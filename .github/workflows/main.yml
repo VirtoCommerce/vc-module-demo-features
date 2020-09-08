@@ -41,9 +41,9 @@ jobs:
       - name: Install dotnet-sonarscanner
         run: dotnet tool install --global dotnet-sonarscanner
 
-      - name: Get changelog
-        id: changelog
-        uses: VirtoCommerce/vc-github-actions/changelog-generator@master
+#      - name: Get changelog
+#        id: changelog
+#        uses: VirtoCommerce/vc-github-actions/changelog-generator@master
 
       - name: Add version suffix
         uses: VirtoCommerce/vc-github-actions/add-version-suffix@master
