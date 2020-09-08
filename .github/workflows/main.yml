@@ -48,17 +48,17 @@ jobs:
       - name: Add version suffix
         uses: VirtoCommerce/vc-github-actions/add-version-suffix@master
 
-      - name: SonarCloud Begin
-        uses: VirtoCommerce/vc-github-actions/sonar-scanner-begin@master
+#      - name: SonarCloud Begin
+#        uses: VirtoCommerce/vc-github-actions/sonar-scanner-begin@master
 
-      - name: Build
-        run: vc-build Compile
+#      - name: Build
+#        run: vc-build Compile
 
-      - name: Unit Tests
-        run: vc-build Test -skip
+#      - name: Unit Tests
+#        run: vc-build Test -skip
 
-      - name: SonarCloud End
-        uses: VirtoCommerce/vc-github-actions/sonar-scanner-end@master
+#      - name: SonarCloud End
+#        uses: VirtoCommerce/vc-github-actions/sonar-scanner-end@master
 
       - name: Packaging
         run: vc-build Compress -skip Clean+Restore+Compile+Test
