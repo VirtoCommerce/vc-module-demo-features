@@ -1,0 +1,28 @@
+{
+  "virtoCommerce.demoSolutionFeaturesModule": {
+    "blades": {
+      "hello-world": {
+        "title": "Hello world blade"
+      }
+    }
+  },
+  "permissions": {
+    "virtoCommerceDemoSolutionFeaturesModule:access": "Open VirtoCommerceDemoSolutionFeaturesModule menu",
+    "virtoCommerceDemoSolutionFeaturesModule:create": "Create VirtoCommerceDemoSolutionFeaturesModule related data",
+    "virtoCommerceDemoSolutionFeaturesModule:read": "View VirtoCommerceDemoSolutionFeaturesModule related data",
+    "virtoCommerceDemoSolutionFeaturesModule:update": "Update VirtoCommerceDemoSolutionFeaturesModule related data",
+    "virtoCommerceDemoSolutionFeaturesModule:delete": "Delete VirtoCommerceDemoSolutionFeaturesModule related data"
+  },
+  "settings": {
+    "VirtoCommerceDemoSolutionFeaturesModule": {
+      "VirtoCommerceDemoSolutionFeaturesModulePassword": {
+        "title": "VirtoCommerceDemoSolutionFeaturesModule Password",
+        "description": "VirtoCommerceDemoSolutionFeaturesModule Password setting"
+      },
+      "VirtoCommerceDemoSolutionFeaturesModuleEnabled": {
+        "title": "VirtoCommerceDemoSolutionFeaturesModule Enabled",
+        "description": "VirtoCommerceDemoSolutionFeaturesModule Enabled setting"
+      }
+    }
+  }
+}
