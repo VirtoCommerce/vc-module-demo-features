@@ -5,10 +5,10 @@
     <version-tag></version-tag>
     <platformVersion>3.0.0</platformVersion>
     <dependencies>
-<!--        <dependency id="VirtoCommerce.Core" version="3.0.0" /> -->
+        <dependency id="VirtoCommerce.Cart" version="3.5.0" />
     </dependencies>
 
-    <title>VirtoCommerce.DemoSolutionFeaturesModule</title>
+    <title>Demo solution features module</title>
     <description>Enter your module description here.</description>
     <authors>
         <author>Maksim Kopnov</author>
