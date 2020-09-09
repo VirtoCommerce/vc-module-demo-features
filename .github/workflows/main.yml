@@ -51,8 +51,8 @@ jobs:
 #      - name: SonarCloud Begin
 #        uses: VirtoCommerce/vc-github-actions/sonar-scanner-begin@master
 
-#      - name: Build
-#        run: vc-build Compile
+      - name: Build
+        run: vc-build Compile
 
 #      - name: Unit Tests
 #        run: vc-build Test -skip
