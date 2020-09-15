@@ -43,7 +43,7 @@ jobs:
 
       - name: Get changelog
         id: changelog
-        uses: VirtoCommerce/vc-github-actions/changelog-generator@dev
+        uses: VirtoCommerce/vc-github-actions/changelog-generator@master
 
       - name: Add version suffix
         uses: VirtoCommerce/vc-github-actions/add-version-suffix@master
