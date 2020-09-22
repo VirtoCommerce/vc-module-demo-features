@@ -8,7 +8,12 @@ using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
-
+using VirtoCommerce.CustomerModule.Core.Model;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
+using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.CustomerModule.Data.Repositories;
+using VirtoCommerce.CustomerModule.Data.Model;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 {
@@ -22,10 +27,18 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             var configuration = serviceCollection.BuildServiceProvider().GetRequiredService<IConfiguration>();
             var connectionString = configuration.GetConnectionString("VirtoCommerce.VirtoCommerceDemoSolutionFeaturesModule") ?? configuration.GetConnectionString("VirtoCommerce");
             serviceCollection.AddDbContext<VirtoCommerceDemoSolutionFeaturesModuleDbContext>(options => options.UseSqlServer(connectionString));
+            
+            serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
         {
+
+
+            AbstractTypeFactory<Contact>.OverrideType<Contact, ContactDemo>();
+            AbstractTypeFactory<ContactEntity>.OverrideType<ContactEntity, ContactDemoEntity>();
+
+
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
             settingsRegistrar.RegisterSettings(ModuleConstants.Settings.AllSettings, ModuleInfo.Id);
