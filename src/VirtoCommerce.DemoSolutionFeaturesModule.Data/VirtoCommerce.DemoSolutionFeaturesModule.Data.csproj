@@ -14,7 +14,6 @@
     <Folder Include="Handlers\" />
     <Folder Include="Models\" />
     <Folder Include="Repositories\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +21,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.0.0" />
+    <PackageReference Include="VirtoCommerce.OrdersModule.Data" Version="3.9.0" />
+    <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.16.0" />
   </ItemGroup>
 
 </Project>

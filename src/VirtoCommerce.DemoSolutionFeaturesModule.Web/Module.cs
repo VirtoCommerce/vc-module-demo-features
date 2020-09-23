@@ -8,7 +8,8 @@ using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
-
+using VirtoCommerce.OrdersModule.Data.Services;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 {
@@ -22,6 +23,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             var configuration = serviceCollection.BuildServiceProvider().GetRequiredService<IConfiguration>();
             var connectionString = configuration.GetConnectionString("VirtoCommerce.VirtoCommerceDemoSolutionFeaturesModule") ?? configuration.GetConnectionString("VirtoCommerce");
             serviceCollection.AddDbContext<VirtoCommerceDemoSolutionFeaturesModuleDbContext>(options => options.UseSqlServer(connectionString));
+            serviceCollection.AddTransient<ICustomerOrderBuilder, DemoCustomerOrderBuilder>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
