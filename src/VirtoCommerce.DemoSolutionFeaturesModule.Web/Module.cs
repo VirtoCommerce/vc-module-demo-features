@@ -26,20 +26,16 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             // database initialization
             var configuration = serviceCollection.BuildServiceProvider().GetRequiredService<IConfiguration>();
             var connectionString = configuration.GetConnectionString("VirtoCommerce.VirtoCommerceDemoSolutionFeaturesModule") ?? configuration.GetConnectionString("VirtoCommerce");
-            serviceCollection.AddDbContext<VirtoCommerceDemoSolutionFeaturesModuleDbContext>(options => options.UseSqlServer(connectionString));
+            serviceCollection.AddDbContext<CustomerDemoDbContext>(options => options.UseSqlServer(connectionString));
             
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
         {
-
-
             AbstractTypeFactory<Contact>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<Member>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
-            //AbstractTypeFactory<ContactEntity>.OverrideType<ContactEntity, ContactDemoEntity>();
             AbstractTypeFactory<MemberEntity>.OverrideType<ContactEntity, ContactDemoEntity>();
-
 
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
@@ -58,7 +54,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             // Ensure that any pending migrations are applied
             using (var serviceScope = appBuilder.ApplicationServices.CreateScope())
             {
-                using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<VirtoCommerceDemoSolutionFeaturesModuleDbContext>())
+                using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<CustomerDemoDbContext>())
                 {
                     dbContext.Database.EnsureCreated();
                     dbContext.Database.Migrate();

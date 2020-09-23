@@ -9,7 +9,7 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 {
-    [DbContext(typeof(VirtoCommerceDemoSolutionFeaturesModuleDbContext))]
+    [DbContext(typeof(CustomerDemoDbContext))]
     [Migration("20200923061422_InitialContactDemo")]
     partial class InitialContactDemo
     {

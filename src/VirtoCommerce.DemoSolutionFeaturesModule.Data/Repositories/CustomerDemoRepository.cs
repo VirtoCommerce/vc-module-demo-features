@@ -11,17 +11,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 {
     public class CustomerDemoRepository : CustomerRepository
     {
-        public CustomerDemoRepository(CustomerDbContext dbContext) : base(dbContext)
+        public CustomerDemoRepository(CustomerDemoDbContext dbContext) : base(dbContext)
         {           
         }
 
-        public IQueryable<ContactDemoEntity> ContactsDemo => DbContext.Set<ContactDemoEntity>();
-
-        public override async Task<MemberEntity[]> GetMembersByIdsAsync(string[] ids, string responseGroup = null, string[] memberTypes = null)
-        {
-            var retVal = await base.GetMembersByIdsAsync(ids, responseGroup, memberTypes);
-            return retVal;
-        }
+        public IQueryable<ContactDemoEntity> ContactsDemo => DbContext.Set<ContactDemoEntity>();       
 
     }
 }

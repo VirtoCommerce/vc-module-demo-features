@@ -3,15 +3,15 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 {
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<VirtoCommerceDemoSolutionFeaturesModuleDbContext>
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<CustomerDemoDbContext>
     {
-        public VirtoCommerceDemoSolutionFeaturesModuleDbContext CreateDbContext(string[] args)
+        public CustomerDemoDbContext CreateDbContext(string[] args)
         {
-            var builder = new DbContextOptionsBuilder<VirtoCommerceDemoSolutionFeaturesModuleDbContext>();
+            var builder = new DbContextOptionsBuilder<CustomerDemoDbContext>();
 
             builder.UseSqlServer("Data Source=(local);Initial Catalog=VirtoCommerce3;Persist Security Info=True;User ID=virto;Password=virto;MultipleActiveResultSets=True;Connect Timeout=30");
 
-            return new VirtoCommerceDemoSolutionFeaturesModuleDbContext(builder.Options);
+            return new CustomerDemoDbContext(builder.Options);
         }
     }
 }

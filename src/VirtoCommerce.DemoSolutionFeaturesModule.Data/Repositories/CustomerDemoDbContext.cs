@@ -5,22 +5,19 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 {
-    public class VirtoCommerceDemoSolutionFeaturesModuleDbContext : CustomerDbContext
+    public class CustomerDemoDbContext : CustomerDbContext
     {
-        public VirtoCommerceDemoSolutionFeaturesModuleDbContext(DbContextOptions<VirtoCommerceDemoSolutionFeaturesModuleDbContext> options)
+        public CustomerDemoDbContext(DbContextOptions<CustomerDemoDbContext> options)
           : base(options)
         {
         }
 
-        protected VirtoCommerceDemoSolutionFeaturesModuleDbContext(DbContextOptions options)
+        protected CustomerDemoDbContext(DbContextOptions options)
             : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //        modelBuilder.Entity<MyModuleEntity>().ToTable("MyModule").HasKey(x => x.Id);
-            //        modelBuilder.Entity<MyModuleEntity>().Property(x => x.Id).HasMaxLength(128);
-
             modelBuilder.Entity<ContactDemoEntity>();
 
             base.OnModelCreating(modelBuilder);

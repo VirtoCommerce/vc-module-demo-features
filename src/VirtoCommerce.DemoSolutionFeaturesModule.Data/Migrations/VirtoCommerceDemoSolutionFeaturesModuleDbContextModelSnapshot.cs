@@ -8,7 +8,7 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 {
-    [DbContext(typeof(VirtoCommerceDemoSolutionFeaturesModuleDbContext))]
+    [DbContext(typeof(CustomerDemoDbContext))]
     partial class VirtoCommerceDemoSolutionFeaturesModuleDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
