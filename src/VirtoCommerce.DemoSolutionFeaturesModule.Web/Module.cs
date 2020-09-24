@@ -15,6 +15,7 @@ using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 using VirtoCommerce.OrdersModule.Data.Services;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 {
