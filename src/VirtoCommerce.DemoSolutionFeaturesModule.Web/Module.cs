@@ -14,6 +14,7 @@ using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
+using VirtoCommerce.OrdersModule.Data.Services;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 {
@@ -29,6 +30,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddDbContext<CustomerDemoDbContext>(options => options.UseSqlServer(connectionString));
             
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
+            serviceCollection.AddTransient<ICustomerOrderBuilder, DemoCustomerOrderBuilder>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
