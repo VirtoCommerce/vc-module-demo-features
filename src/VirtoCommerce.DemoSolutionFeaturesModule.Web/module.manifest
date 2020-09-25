@@ -5,7 +5,6 @@
     <version-tag></version-tag>
     <platformVersion>3.0.0</platformVersion>
     <dependencies>
-<!--        <dependency id="VirtoCommerce.Core" version="3.0.0" /> -->
         <dependency id="VirtoCommerce.Customer" version="3.9.0" />
         <dependency id="VirtoCommerce.Orders" version="3.9.0" />
     </dependencies>

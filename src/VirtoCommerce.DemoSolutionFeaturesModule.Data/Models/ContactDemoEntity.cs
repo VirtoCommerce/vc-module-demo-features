@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
@@ -17,12 +14,13 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
         public override Member ToModel(Member member)
         {
-            //Call base converter first
             base.ToModel(member);
+
             if (member is ContactDemo contact)
             {
                 contact.Title = Title;
             }
+
             return member;
         }
 
@@ -33,7 +31,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
                 Title = contact.Title;
             }
 
-            //Call base converter
             return base.FromModel(member, pkMap);
         }
 
