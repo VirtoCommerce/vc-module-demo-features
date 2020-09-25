@@ -8,6 +8,12 @@ using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
+using VirtoCommerce.CustomerModule.Core.Model;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
+using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.CustomerModule.Data.Repositories;
+using VirtoCommerce.CustomerModule.Data.Model;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 using VirtoCommerce.OrdersModule.Data.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 
@@ -22,12 +28,18 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             // database initialization
             var configuration = serviceCollection.BuildServiceProvider().GetRequiredService<IConfiguration>();
             var connectionString = configuration.GetConnectionString("VirtoCommerce.VirtoCommerceDemoSolutionFeaturesModule") ?? configuration.GetConnectionString("VirtoCommerce");
-            serviceCollection.AddDbContext<VirtoCommerceDemoSolutionFeaturesModuleDbContext>(options => options.UseSqlServer(connectionString));
+            serviceCollection.AddDbContext<CustomerDemoDbContext>(options => options.UseSqlServer(connectionString));
+            
+            serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
             serviceCollection.AddTransient<ICustomerOrderBuilder, DemoCustomerOrderBuilder>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
         {
+            AbstractTypeFactory<Contact>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
+            AbstractTypeFactory<Member>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
+            AbstractTypeFactory<MemberEntity>.OverrideType<ContactEntity, ContactDemoEntity>();
+
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
             settingsRegistrar.RegisterSettings(ModuleConstants.Settings.AllSettings, ModuleInfo.Id);
@@ -45,7 +57,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             // Ensure that any pending migrations are applied
             using (var serviceScope = appBuilder.ApplicationServices.CreateScope())
             {
-                using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<VirtoCommerceDemoSolutionFeaturesModuleDbContext>())
+                using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<CustomerDemoDbContext>())
                 {
                     dbContext.Database.EnsureCreated();
                     dbContext.Database.Migrate();
