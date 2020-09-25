@@ -10,12 +10,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
         public CustomerDemoDbContext(DbContextOptions<CustomerDemoDbContext> options)
           : base(options)
         {
+
         }
 
-        protected CustomerDemoDbContext(DbContextOptions options)
-            : base(options)
-        {
-        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ContactDemoEntity>();
@@ -24,4 +21,3 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
         }
     }
 }
-

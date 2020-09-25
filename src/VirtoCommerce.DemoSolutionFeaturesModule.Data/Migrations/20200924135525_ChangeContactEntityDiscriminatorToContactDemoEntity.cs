@@ -6,11 +6,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(
- @"UPDATE [Member]
-   SET
-       [Discriminator] = 'ContactDemoEntity'
- WHERE[Discriminator] = 'ContactEntity'");
+            migrationBuilder.Sql("UPDATE [Member] SET [Discriminator] = 'ContactDemoEntity' WHERE [Discriminator] = 'ContactEntity'");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

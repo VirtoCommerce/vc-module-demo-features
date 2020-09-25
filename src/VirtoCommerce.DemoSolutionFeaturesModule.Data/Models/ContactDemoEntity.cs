@@ -34,7 +34,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             return base.FromModel(member, pkMap);
         }
 
-
         public override void Patch(MemberEntity target)
         {
             if (target is ContactDemoEntity contact)
