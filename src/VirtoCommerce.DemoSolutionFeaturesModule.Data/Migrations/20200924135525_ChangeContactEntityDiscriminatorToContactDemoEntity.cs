@@ -11,7 +11,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
+            migrationBuilder.Sql("UPDATE [Member] SET [Discriminator] = 'ContactEntity' WHERE [Discriminator] = 'ContactDemoEntity'");
         }
     }
 }
