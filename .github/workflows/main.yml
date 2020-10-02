@@ -67,19 +67,20 @@ jobs:
         uses: VirtoCommerce/vc-github-actions/publish-nuget@master
 
       - name: Publish to Blob
-        if: ${{ github.ref == 'dev' }}
+        if: ${{ github.ref == 'refs/heads/dev' }}
         id: blobRelease
         uses: VirtoCommerce/vc-github-actions/publish-blob-release@VP-5059
         with:
           blobSAS: ${{ secrets.BLOB_TOKEN }}
         
       - name: Publish Github Release
-        if: ${{ github.ref == 'master' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         with:
           changelog: ${{ steps.changelog.outputs.changelog }}
         uses: VirtoCommerce/vc-github-actions/publish-github-release@VP-5059
 
       - name: Publish Manifest
+        if: ${{ github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'}}
         uses: VirtoCommerce/vc-github-actions/publish-manifest@VP-5059
         with:
           githubToken: ${{ secrets.REPO_TOKEN }}
