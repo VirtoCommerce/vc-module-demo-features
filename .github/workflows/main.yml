@@ -79,9 +79,14 @@ jobs:
           changelog: ${{ steps.changelog.outputs.changelog }}
         uses: VirtoCommerce/vc-github-actions/publish-github-release@VP-5059
 
+      - name: Setup Git Credentials
+        if: ${{ github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'}}
+        uses: VirtoCommerce/vc-github-actions/setup-git-credentials-github@VP-5059
+        with: 
+          githubToken: ${{ secrets.REPO_TOKEN }}
+        
       - name: Publish Manifest
         if: ${{ github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'}}
         uses: VirtoCommerce/vc-github-actions/publish-manifest@VP-5059
         with:
-          githubToken: ${{ secrets.REPO_TOKEN }}
           packageUrl: ${{ steps.blobRelease.outputs.packageUrl }}
