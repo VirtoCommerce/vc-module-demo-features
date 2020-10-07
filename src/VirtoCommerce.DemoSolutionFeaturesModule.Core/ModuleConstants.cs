@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using VirtoCommerce.Platform.Core.Settings;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
@@ -16,41 +15,13 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
                 public const string Update = "virtoCommerceDemoSolutionFeaturesModule:update";
                 public const string Delete = "virtoCommerceDemoSolutionFeaturesModule:delete";
 
-                public static string[] AllPermissions { get; } = { Read, Create, Access, Update, Delete };
+                public static string[] AllPermissions => new [] { Read, Create, Access, Update, Delete };
             }
         }
 
         public static class Settings
         {
             public static class General
-            {
-                public static SettingDescriptor VirtoCommerceDemoSolutionFeaturesModuleEnabled { get; } = new SettingDescriptor
-                {
-                    Name = "VirtoCommerceDemoSolutionFeaturesModule.VirtoCommerceDemoSolutionFeaturesModuleEnabled",
-                    GroupName = "VirtoCommerceDemoSolutionFeaturesModule|General",
-                    ValueType = SettingValueType.Boolean,
-                    DefaultValue = false
-                };
-
-                public static SettingDescriptor VirtoCommerceDemoSolutionFeaturesModulePassword { get; } = new SettingDescriptor
-                {
-                    Name = "VirtoCommerceDemoSolutionFeaturesModule.VirtoCommerceDemoSolutionFeaturesModulePassword",
-                    GroupName = "VirtoCommerceDemoSolutionFeaturesModule|Advanced",
-                    ValueType = SettingValueType.SecureString,
-                    DefaultValue = "qwerty"
-                };
-
-                public static IEnumerable<SettingDescriptor> AllSettings
-                {
-                    get
-                    {
-                        yield return VirtoCommerceDemoSolutionFeaturesModuleEnabled;
-                        yield return VirtoCommerceDemoSolutionFeaturesModulePassword;
-                    }
-                }
-            }
-
-            public static class DemoInvoicePaymentMethod
             {
                 public static readonly SettingDescriptor Logo = new SettingDescriptor
                 {
@@ -68,8 +39,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
                     }
                 }
             }
-
-            public static IEnumerable<SettingDescriptor> AllSettings => General.AllSettings.Concat(DemoInvoicePaymentMethod.AllSettings);
         }
     }
 }

@@ -44,12 +44,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
-            settingsRegistrar.RegisterSettings(ModuleConstants.Settings.AllSettings, ModuleInfo.Id);
+            settingsRegistrar.RegisterSettings(ModuleConstants.Settings.General.AllSettings, ModuleInfo.Id);
 
             // register invoicePaymentMethod
             var paymentMethodsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IPaymentMethodsRegistrar>();
             paymentMethodsRegistrar.RegisterPaymentMethod<DemoInvoicePaymentMethod>();
-            settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.DemoInvoicePaymentMethod.AllSettings, nameof(DemoInvoicePaymentMethod));
+            settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.General.AllSettings, nameof(DemoInvoicePaymentMethod));
 
             // register permissions
             var permissionsProvider = appBuilder.ApplicationServices.GetRequiredService<IPermissionsRegistrar>();

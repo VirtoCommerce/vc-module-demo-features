@@ -17,8 +17,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data
         public new string Name => "Invoice";
 
         public new string LogoUrl => Settings?.GetSettingValue(
-            ModuleConstants.Settings.DemoInvoicePaymentMethod.Logo.Name,
-            ModuleConstants.Settings.DemoInvoicePaymentMethod.Logo.DefaultValue.ToString()
+            ModuleConstants.Settings.General.Logo.Name,
+            ModuleConstants.Settings.General.Logo.DefaultValue.ToString()
         );
 
         public override PaymentMethodType PaymentMethodType => PaymentMethodType.Unknown;
@@ -40,12 +40,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data
             return new VoidPaymentRequestResult { IsSuccess = true, NewPaymentStatus = PaymentStatus.Voided };
         }
 
-        public override CapturePaymentRequestResult CaptureProcessPayment(CapturePaymentRequest request)
+        public override CapturePaymentRequestResult CaptureProcessPayment(CapturePaymentRequest context)
         {
             return new CapturePaymentRequestResult { IsSuccess = true, NewPaymentStatus = PaymentStatus.Paid };
         }
 
-        public override RefundPaymentRequestResult RefundProcessPayment(RefundPaymentRequest request)
+        public override RefundPaymentRequestResult RefundProcessPayment(RefundPaymentRequest context)
         {
             throw new NotImplementedException();
         }
