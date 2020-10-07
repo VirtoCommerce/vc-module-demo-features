@@ -52,11 +52,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
 
             public static class DemoInvoicePaymentMethod
             {
-                public static SettingDescriptor Logo = new SettingDescriptor
+                public static readonly SettingDescriptor Logo = new SettingDescriptor
                 {
                     Name = "VirtoCommerceDemoSolutionFeaturesModule.DemoInvoicePaymentMethod.Logo",
                     GroupName = "VirtoCommerceDemoSolutionFeaturesModule|DemoInvoicePaymentMethod",
-                    ValueType = SettingValueType.ShortText
+                    ValueType = SettingValueType.ShortText,
+                    DefaultValue = "",
                 };
 
                 public static IEnumerable<SettingDescriptor> AllSettings
