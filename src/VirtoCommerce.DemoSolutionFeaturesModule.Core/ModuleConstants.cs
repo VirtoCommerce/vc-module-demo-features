@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using VirtoCommerce.Platform.Core.Settings;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
@@ -49,13 +50,25 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
                 }
             }
 
-            public static IEnumerable<SettingDescriptor> AllSettings
+            public static class DemoInvoicePaymentMethod
             {
-                get
+                public static SettingDescriptor Logo = new SettingDescriptor
                 {
-                    return General.AllSettings;
+                    Name = "VirtoCommerceDemoSolutionFeaturesModule.DemoInvoicePaymentMethod.Logo",
+                    GroupName = "VirtoCommerceDemoSolutionFeaturesModule|DemoInvoicePaymentMethod",
+                    ValueType = SettingValueType.ShortText
+                };
+
+                public static IEnumerable<SettingDescriptor> AllSettings
+                {
+                    get
+                    {
+                        yield return Logo;
+                    }
                 }
             }
+
+            public static IEnumerable<SettingDescriptor> AllSettings => General.AllSettings.Concat(DemoInvoicePaymentMethod.AllSettings);
         }
     }
 }

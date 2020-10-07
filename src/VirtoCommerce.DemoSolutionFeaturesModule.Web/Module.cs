@@ -16,6 +16,8 @@ using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 using VirtoCommerce.OrdersModule.Data.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
+using VirtoCommerce.PaymentModule.Core.Services;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 {
@@ -29,7 +31,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             var configuration = serviceCollection.BuildServiceProvider().GetRequiredService<IConfiguration>();
             var connectionString = configuration.GetConnectionString("VirtoCommerce.VirtoCommerceDemoSolutionFeaturesModule") ?? configuration.GetConnectionString("VirtoCommerce");
             serviceCollection.AddDbContext<CustomerDemoDbContext>(options => options.UseSqlServer(connectionString));
-            
+
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
             serviceCollection.AddTransient<ICustomerOrderBuilder, DemoCustomerOrderBuilder>();
         }
@@ -43,6 +45,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
             settingsRegistrar.RegisterSettings(ModuleConstants.Settings.AllSettings, ModuleInfo.Id);
+
+            // register invoicePaymentMethod
+            var paymentMethodsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IPaymentMethodsRegistrar>();
+            paymentMethodsRegistrar.RegisterPaymentMethod<DemoInvoicePaymentMethod>();
+            settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.DemoInvoicePaymentMethod.AllSettings, typeof(DemoInvoicePaymentMethod).Name);
 
             // register permissions
             var permissionsProvider = appBuilder.ApplicationServices.GetRequiredService<IPermissionsRegistrar>();
