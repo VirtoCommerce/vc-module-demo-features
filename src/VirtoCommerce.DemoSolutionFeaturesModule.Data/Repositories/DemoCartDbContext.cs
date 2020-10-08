@@ -17,10 +17,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            //modelBuilder.Entity<LineItemEntity>().HasDiscriminator().HasValue(nameof(DemoCartLineItemEntity));
+            modelBuilder.Entity<LineItemEntity>()
+                .HasDiscriminator()
+                .HasValue<DemoCartLineItemEntity>(nameof(DemoCartLineItemEntity));
 
-            //modelBuilder.Entity<DemoCartLineItemEntity>();
-            //modelBuilder.Entity<DemoCartLineItemEntity>().HasDiscriminator().HasValue(nameof(DemoCartLineItemEntity));
+            
 
             base.OnModelCreating(modelBuilder);
         }

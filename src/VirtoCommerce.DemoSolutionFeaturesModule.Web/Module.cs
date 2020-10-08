@@ -18,7 +18,6 @@ using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
-using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 using VirtoCommerce.CartModule.Core.Model;
 using VirtoCommerce.CartModule.Data.Model;
 using VirtoCommerce.CartModule.Data.Repositories;
@@ -80,11 +79,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
                     dbContext.Database.EnsureCreated();
                     dbContext.Database.Migrate();
                 }
-                //using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<DemoCartDbContext>())
-                //{
-                //    dbContext.Database.EnsureCreated();
-                //    dbContext.Database.Migrate();
-                //}
+                using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<DemoCartDbContext>())
+                {
+                    dbContext.Database.EnsureCreated();
+                    dbContext.Database.Migrate();
+                }
             }
         }
 
