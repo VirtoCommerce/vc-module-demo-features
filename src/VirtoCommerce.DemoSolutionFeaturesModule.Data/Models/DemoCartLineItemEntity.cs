@@ -11,13 +11,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 {
     public class DemoCartLineItemEntity : LineItemEntity
     {
-        //[StringLength(64)]
-        //public string GroupId { get; set; }
-
-        //public CartLineItemGroupDemoEntity Group { get; set; }
-
-        
-        public string ParentLineItemId { get; set; }
+        [StringLength(64)]
+        public string ConfiguredProductId { get; set; }
 
         public override LineItem ToModel(LineItem lineItem)
         {            
@@ -25,8 +20,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
             if (lineItem is DemoCartLineItem item)
             {
-                //item.GroupId = GroupId;
-                item.ParentLineItemId = ParentLineItemId;
+                item.ConfiguredProductId = ConfiguredProductId;
             }
 
             return lineItem;
@@ -36,8 +30,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
         {
             if (lineItem is DemoCartLineItem item)
             {
-                //GroupId = item.GroupId;
-                ParentLineItemId = item.ParentLineItemId;
+                ConfiguredProductId = item.ConfiguredProductId;
             }
 
             return base.FromModel(lineItem, pkMap);
@@ -47,8 +40,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
         {
             if (target is DemoCartLineItemEntity item)
             {
-                //item.GroupId = GroupId;
-                item.ParentLineItemId = ParentLineItemId;
+                item.ConfiguredProductId = ConfiguredProductId;
             }
 
             base.Patch(target);

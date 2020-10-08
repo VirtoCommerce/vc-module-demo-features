@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using VirtoCommerce.CartModule.Data.Model;
 using VirtoCommerce.CartModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 
@@ -14,11 +15,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //modelBuilder.Entity<CartLineItemDemoEntity>();
-
-            //modelBuilder.Entity<CartLineItemGroupDemoEntity>();
-
+        {       
+            //modelBuilder.Entity<DemoCartLineItemEntity>();
+            
             base.OnModelCreating(modelBuilder);
         }
     }

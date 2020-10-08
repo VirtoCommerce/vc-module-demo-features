@@ -7,6 +7,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
 {
     public class DemoCartLineItem: LineItem
     {
-        public string ParentLineItemId { get; set; }
+        public string ConfiguredProductId { get; set; }
     }
 }

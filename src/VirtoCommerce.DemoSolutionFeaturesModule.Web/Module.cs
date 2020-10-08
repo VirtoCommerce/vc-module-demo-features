@@ -48,11 +48,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             //Cart
             AbstractTypeFactory<LineItem>.OverrideType<LineItem, DemoCartLineItem>().MapToType<DemoCartLineItemEntity>();
-            AbstractTypeFactory<LineItem>.OverrideType<LineItem, DemoCartConfiguredLineItem>().MapToType<DemoCartConfiguredLineItemEntity>();
-
             AbstractTypeFactory<LineItemEntity>.OverrideType<LineItemEntity, DemoCartLineItemEntity>();
-
-            //AbstractTypeFactory<DemoCartLineItemGroup>.RegisterType<DemoCartLineItemGroup>();
 
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
