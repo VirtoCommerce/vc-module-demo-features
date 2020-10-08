@@ -22,6 +22,20 @@
       "VirtoCommerceDemoSolutionFeaturesModuleEnabled": {
         "title": "VirtoCommerceDemoSolutionFeaturesModule Enabled",
         "description": "VirtoCommerceDemoSolutionFeaturesModule Enabled setting"
+      },
+      "DemoInvoicePaymentMethod": {
+        "Logo": {
+          "title": "Logo url",
+          "description": "Payment method logo url"
+        }
+      }
+    }
+  },
+  "payment": {
+    "labels": {
+      "DemoInvoicePaymentMethod": {
+        "name": "Invoice payment method",
+        "description": "Invoice payment method for B2B-theme"
       }
     }
   }

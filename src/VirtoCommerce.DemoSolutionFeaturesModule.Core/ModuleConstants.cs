@@ -15,7 +15,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
                 public const string Update = "virtoCommerceDemoSolutionFeaturesModule:update";
                 public const string Delete = "virtoCommerceDemoSolutionFeaturesModule:delete";
 
-                public static string[] AllPermissions { get; } = { Read, Create, Access, Update, Delete };
+                public static string[] AllPermissions => new [] { Read, Create, Access, Update, Delete };
             }
         }
 
@@ -23,37 +23,20 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
         {
             public static class General
             {
-                public static SettingDescriptor VirtoCommerceDemoSolutionFeaturesModuleEnabled { get; } = new SettingDescriptor
+                public static readonly SettingDescriptor Logo = new SettingDescriptor
                 {
-                    Name = "VirtoCommerceDemoSolutionFeaturesModule.VirtoCommerceDemoSolutionFeaturesModuleEnabled",
-                    GroupName = "VirtoCommerceDemoSolutionFeaturesModule|General",
-                    ValueType = SettingValueType.Boolean,
-                    DefaultValue = false
-                };
-
-                public static SettingDescriptor VirtoCommerceDemoSolutionFeaturesModulePassword { get; } = new SettingDescriptor
-                {
-                    Name = "VirtoCommerceDemoSolutionFeaturesModule.VirtoCommerceDemoSolutionFeaturesModulePassword",
-                    GroupName = "VirtoCommerceDemoSolutionFeaturesModule|Advanced",
-                    ValueType = SettingValueType.SecureString,
-                    DefaultValue = "qwerty"
+                    Name = "VirtoCommerceDemoSolutionFeaturesModule.DemoInvoicePaymentMethod.Logo",
+                    GroupName = "VirtoCommerceDemoSolutionFeaturesModule|DemoInvoicePaymentMethod",
+                    ValueType = SettingValueType.ShortText,
+                    DefaultValue = "",
                 };
 
                 public static IEnumerable<SettingDescriptor> AllSettings
                 {
                     get
                     {
-                        yield return VirtoCommerceDemoSolutionFeaturesModuleEnabled;
-                        yield return VirtoCommerceDemoSolutionFeaturesModulePassword;
+                        yield return Logo;
                     }
-                }
-            }
-
-            public static IEnumerable<SettingDescriptor> AllSettings
-            {
-                get
-                {
-                    return General.AllSettings;
                 }
             }
         }
