@@ -21,6 +21,7 @@ using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 using VirtoCommerce.CartModule.Core.Model;
 using VirtoCommerce.CartModule.Data.Model;
+using VirtoCommerce.CartModule.Data.Repositories;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 {
@@ -34,9 +35,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             var configuration = serviceCollection.BuildServiceProvider().GetRequiredService<IConfiguration>();
             var connectionString = configuration.GetConnectionString("VirtoCommerce.VirtoCommerceDemoSolutionFeaturesModule") ?? configuration.GetConnectionString("VirtoCommerce");
             serviceCollection.AddDbContext<CustomerDemoDbContext>(options => options.UseSqlServer(connectionString));
+            serviceCollection.AddDbContext<DemoCartDbContext>(options => options.UseSqlServer(connectionString));
 
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
             serviceCollection.AddTransient<ICustomerOrderBuilder, DemoCustomerOrderBuilder>();
+            serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
@@ -71,10 +74,17 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             // Ensure that any pending migrations are applied
             using (var serviceScope = appBuilder.ApplicationServices.CreateScope())
-            using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<CustomerDemoDbContext>())
             {
-                dbContext.Database.EnsureCreated();
-                dbContext.Database.Migrate();
+                using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<CustomerDemoDbContext>())
+                {
+                    dbContext.Database.EnsureCreated();
+                    dbContext.Database.Migrate();
+                }
+                //using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<DemoCartDbContext>())
+                //{
+                //    dbContext.Database.EnsureCreated();
+                //    dbContext.Database.Migrate();
+                //}
             }
         }
 

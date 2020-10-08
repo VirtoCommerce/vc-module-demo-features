@@ -5,9 +5,9 @@ using VirtoCommerce.CartModule.Data.Repositories;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 {
-    public class CartDemoRepository : CartRepository
+    public class DemoCartRepository : CartRepository
     {
-        public CartDemoRepository(CartDemoDbContext dbContext) : base(dbContext)
+        public DemoCartRepository(DemoCartDbContext dbContext) : base(dbContext)
         {
         }
     }

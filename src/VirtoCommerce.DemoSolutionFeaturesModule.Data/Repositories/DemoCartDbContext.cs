@@ -8,16 +8,20 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 {
-    public class CartDemoDbContext : CartDbContext
+    public class DemoCartDbContext : CartDbContext
     {
-        public CartDemoDbContext(DbContextOptions<CartDemoDbContext> options) : base(options)
+        public DemoCartDbContext(DbContextOptions<DemoCartDbContext> options) : base(options)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {       
+        {
+
+            //modelBuilder.Entity<LineItemEntity>().HasDiscriminator().HasValue(nameof(DemoCartLineItemEntity));
+
             //modelBuilder.Entity<DemoCartLineItemEntity>();
-            
+            //modelBuilder.Entity<DemoCartLineItemEntity>().HasDiscriminator().HasValue(nameof(DemoCartLineItemEntity));
+
             base.OnModelCreating(modelBuilder);
         }
     }
