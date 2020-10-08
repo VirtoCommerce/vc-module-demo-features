@@ -7,7 +7,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 {
     public class DemoCartRepository : CartRepository
     {
-        public DemoCartRepository(DemoCartDbContext dbContext) : base(dbContext)
+        public DemoCartRepository(DemoCartDbContext dbContext)
+            : base(dbContext)
         {
         }
     }

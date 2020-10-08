@@ -10,7 +10,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 {
     public class DemoCartDbContext : CartDbContext
     {
-        public DemoCartDbContext(DbContextOptions<DemoCartDbContext> options) : base(options)
+        public DemoCartDbContext(DbContextOptions<DemoCartDbContext> options)
+            : base(options)
         {
         }
 
