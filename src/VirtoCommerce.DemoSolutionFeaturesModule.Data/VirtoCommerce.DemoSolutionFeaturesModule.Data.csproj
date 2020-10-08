@@ -13,8 +13,6 @@
     <Folder Include="ExportImport\" />
     <Folder Include="Handlers\" />
     <Folder Include="Services\" />
-    <Folder Include="Models\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +21,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="VirtoCommerce.CartModule.Data" Version="3.7.0" />
     <PackageReference Include="VirtoCommerce.CustomerModule.Data" Version="3.9.0" />
     <PackageReference Include="VirtoCommerce.OrdersModule.Data" Version="3.9.0" />
     <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.16.0" />

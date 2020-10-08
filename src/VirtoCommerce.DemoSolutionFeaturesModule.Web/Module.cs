@@ -16,6 +16,8 @@ using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 using VirtoCommerce.OrdersModule.Data.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
+using VirtoCommerce.CartModule.Core.Model;
+using VirtoCommerce.CartModule.Data.Model;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 {
@@ -36,9 +38,18 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
         public void PostInitialize(IApplicationBuilder appBuilder)
         {
+            //Customer
             AbstractTypeFactory<Contact>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<Member>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<MemberEntity>.OverrideType<ContactEntity, ContactDemoEntity>();
+
+            //Cart
+            AbstractTypeFactory<LineItem>.OverrideType<LineItem, DemoCartLineItem>().MapToType<DemoCartLineItemEntity>();
+            AbstractTypeFactory<LineItem>.OverrideType<LineItem, DemoCartConfiguredLineItem>().MapToType<DemoCartConfiguredLineItemEntity>();
+
+            AbstractTypeFactory<LineItemEntity>.OverrideType<LineItemEntity, DemoCartLineItemEntity>();
+
+            //AbstractTypeFactory<DemoCartLineItemGroup>.RegisterType<DemoCartLineItemGroup>();
 
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
