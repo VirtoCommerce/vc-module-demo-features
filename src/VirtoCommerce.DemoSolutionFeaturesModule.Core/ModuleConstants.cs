@@ -23,7 +23,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
         {
             public static class General
             {
-                public static readonly SettingDescriptor Logo = new SettingDescriptor
+                public static readonly SettingDescriptor DemoInvoicePaymentMethodLogo = new SettingDescriptor
                 {
                     Name = "VirtoCommerceDemoSolutionFeaturesModule.DemoInvoicePaymentMethod.Logo",
                     GroupName = "VirtoCommerceDemoSolutionFeaturesModule|DemoInvoicePaymentMethod",
@@ -31,11 +31,37 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
                     DefaultValue = "",
                 };
 
+                public static readonly SettingDescriptor DemoCreditCardPaymentMethodLogo = new SettingDescriptor
+                {
+                    Name = "VirtoCommerceDemoSolutionFeaturesModule.DemoCreditCardPaymentMethod.Logo",
+                    GroupName = "VirtoCommerceDemoSolutionFeaturesModule|DemoCreditCardPaymentMethod",
+                    ValueType = SettingValueType.ShortText,
+                    DefaultValue = "",
+                };
+
+
+                public static IEnumerable<SettingDescriptor> InvoicePaymentMethodSettings
+                {
+                    get
+                    {
+                        yield return DemoInvoicePaymentMethodLogo;
+                    }
+                }
+
+                public static IEnumerable<SettingDescriptor> CreditCardPaymentMethodSettings
+                {
+                    get
+                    {
+                        yield return DemoCreditCardPaymentMethodLogo;
+                    }
+                }
+
                 public static IEnumerable<SettingDescriptor> AllSettings
                 {
                     get
                     {
-                        yield return Logo;
+                        yield return DemoInvoicePaymentMethodLogo;
+                        yield return DemoCreditCardPaymentMethodLogo;
                     }
                 }
             }

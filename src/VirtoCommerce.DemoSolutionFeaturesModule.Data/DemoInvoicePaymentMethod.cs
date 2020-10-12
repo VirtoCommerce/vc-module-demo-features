@@ -17,8 +17,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data
         public new string Name => "Invoice";
 
         public new string LogoUrl => Settings?.GetSettingValue(
-            ModuleConstants.Settings.General.Logo.Name,
-            ModuleConstants.Settings.General.Logo.DefaultValue.ToString()
+            ModuleConstants.Settings.General.DemoInvoicePaymentMethodLogo.Name,
+            ModuleConstants.Settings.General.DemoInvoicePaymentMethodLogo.DefaultValue.ToString()
         );
 
         public override PaymentMethodType PaymentMethodType => PaymentMethodType.Unknown;

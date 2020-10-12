@@ -28,6 +28,12 @@
           "title": "Logo url",
           "description": "Payment method logo url"
         }
+      },
+      "DemoCreditCardPaymentMethod": {
+        "Logo": {
+          "title": "Logo url",
+          "description": "Payment method logo url"
+        }
       }
     }
   },
@@ -36,6 +42,10 @@
       "DemoInvoicePaymentMethod": {
         "name": "Invoice payment method",
         "description": "Invoice payment method for B2B-theme"
+      },
+      "DemoCreditCardPaymentMethod": {
+        "name": "Credit card payment method",
+        "description": "Credit card payment method for B2B-theme"
       }
     }
   }
