@@ -60,6 +60,12 @@ jobs:
       - name: SonarCloud End
         uses: VirtoCommerce/vc-github-actions/sonar-scanner-end@master
 
+      - name: Quality Gate
+        uses: VirtoCommerce/vc-github-actions/sonar-quality-gate@VP-5059
+        with:
+          login: ${{secrets.SONAR_TOKEN}}
+          projectKey: "VirtoCommerce_vc-module-demo-features"
+
       - name: Packaging
         run: vc-build Compress -skip Clean+Restore+Compile+Test
       
