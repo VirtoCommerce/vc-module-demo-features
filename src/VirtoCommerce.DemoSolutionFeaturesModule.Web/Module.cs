@@ -18,6 +18,9 @@ using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
+using VirtoCommerce.CartModule.Core.Model;
+using VirtoCommerce.CartModule.Data.Model;
+using VirtoCommerce.CartModule.Data.Repositories;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 {
@@ -31,16 +34,23 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             var configuration = serviceCollection.BuildServiceProvider().GetRequiredService<IConfiguration>();
             var connectionString = configuration.GetConnectionString("VirtoCommerce.VirtoCommerceDemoSolutionFeaturesModule") ?? configuration.GetConnectionString("VirtoCommerce");
             serviceCollection.AddDbContext<CustomerDemoDbContext>(options => options.UseSqlServer(connectionString));
+            serviceCollection.AddDbContext<DemoCartDbContext>(options => options.UseSqlServer(connectionString));
 
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
             serviceCollection.AddTransient<ICustomerOrderBuilder, DemoCustomerOrderBuilder>();
+            serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
         {
+            //Customer
             AbstractTypeFactory<Contact>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<Member>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<MemberEntity>.OverrideType<ContactEntity, ContactDemoEntity>();
+
+            //Cart
+            AbstractTypeFactory<LineItem>.OverrideType<LineItem, DemoCartLineItem>().MapToType<DemoCartLineItemEntity>();
+            AbstractTypeFactory<LineItemEntity>.OverrideType<LineItemEntity, DemoCartLineItemEntity>();
 
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
@@ -63,10 +73,17 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             // Ensure that any pending migrations are applied
             using (var serviceScope = appBuilder.ApplicationServices.CreateScope())
-            using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<CustomerDemoDbContext>())
             {
-                dbContext.Database.EnsureCreated();
-                dbContext.Database.Migrate();
+                using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<CustomerDemoDbContext>())
+                {
+                    dbContext.Database.EnsureCreated();
+                    dbContext.Database.Migrate();
+                }
+                using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<DemoCartDbContext>())
+                {
+                    dbContext.Database.EnsureCreated();
+                    dbContext.Database.Migrate();
+                }
             }
         }
 
