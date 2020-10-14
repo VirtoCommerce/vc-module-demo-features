@@ -59,7 +59,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             // register invoicePaymentMethod
             var paymentMethodsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IPaymentMethodsRegistrar>();
             paymentMethodsRegistrar.RegisterPaymentMethod<DemoInvoicePaymentMethod>();
-            settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.General.AllSettings, nameof(DemoInvoicePaymentMethod));
+            settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.General.InvoicePaymentMethodSettings, nameof(DemoInvoicePaymentMethod));
+            paymentMethodsRegistrar.RegisterPaymentMethod<DemoCreditCardPaymentMethod>();
+            settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.General.CreditCardPaymentMethodSettings, nameof(DemoCreditCardPaymentMethod));
 
             // register permissions
             var permissionsProvider = appBuilder.ApplicationServices.GetRequiredService<IPermissionsRegistrar>();
