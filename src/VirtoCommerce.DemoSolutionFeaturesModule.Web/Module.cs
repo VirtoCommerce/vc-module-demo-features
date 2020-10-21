@@ -21,6 +21,7 @@ using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.CartModule.Core.Model;
 using VirtoCommerce.CartModule.Data.Model;
 using VirtoCommerce.CartModule.Data.Repositories;
+using VirtoCommerce.CartModule.Core.Services;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 {
@@ -39,6 +40,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
             serviceCollection.AddTransient<ICustomerOrderBuilder, DemoCustomerOrderBuilder>();
             serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
+            serviceCollection.AddTransient<IShoppingCartTotalsCalculator, DemoShoppingCartTotalsCalculator>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)

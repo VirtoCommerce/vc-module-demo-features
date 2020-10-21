@@ -13,6 +13,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 {
     public class DemoCartConfiguredGroupEntity : AuditableEntity
     {
+        public string ProductId { get; set; }
         public string ShoppingCartId { get; set; }
         public virtual DemoShoppingCartEntity ShoppingCart { get; set; }
         public virtual ObservableCollection<DemoCartLineItemConfiguredGroupEntity> ItemGroups { get; set; } = new NullCollection<DemoCartLineItemConfiguredGroupEntity>();
@@ -40,7 +41,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
         #region Taxation
 
-        public virtual ObservableCollection<TaxDetailExtendedEntity> TaxDetails { get; set; } = new NullCollection<TaxDetailExtendedEntity>();
+        public virtual ObservableCollection<DemoTaxDetailEntity> TaxDetails { get; set; } = new NullCollection<DemoTaxDetailEntity>();
+
+        #endregion
 
         public virtual DemoCartConfiguredGroup ToModel(DemoCartConfiguredGroup group)
         {
@@ -50,6 +53,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             }
 
             group.Id = Id;
+            group.ProductId = ProductId;
             group.CreatedDate = CreatedDate;
             group.CreatedBy = CreatedBy;
             group.ModifiedDate = ModifiedDate;
@@ -81,6 +85,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             pkMap.AddPair(group, this);
 
             Id = group.Id;
+            ProductId = group.ProductId;
             CreatedDate = group.CreatedDate;
             CreatedBy = group.CreatedBy;
             ModifiedDate = group.ModifiedDate;
@@ -101,10 +106,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
             if (group.TaxDetails != null)
             {
-                TaxDetails = new ObservableCollection<TaxDetailExtendedEntity>(
+                TaxDetails = new ObservableCollection<DemoTaxDetailEntity>(
                     group.TaxDetails.Select(x =>
-                                 AbstractTypeFactory<TaxDetailExtendedEntity>.TryCreateInstance().FromModel(x))
-                             .Cast<TaxDetailExtendedEntity>());
+                                 AbstractTypeFactory<DemoTaxDetailEntity>.TryCreateInstance().FromModel(x))
+                             .Cast<DemoTaxDetailEntity>());
             }
 
             return this;
@@ -112,6 +117,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
         public virtual void Patch(DemoCartConfiguredGroupEntity target)
         {
+            target.ProductId = ProductId;
             target.Quantity = Quantity;
             target.Currency = Currency;
             target.ListPrice = ListPrice;
@@ -129,7 +135,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
             if (!TaxDetails.IsNullCollection())
             {
-                var taxDetailComparer = AnonymousComparer.Create((TaxDetailExtendedEntity x) => x.Name);
+                var taxDetailComparer = AnonymousComparer.Create((DemoTaxDetailEntity x) => x.Name);
                 TaxDetails.Patch(target.TaxDetails, taxDetailComparer, (s, t) => s.Patch(t));
             }
         }

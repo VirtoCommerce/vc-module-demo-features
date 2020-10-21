@@ -10,37 +10,20 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
     public class DemoCartLineItemEntity : LineItemEntity
     {
         public virtual ObservableCollection<DemoCartLineItemConfiguredGroupEntity> ItemGroups { get; set; } = new NullCollection<DemoCartLineItemConfiguredGroupEntity>();
-
-        public override LineItem ToModel(LineItem lineItem)
-        {            
-            base.ToModel(lineItem);
-
-            if (lineItem is DemoCartLineItem item)
-            {
-                item.ConfiguredProductId = ConfiguredProductId;
-            }
-
-            return lineItem;
-        }
-
-        public override LineItemEntity FromModel(LineItem lineItem, PrimaryKeyResolvingMap pkMap)
-        {
-            if (lineItem is DemoCartLineItem item)
-            {
-                ConfiguredProductId = item.ConfiguredProductId;
-            }
-
-            return base.FromModel(lineItem, pkMap);
-        }
+      
 
         public override void Patch(LineItemEntity target)
         {
+            base.Patch(target);
+
             if (target is DemoCartLineItemEntity item)
             {
-                item.ConfiguredProductId = ConfiguredProductId;
-            }
-
-            base.Patch(target);
+                if (!ItemGroups.IsNullCollection())
+                {
+                    var itemGroupsComparer = AnonymousComparer.Create((DemoCartLineItemConfiguredGroupEntity x) => new { x.ItemId, x.GroupId });
+                    ItemGroups.Patch(item.ItemGroups, itemGroupsComparer, (s, t) => { });
+                }
+            }            
         }
     }
 }

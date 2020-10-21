@@ -8,6 +8,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
 {
     public class DemoCartConfiguredGroup: AuditableEntity
     {
+        public string ProductId { get; set; }
         public ICollection<string> ItemIds { get; set; }
         public int Quantity { get; set; }
 
