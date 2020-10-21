@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using VirtoCommerce.CartModule.Core.Model;
 using VirtoCommerce.CartModule.Data.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
@@ -13,14 +10,14 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
         public override void CalculateTotals(ShoppingCart cart)
         {
             base.CalculateTotals(cart);
-            CalculateConfiguredGroups(cart);            
+            CalculateConfiguredGroups(cart);
         }
 
         private static void CalculateConfiguredGroups(ShoppingCart cart)
         {
-            var cartExtended = (DemoShoppingCart)cart;            
-           
-            var configuredGroups = (cartExtended.ConfiguredGroups ?? Enumerable.Empty<DemoCartConfiguredGroup>()).ToArray();           
+            var cartExtended = (DemoShoppingCart)cart;
+
+            var configuredGroups = (cartExtended.ConfiguredGroups ?? Enumerable.Empty<DemoCartConfiguredGroup>()).ToArray();
 
             foreach (var configuredGroup in configuredGroups)
             {
@@ -33,7 +30,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
                 configuredGroup.PlacedPrice = configuredGroup.ListPrice;
                 configuredGroup.PlacedPriceWithTax = configuredGroup.ListPriceWithTax;
                 configuredGroup.ExtendedPrice = configuredGroup.PlacedPrice * configuredGroup.Quantity;
-                configuredGroup.ExtendedPriceWithTax = configuredGroup.PlacedPriceWithTax * configuredGroup.Quantity;                
+                configuredGroup.ExtendedPriceWithTax = configuredGroup.PlacedPriceWithTax * configuredGroup.Quantity;
 
                 configuredGroup.ExtendedPrice = lineItems.Sum(x => x.ExtendedPrice);
                 configuredGroup.TaxTotal = lineItems.Sum(x => x.TaxTotal);

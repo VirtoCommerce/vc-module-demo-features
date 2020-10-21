@@ -11,7 +11,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
         [StringLength(128)]
         public string Title { get; set; }
 
-
         public override Member ToModel(Member member)
         {
             base.ToModel(member);

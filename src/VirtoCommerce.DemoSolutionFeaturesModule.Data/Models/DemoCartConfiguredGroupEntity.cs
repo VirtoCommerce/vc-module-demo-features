@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
 using VirtoCommerce.CoreModule.Core.Tax;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
 using VirtoCommerce.Platform.Core.Common;
@@ -23,7 +21,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
         [Required]
         [StringLength(3)]
-        public string Currency { get; set; }       
+        public string Currency { get; set; }
 
         [Column(TypeName = "Money")]
         public decimal ListPrice { get; set; }
@@ -37,13 +35,13 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
         [Column(TypeName = "Money")]
         public decimal SalePriceWithTax { get; set; }
 
-        #endregion
+        #endregion Pricing
 
         #region Taxation
 
         public virtual ObservableCollection<DemoTaxDetailEntity> TaxDetails { get; set; } = new NullCollection<DemoTaxDetailEntity>();
 
-        #endregion
+        #endregion Taxation
 
         public virtual DemoCartConfiguredGroup ToModel(DemoCartConfiguredGroup group)
         {
@@ -70,7 +68,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             group.TaxDetails =
                TaxDetails.Select(x => x.ToModel(AbstractTypeFactory<TaxDetail>.TryCreateInstance()))
                          .ToList();
-
 
             return group;
         }
@@ -139,6 +136,5 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
                 TaxDetails.Patch(target.TaxDetails, taxDetailComparer, (s, t) => s.Patch(t));
             }
         }
-
     }
 }

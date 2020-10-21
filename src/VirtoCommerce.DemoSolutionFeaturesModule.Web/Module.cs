@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using VirtoCommerce.CartModule.Core.Model;
+using VirtoCommerce.CartModule.Core.Services;
+using VirtoCommerce.CartModule.Data.Model;
+using VirtoCommerce.CartModule.Data.Repositories;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
@@ -18,10 +22,6 @@ using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
-using VirtoCommerce.CartModule.Core.Model;
-using VirtoCommerce.CartModule.Data.Model;
-using VirtoCommerce.CartModule.Data.Repositories;
-using VirtoCommerce.CartModule.Core.Services;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 {
@@ -50,7 +50,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             AbstractTypeFactory<Member>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<MemberEntity>.OverrideType<ContactEntity, ContactDemoEntity>();
 
-            //Cart            
+            //Cart
             AbstractTypeFactory<LineItemEntity>.OverrideType<LineItemEntity, DemoCartLineItemEntity>();
             AbstractTypeFactory<DemoCartConfiguredGroup>.RegisterType<DemoCartConfiguredGroup>().MapToType<DemoCartConfiguredGroupEntity>();
             AbstractTypeFactory<DemoCartConfiguredGroupEntity>.RegisterType<DemoCartConfiguredGroupEntity>();
@@ -99,7 +99,5 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
         {
             // do nothing in here
         }
-
     }
-
 }

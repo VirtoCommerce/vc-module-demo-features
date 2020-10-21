@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using VirtoCommerce.CartModule.Data.Model;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
@@ -13,6 +10,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
         public DemoCartConfiguredGroupEntity ConfiguredGroup { get; set; }
 
-        #endregion
+        #endregion Navigation properties
     }
 }
