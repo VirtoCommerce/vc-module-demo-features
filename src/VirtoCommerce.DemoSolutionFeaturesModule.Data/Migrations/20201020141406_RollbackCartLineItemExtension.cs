@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 {
@@ -6,6 +6,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql("DELETE FROM [Cart]");
+
             migrationBuilder.DropColumn(
                 name: "Discriminator",
                 table: "CartLineItem");
