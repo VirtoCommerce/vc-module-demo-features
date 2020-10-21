@@ -14,12 +14,16 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ShoppingCartEntity>()
+               .HasDiscriminator()
+               .HasValue<DemoShoppingCartEntity>(nameof(DemoShoppingCartEntity));
+
             modelBuilder.Entity<DemoCartLineItemConfiguredGroupEntity>().ToTable("DemoCartLineItemConfiguredGroupEntity").HasKey(x => x.Id);
             modelBuilder.Entity<DemoCartLineItemConfiguredGroupEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<LineItemEntity>()
                 .HasDiscriminator()
-                .HasValue<DemoCartLineItemEntity>(nameof(DemoCartLineItemEntity));
+                .HasValue<DemoCartLineItemEntity>(nameof(DemoCartLineItemEntity));            
 
             modelBuilder.Entity<DemoCartLineItemEntity>()
                 .HasMany(x => x.ItemGroups).WithOne(x => x.Item).IsRequired().HasForeignKey(x => x.ItemId).OnDelete(DeleteBehavior.Cascade);
