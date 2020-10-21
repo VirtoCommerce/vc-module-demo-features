@@ -25,8 +25,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
                 .HasDiscriminator()
                 .HasValue<DemoCartLineItemEntity>(nameof(DemoCartLineItemEntity));            
 
-            modelBuilder.Entity<DemoCartLineItemEntity>()
-                .HasMany(x => x.ItemGroups).WithOne(x => x.Item).IsRequired().HasForeignKey(x => x.ItemId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<DemoCartLineItemEntity>().HasMany(x=>x.ItemGroups).WithOne().IsRequired().HasForeignKey(x => x.ItemId).OnDelete(DeleteBehavior.Cascade);            
 
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>().ToTable("DemoCartConfiguredGroupEntity").HasKey(x => x.Id);
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();

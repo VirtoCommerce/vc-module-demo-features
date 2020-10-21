@@ -9,7 +9,5 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
         public DemoCartConfiguredGroupEntity Group { get; set; }
 
         public string ItemId { get; set; }
-
-        public DemoCartLineItemEntity Item { get; set; }
     }
 }
