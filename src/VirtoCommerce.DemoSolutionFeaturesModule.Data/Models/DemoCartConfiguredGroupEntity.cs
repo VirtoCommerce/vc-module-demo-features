@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using VirtoCommerce.CoreModule.Core.Tax;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
 using VirtoCommerce.Platform.Core.Common;
 
@@ -37,12 +36,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
         #endregion Pricing
 
-        #region Taxation
-
-        public virtual ObservableCollection<DemoTaxDetailEntity> TaxDetails { get; set; } = new NullCollection<DemoTaxDetailEntity>();
-
-        #endregion Taxation
-
         public virtual DemoCartConfiguredGroup ToModel(DemoCartConfiguredGroup group)
         {
             if (group == null)
@@ -64,11 +57,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             group.SalePriceWithTax = SalePriceWithTax;
 
             group.ItemIds = ItemGroups.Select(x => x.ItemId).ToList();
-
-            group.TaxDetails =
-               TaxDetails.Select(x => x.ToModel(AbstractTypeFactory<TaxDetail>.TryCreateInstance()))
-                         .ToList();
-
+            
             return group;
         }
 
@@ -100,15 +89,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
                     new ObservableCollection<DemoCartLineItemConfiguredGroupEntity>(
                         group.ItemIds.Select(x => new DemoCartLineItemConfiguredGroupEntity { GroupId = Id, ItemId = x }));
             }
-
-            if (group.TaxDetails != null)
-            {
-                TaxDetails = new ObservableCollection<DemoTaxDetailEntity>(
-                    group.TaxDetails.Select(x =>
-                                 AbstractTypeFactory<DemoTaxDetailEntity>.TryCreateInstance().FromModel(x))
-                             .Cast<DemoTaxDetailEntity>());
-            }
-
+           
             return this;
         }
 
@@ -128,12 +109,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
                     AnonymousComparer.Create((DemoCartLineItemConfiguredGroupEntity x) => new { x.ItemId, x.GroupId });
 
                 ItemGroups.Patch(target.ItemGroups, itemGroupsComparer, (s, t) => { });
-            }
-
-            if (!TaxDetails.IsNullCollection())
-            {
-                var taxDetailComparer = AnonymousComparer.Create((DemoTaxDetailEntity x) => x.Name);
-                TaxDetails.Patch(target.TaxDetails, taxDetailComparer, (s, t) => s.Patch(t));
             }
         }
     }

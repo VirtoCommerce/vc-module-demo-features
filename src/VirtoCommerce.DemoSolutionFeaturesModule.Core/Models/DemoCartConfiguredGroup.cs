@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using VirtoCommerce.CoreModule.Core.Tax;
 using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
@@ -33,8 +32,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
 
         #region Taxation
 
-        public decimal TaxTotal { get; set; }
-        public ICollection<TaxDetail> TaxDetails { get; set; }
+        public decimal TaxTotal { get; set; }        
 
         #endregion Taxation
     }

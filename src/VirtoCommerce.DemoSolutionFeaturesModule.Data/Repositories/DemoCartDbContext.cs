@@ -24,18 +24,13 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
             modelBuilder.Entity<DemoCartLineItemEntity>()
                 .HasMany(x => x.ItemGroups).WithOne(x => x.Item).IsRequired().HasForeignKey(x => x.ItemId).OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<TaxDetailEntity>()
-                .HasDiscriminator()
-                .HasValue<DemoTaxDetailEntity>(nameof(DemoTaxDetailEntity));
-
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>().ToTable("DemoCartConfiguredGroupEntity").HasKey(x => x.Id);
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>();
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>()
                 .HasOne(x => x.ShoppingCart).WithMany(x => x.ConfiguredGroups).HasForeignKey(x => x.ShoppingCartId).IsRequired().OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>()
-                .HasMany(x => x.ItemGroups).WithOne(x => x.Group).HasForeignKey(x => x.GroupId).IsRequired().OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<DemoCartConfiguredGroupEntity>().HasMany(x => x.TaxDetails).WithOne(x => x.ConfiguredGroup).IsRequired(false).HasForeignKey(x => x.ConfiguredGroupId).OnDelete(DeleteBehavior.Cascade);
+                .HasMany(x => x.ItemGroups).WithOne(x => x.Group).HasForeignKey(x => x.GroupId).IsRequired().OnDelete(DeleteBehavior.Cascade);            
 
             base.OnModelCreating(modelBuilder);
         }
