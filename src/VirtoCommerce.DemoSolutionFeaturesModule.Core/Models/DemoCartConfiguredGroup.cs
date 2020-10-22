@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
 {
-    public class DemoCartConfiguredGroup : AuditableEntity
+    public class DemoCartConfiguredGroup : AuditableEntity, ICloneable
     {
         public string ProductId { get; set; }
         public ICollection<DemoCartLineItem> Items { get; set; }
@@ -33,6 +35,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
         #region Taxation
 
         public decimal TaxTotal { get; set; }
+
+        public object Clone()
+        {
+            var result = MemberwiseClone() as DemoCartConfiguredGroup;
+
+            result.Items = Items?.Select(x => x.Clone()).OfType<DemoCartLineItem>().ToList();
+
+            return result;
+        }
 
         #endregion Taxation
     }
