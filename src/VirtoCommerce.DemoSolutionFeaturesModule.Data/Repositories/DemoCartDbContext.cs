@@ -28,7 +28,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>()
                 .HasOne(x => x.ShoppingCart).WithMany(x => x.ConfiguredGroups).HasForeignKey(x => x.ShoppingCartId).IsRequired();
 
-            modelBuilder.Entity<DemoCartLineItemEntity>().HasOne(x => x.ConfiguredGroup).WithMany(x => x.Items).HasForeignKey(x => x.ConfiguredGroupId).IsRequired(false).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<DemoCartLineItemEntity>().HasOne(x => x.ConfiguredGroup).WithMany(x => x.Items).HasForeignKey(x => x.ConfiguredGroupId).IsRequired(false).OnDelete(DeleteBehavior.ClientCascade);
 
             base.OnModelCreating(modelBuilder);
         }
