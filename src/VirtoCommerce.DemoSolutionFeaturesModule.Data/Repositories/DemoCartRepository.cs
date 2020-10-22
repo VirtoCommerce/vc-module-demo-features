@@ -16,9 +16,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
         {
         }
 
-        public override Task<ShoppingCartEntity[]> GetShoppingCartsByIdsAsync(string[] ids, string responseGroup = null)
+        public override async Task<ShoppingCartEntity[]> GetShoppingCartsByIdsAsync(string[] ids, string responseGroup = null)
         {
-            var result = base.GetShoppingCartsByIdsAsync(ids, responseGroup);
+            var result = await base.GetShoppingCartsByIdsAsync(ids, responseGroup);
 
             ConfiguredGroups.Where(x => ids.Contains(x.ShoppingCartId)).Load();
 
