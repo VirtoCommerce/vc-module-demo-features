@@ -20,20 +20,24 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 
             modelBuilder.Entity<DemoCartLineItemConfiguredGroupEntity>().ToTable("DemoCartLineItemConfiguredGroupEntity").HasKey(x => x.Id);
             modelBuilder.Entity<DemoCartLineItemConfiguredGroupEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
+            modelBuilder.Entity<DemoCartLineItemConfiguredGroupEntity>().HasOne(x => x.Group).WithMany(x => x.ItemGroups).HasForeignKey(x => x.GroupId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<LineItemEntity>()
                 .HasDiscriminator()
                 .HasValue<DemoCartLineItemEntity>(nameof(DemoCartLineItemEntity));            
 
-            modelBuilder.Entity<DemoCartLineItemEntity>().HasMany(x=>x.ItemGroups).WithOne().IsRequired().HasForeignKey(x => x.ItemId).OnDelete(DeleteBehavior.Cascade);            
+            
 
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>().ToTable("DemoCartConfiguredGroupEntity").HasKey(x => x.Id);
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>();
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>()
-                .HasOne(x => x.ShoppingCart).WithMany(x => x.ConfiguredGroups).HasForeignKey(x => x.ShoppingCartId).IsRequired().OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<DemoCartConfiguredGroupEntity>()
-                .HasMany(x => x.ItemGroups).WithOne(x => x.Group).HasForeignKey(x => x.GroupId).IsRequired().OnDelete(DeleteBehavior.Cascade);            
+                .HasOne(x => x.ShoppingCart).WithMany(x => x.ConfiguredGroups).HasForeignKey(x => x.ShoppingCartId).IsRequired();
+
+            modelBuilder.Entity<DemoCartLineItemEntity>().HasMany(x => x.ItemGroups).WithOne().HasForeignKey(x => x.ItemId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+
+            //modelBuilder.Entity<DemoCartConfiguredGroupEntity>()
+            //    .HasMany(x => x.ItemGroups).WithOne(x => x.Group).HasForeignKey(x => x.GroupId).IsRequired().OnDelete(DeleteBehavior.Cascade);            
 
             base.OnModelCreating(modelBuilder);
         }
