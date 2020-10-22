@@ -6,7 +6,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
     public class DemoCartConfiguredGroup : AuditableEntity
     {
         public string ProductId { get; set; }
-        public ICollection<string> ItemIds { get; set; }
+        public ICollection<DemoCartLineItem> Items { get; set; }
         public int Quantity { get; set; }
 
         #region Pricing
@@ -32,7 +32,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
 
         #region Taxation
 
-        public decimal TaxTotal { get; set; }        
+        public decimal TaxTotal { get; set; }
 
         #endregion Taxation
     }

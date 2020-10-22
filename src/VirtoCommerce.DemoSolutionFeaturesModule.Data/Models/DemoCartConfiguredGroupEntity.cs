@@ -13,7 +13,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
         public string ProductId { get; set; }
         public string ShoppingCartId { get; set; }
         public virtual DemoShoppingCartEntity ShoppingCart { get; set; }
-        public virtual ObservableCollection<DemoCartLineItemConfiguredGroupEntity> ItemGroups { get; set; } = new NullCollection<DemoCartLineItemConfiguredGroupEntity>();
+        public virtual ObservableCollection<DemoCartLineItemEntity> Items { get; set; } = new NullCollection<DemoCartLineItemEntity>();
         public int Quantity { get; set; }
 
         #region Pricing
@@ -56,8 +56,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             group.SalePrice = SalePrice;
             group.SalePriceWithTax = SalePriceWithTax;
 
-            group.ItemIds = ItemGroups.Select(x => x.ItemId).ToList();
-            
+            group.Items = Items.Select(x => (DemoCartLineItem)x.ToModel(AbstractTypeFactory<DemoCartLineItem>.TryCreateInstance())).ToList();
+
             return group;
         }
 
@@ -83,13 +83,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             SalePrice = group.SalePrice;
             SalePriceWithTax = group.SalePriceWithTax;
 
-            if (group.ItemIds != null)
+            if (group.Items != null)
             {
-                ItemGroups =
-                    new ObservableCollection<DemoCartLineItemConfiguredGroupEntity>(
-                        group.ItemIds.Select(x => new DemoCartLineItemConfiguredGroupEntity { GroupId = Id, ItemId = x }));
+                Items = new ObservableCollection<DemoCartLineItemEntity>(group.Items.Select(x => (DemoCartLineItemEntity)AbstractTypeFactory<DemoCartLineItemEntity>.TryCreateInstance().FromModel(x, pkMap)));
             }
-           
+
             return this;
         }
 
@@ -103,12 +101,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             target.SalePrice = SalePrice;
             target.SalePriceWithTax = SalePriceWithTax;
 
-            if (!ItemGroups.IsNullCollection())
+            if (!Items.IsNullCollection())
             {
-                var itemGroupsComparer =
-                    AnonymousComparer.Create((DemoCartLineItemConfiguredGroupEntity x) => new { x.ItemId, x.GroupId });
-
-                ItemGroups.Patch(target.ItemGroups, itemGroupsComparer, (s, t) => { });
+                Items.Patch(target.Items, (sourceItem, targetItem) => sourceItem.Patch(targetItem));
             }
         }
     }
