@@ -18,9 +18,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
                .HasDiscriminator()
                .HasValue<DemoShoppingCartEntity>(nameof(DemoShoppingCartEntity));
 
-            modelBuilder.Entity<DemoCartLineItemConfiguredGroupEntity>().ToTable("DemoCartLineItemConfiguredGroupEntity").HasKey(x => x.Id);
+            modelBuilder.Entity<DemoCartLineItemConfiguredGroupEntity>().ToTable("DemoCartLineItemConfiguredGroup").HasKey(x => x.Id);
             modelBuilder.Entity<DemoCartLineItemConfiguredGroupEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
-            modelBuilder.Entity<DemoCartLineItemConfiguredGroupEntity>().HasOne(x => x.Group).WithMany(x => x.ItemGroups).HasForeignKey(x => x.GroupId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<DemoCartLineItemConfiguredGroupEntity>().HasOne(x => x.Group).WithMany(x => x.ItemGroups).HasForeignKey(x => x.GroupId).IsRequired().OnDelete(DeleteBehavior.Cascade);            
 
             modelBuilder.Entity<LineItemEntity>()
                 .HasDiscriminator()
@@ -28,7 +28,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 
             
 
-            modelBuilder.Entity<DemoCartConfiguredGroupEntity>().ToTable("DemoCartConfiguredGroupEntity").HasKey(x => x.Id);
+            modelBuilder.Entity<DemoCartConfiguredGroupEntity>().ToTable("DemoCartConfiguredGroup").HasKey(x => x.Id);
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>();
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>()
@@ -37,8 +37,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
             modelBuilder.Entity<DemoCartLineItemEntity>().HasMany(x => x.ItemGroups).WithOne().HasForeignKey(x => x.ItemId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             //modelBuilder.Entity<DemoCartConfiguredGroupEntity>()
-            //    .HasMany(x => x.ItemGroups).WithOne(x => x.Group).HasForeignKey(x => x.GroupId).IsRequired().OnDelete(DeleteBehavior.Cascade);            
-
+            //    .HasMany(x => x.ItemGroups).WithOne(x => x.Group).HasForeignKey(x => x.GroupId).IsRequired().OnDelete(DeleteBehavior.Cascade);
             base.OnModelCreating(modelBuilder);
         }
     }
