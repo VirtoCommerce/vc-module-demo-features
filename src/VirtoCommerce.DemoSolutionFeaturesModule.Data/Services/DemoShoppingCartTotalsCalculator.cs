@@ -21,7 +21,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
 
             foreach (var configuredGroup in configuredGroups)
             {
-                var lineItems = cartExtended.Items.Where(x=>configuredGroup.ItemIds.Contains(x.Id)).ToList();
+                var lineItems = cartExtended.Items.Where(x => configuredGroup.ItemIds.Contains(x.Id)).ToList();
                 // Quantity if line item in mixed tote = quantity of line item of single mixed tote * mixed tote quantity
                 configuredGroup.ListPrice = lineItems.Sum(x => x.PlacedPrice * (x.Quantity / configuredGroup.Quantity));
                 configuredGroup.ListPriceWithTax = lineItems.Sum(x => x.PlacedPriceWithTax * (x.Quantity / configuredGroup.Quantity));
