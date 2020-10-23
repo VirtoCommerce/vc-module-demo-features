@@ -61,21 +61,21 @@ jobs:
         uses: VirtoCommerce/vc-github-actions/sonar-scanner-end@master
 
       - name: Quality Gate
-        uses: VirtoCommerce/vc-github-actions/sonar-quality-gate@VP-5059
+        uses: VirtoCommerce/vc-github-actions/sonar-quality-gate@master
         with:
           login: ${{secrets.SONAR_TOKEN}}
-          projectKey: "VirtoCommerce_vc-module-demo-features"
 
       - name: Packaging
         run: vc-build Compress -skip Clean+Restore+Compile+Test
       
       - name: Publish Nuget
+        if: ${{ github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'}}
         uses: VirtoCommerce/vc-github-actions/publish-nuget@master
 
       - name: Publish to Blob
         if: ${{ github.ref == 'refs/heads/dev' }}
         id: blobRelease
-        uses: VirtoCommerce/vc-github-actions/publish-blob-release@VP-5059
+        uses: VirtoCommerce/vc-github-actions/publish-blob-release@master
         with:
           blobSAS: ${{ secrets.BLOB_TOKEN }}
         
@@ -83,16 +83,16 @@ jobs:
         if: ${{ github.ref == 'refs/heads/master' }}
         with:
           changelog: ${{ steps.changelog.outputs.changelog }}
-        uses: VirtoCommerce/vc-github-actions/publish-github-release@VP-5059
+        uses: VirtoCommerce/vc-github-actions/publish-github-release@master
 
-#      - name: Setup Git Credentials
-#        if: ${{ github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'}}
-#        uses: VirtoCommerce/vc-github-actions/setup-git-credentials-github@VP-5059
-#        with: 
-#          githubToken: ${{ secrets.REPO_TOKEN }}
+      - name: Setup Git Credentials
+        if: ${{ github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'}}
+        uses: VirtoCommerce/vc-github-actions/setup-git-credentials-github@master
+        with: 
+          githubToken: ${{ secrets.REPO_TOKEN }}
         
-#      - name: Publish Manifest
-#        if: ${{ github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'}}
-#        uses: VirtoCommerce/vc-github-actions/publish-manifest@VP-5059
-#        with:
-#          packageUrl: ${{ steps.blobRelease.outputs.packageUrl }}
+      - name: Publish Manifest
+        if: ${{ github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'}}
+        uses: VirtoCommerce/vc-github-actions/publish-manifest@master
+        with:
+          packageUrl: ${{ steps.blobRelease.outputs.packageUrl }}
