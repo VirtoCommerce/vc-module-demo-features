@@ -29,7 +29,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
             var cartExtended = (DemoShoppingCart)cart;
 
-            if (!cartExtended.ConfiguredGroups.IsNullOrEmpty())
+            if (cartExtended.ConfiguredGroups != null)
             {
                 ConfiguredGroups = new ObservableCollection<DemoCartConfiguredGroupEntity>(
                    cartExtended.ConfiguredGroups.Select(x => AbstractTypeFactory<DemoCartConfiguredGroupEntity>.TryCreateInstance().FromModel(x, pkMap)));
