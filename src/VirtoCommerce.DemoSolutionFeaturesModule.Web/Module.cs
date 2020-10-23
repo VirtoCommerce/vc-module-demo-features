@@ -50,7 +50,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             AbstractTypeFactory<Member>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<MemberEntity>.OverrideType<ContactEntity, ContactDemoEntity>();
 
-            //Cart            
+            //Cart
             AbstractTypeFactory<LineItem>.OverrideType<LineItem, DemoCartLineItem>().MapToType<DemoCartLineItemEntity>();
             AbstractTypeFactory<LineItemEntity>.OverrideType<LineItemEntity, DemoCartLineItemEntity>();
 

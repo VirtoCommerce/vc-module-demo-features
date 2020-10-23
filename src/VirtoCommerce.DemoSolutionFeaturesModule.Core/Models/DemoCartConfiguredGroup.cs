@@ -40,7 +40,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
         {
             var result = MemberwiseClone() as DemoCartConfiguredGroup;
 
-            result.ItemIds = ItemIds?.Select(x =>x.ToString()).ToList();
+            result.ItemIds = ItemIds?.Select(x => x.ToString()).ToList();
 
             return result;
         }
