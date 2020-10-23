@@ -83,13 +83,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             SalePrice = group.SalePrice;
             SalePriceWithTax = group.SalePriceWithTax;
 
-            if (!group.ItemIds.IsNullOrEmpty())
-            {
-                Items = new ObservableCollection<DemoCartLineItemEntity>(ShoppingCart.Items.OfType<DemoCartLineItemEntity>()
-                    .Where(x=>x.ConfiguredGroupId == Id)
-                    .Select(x => x));
-            }
-
             return this;
         }
 
