@@ -8,7 +8,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
     public class DemoCartConfiguredGroup : AuditableEntity, ICloneable
     {
         public string ProductId { get; set; }
-        public ICollection<DemoCartLineItem> Items { get; set; }
+        public ICollection<string> ItemIds { get; set; } = new List<string>();
         public int Quantity { get; set; }
 
         #region Pricing
@@ -40,7 +40,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
         {
             var result = MemberwiseClone() as DemoCartConfiguredGroup;
 
-            result.Items = Items?.Select(x => x.Clone()).OfType<DemoCartLineItem>().ToList();
+            result.ItemIds = ItemIds?.Select(x =>x.ToString()).ToList();
 
             return result;
         }
