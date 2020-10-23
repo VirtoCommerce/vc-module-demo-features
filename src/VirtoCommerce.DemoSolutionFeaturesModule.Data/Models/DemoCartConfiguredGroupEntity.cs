@@ -56,7 +56,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             group.SalePrice = SalePrice;
             group.SalePriceWithTax = SalePriceWithTax;
 
-            group.Items = Items.Select(x => (DemoCartLineItem)x.ToModel(AbstractTypeFactory<DemoCartLineItem>.TryCreateInstance())).ToList();
+            group.ItemIds = Items.Select(x => x.Id).ToList();
 
             return group;
         }
@@ -83,9 +83,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             SalePrice = group.SalePrice;
             SalePriceWithTax = group.SalePriceWithTax;
 
-            if (group.Items != null)
+            if (!group.ItemIds.IsNullOrEmpty())
             {
-                Items = new ObservableCollection<DemoCartLineItemEntity>(group.Items.Select(x => (DemoCartLineItemEntity)AbstractTypeFactory<DemoCartLineItemEntity>.TryCreateInstance().FromModel(x, pkMap)));
+                Items = new ObservableCollection<DemoCartLineItemEntity>(ShoppingCart.Items.OfType<DemoCartLineItemEntity>()
+                    .Where(x=>x.ConfiguredGroupId == Id)
+                    .Select(x => x));
             }
 
             return this;

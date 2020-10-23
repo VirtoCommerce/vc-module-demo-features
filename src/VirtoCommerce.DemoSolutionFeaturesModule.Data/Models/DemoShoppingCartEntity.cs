@@ -24,16 +24,18 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
         }
 
         public override ShoppingCartEntity FromModel(ShoppingCart cart, PrimaryKeyResolvingMap pkMap)
-        {           
+        {
+            base.FromModel(cart, pkMap);
+
             var cartExtended = (DemoShoppingCart)cart;
 
-            if (cartExtended.ConfiguredGroups != null)
+            if (!cartExtended.ConfiguredGroups.IsNullOrEmpty())
             {
                 ConfiguredGroups = new ObservableCollection<DemoCartConfiguredGroupEntity>(
                    cartExtended.ConfiguredGroups.Select(x => AbstractTypeFactory<DemoCartConfiguredGroupEntity>.TryCreateInstance().FromModel(x, pkMap)));
             }
 
-            return base.FromModel(cart, pkMap);
+            return this;
         }
 
         public override void Patch(ShoppingCartEntity target)
