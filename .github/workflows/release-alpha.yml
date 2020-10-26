@@ -3,8 +3,6 @@ name: Release alpha
 
 on:
   workflow_dispatch:
-  push:
-    
 
 jobs:
   ci:
