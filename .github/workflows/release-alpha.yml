@@ -1,5 +1,5 @@
 # v1
-name: Release alpha module
+name: Release alpha
 
 on:
   workflow_dispatch:
