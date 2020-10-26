@@ -53,4 +53,3 @@ jobs:
         uses: VirtoCommerce/vc-github-actions/publish-blob-release@VP-5059
         with:
           blobSAS: ${{ secrets.BLOB_TOKEN }}
-
