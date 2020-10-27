@@ -16,7 +16,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
         protected override CustomerOrder ConvertCartToOrder(ShoppingCart cart)
         {
             var cartExtended = (DemoShoppingCart) cart;
-            var orderExtended = (DemoCustomerOrder)base.ConvertCartToOrder(cart);
+            var orderExtended = (DemoCustomerOrder) base.ConvertCartToOrder(cart);
 
             orderExtended.Status = "Unpaid";
 
