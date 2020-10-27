@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using VirtoCommerce.CartModule.Core.Model;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
 using VirtoCommerce.OrdersModule.Core.Model;
 using VirtoCommerce.OrdersModule.Core.Services;
 using VirtoCommerce.OrdersModule.Data.Services;
-using VirtoCommerce.Platform.Core.Common;
-using LineItem = VirtoCommerce.OrdersModule.Core.Model.LineItem;
-using Shipment = VirtoCommerce.OrdersModule.Core.Model.Shipment;
-using ShipmentItem = VirtoCommerce.OrdersModule.Core.Model.ShipmentItem;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
 {
@@ -21,9 +15,27 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
 
         protected override CustomerOrder ConvertCartToOrder(ShoppingCart cart)
         {
-            var retVal = base.ConvertCartToOrder(cart);
-            retVal.Status = "Unpaid";
-            return retVal;
+            var cartExtended = (DemoShoppingCart) cart;
+            var orderExtended = (DemoCustomerOrder)base.ConvertCartToOrder(cart);
+
+            orderExtended.Status = "Unpaid";
+
+            orderExtended.ConfiguredGroups = cartExtended.ConfiguredGroups.Select(x => new DemoOrderConfiguredGroup
+            {
+                ProductId = x.ProductId,
+                ItemIds = x.ItemIds,
+                Quantity = x.Quantity,
+                Currency = x.Currency,
+                Price = x.ListPrice,
+                PriceWithTax = x.ListPriceWithTax,
+                PlacedPrice = x.PlacedPrice,
+                PlacedPriceWithTax = x.PlacedPriceWithTax,
+                ExtendedPrice = x.ExtendedPrice,
+                ExtendedPriceWithTax = x.ExtendedPriceWithTax,
+                TaxTotal = x.TaxTotal
+            }).ToList();
+
+            return orderExtended;
         }
     }
 }

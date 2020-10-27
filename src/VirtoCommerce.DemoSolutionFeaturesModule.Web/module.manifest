@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <id>VirtoCommerce.DemoSolutionFeaturesModule</id>
   <version>1.2.0</version>
@@ -8,13 +8,15 @@
   <description>Enter your module description here.</description>
   <authors>
     <author>Maksim Kopnov</author>
+    <author>Anton Veretennikov</author>
+    <author>Aleksandr Vishniakov</author>
   </authors>
   <owners>
     <owner />
   </owners>
   <requireLicenseAcceptance>false</requireLicenseAcceptance>
   <releaseNotes>First version.</releaseNotes>
-  <copyright>Copyright © 2020 . All rights reserved</copyright>
+  <copyright>Copyright © 2020 VirtoCommerce. All rights reserved</copyright>
   <tags>extension module</tags>
   <assemblyFile>VirtoCommerce.DemoSolutionFeaturesModule.Web.dll</assemblyFile>
   <moduleType>VirtoCommerce.DemoSolutionFeaturesModule.Web.Module, VirtoCommerce.DemoSolutionFeaturesModule.Web</moduleType>

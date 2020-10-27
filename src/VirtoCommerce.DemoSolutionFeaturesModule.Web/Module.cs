@@ -16,12 +16,20 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Data;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
+using VirtoCommerce.OrdersModule.Core.Model;
+using VirtoCommerce.OrdersModule.Core.Services;
+using VirtoCommerce.OrdersModule.Data.Model;
+using VirtoCommerce.OrdersModule.Data.Repositories;
 using VirtoCommerce.OrdersModule.Data.Services;
 using VirtoCommerce.PaymentModule.Core.Services;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
+using CartLineItem = VirtoCommerce.CartModule.Core.Model.LineItem;
+using CartLineItemEntity = VirtoCommerce.CartModule.Data.Model.LineItemEntity;
+using OrderLineItem = VirtoCommerce.OrdersModule.Core.Model.LineItem;
+using OrderLineItemEntity = VirtoCommerce.OrdersModule.Data.Model.LineItemEntity;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 {
@@ -36,11 +44,14 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             var connectionString = configuration.GetConnectionString("VirtoCommerce.VirtoCommerceDemoSolutionFeaturesModule") ?? configuration.GetConnectionString("VirtoCommerce");
             serviceCollection.AddDbContext<CustomerDemoDbContext>(options => options.UseSqlServer(connectionString));
             serviceCollection.AddDbContext<DemoCartDbContext>(options => options.UseSqlServer(connectionString));
+            serviceCollection.AddDbContext<DemoOrderDbContext>(options => options.UseSqlServer(connectionString));
 
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
-            serviceCollection.AddTransient<ICustomerOrderBuilder, DemoCustomerOrderBuilder>();
             serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
             serviceCollection.AddTransient<IShoppingCartTotalsCalculator, DemoShoppingCartTotalsCalculator>();
+            serviceCollection.AddTransient<IOrderRepository, DemoOrderRepository>();
+            serviceCollection.AddTransient<ICustomerOrderTotalsCalculator, DemoCustomerOrderTotalsCalculator>();
+            serviceCollection.AddTransient<ICustomerOrderBuilder, DemoCustomerOrderBuilder>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
@@ -51,14 +62,24 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             AbstractTypeFactory<MemberEntity>.OverrideType<ContactEntity, ContactDemoEntity>();
 
             //Cart
-            AbstractTypeFactory<LineItem>.OverrideType<LineItem, DemoCartLineItem>().MapToType<DemoCartLineItemEntity>();
-            AbstractTypeFactory<LineItemEntity>.OverrideType<LineItemEntity, DemoCartLineItemEntity>();
+            AbstractTypeFactory<CartLineItem>.OverrideType<CartLineItem, DemoCartLineItem>().MapToType<DemoCartLineItemEntity>();
+            AbstractTypeFactory<CartLineItemEntity>.OverrideType<CartLineItemEntity, DemoCartLineItemEntity>();
 
             AbstractTypeFactory<DemoCartConfiguredGroup>.RegisterType<DemoCartConfiguredGroup>().MapToType<DemoCartConfiguredGroupEntity>();
             AbstractTypeFactory<DemoCartConfiguredGroupEntity>.RegisterType<DemoCartConfiguredGroupEntity>();
 
             AbstractTypeFactory<ShoppingCart>.OverrideType<ShoppingCart, DemoShoppingCart>().MapToType<DemoShoppingCartEntity>();
             AbstractTypeFactory<ShoppingCartEntity>.OverrideType<ShoppingCartEntity, DemoShoppingCartEntity>();
+
+            //Order
+            AbstractTypeFactory<OrderLineItem>.OverrideType<OrderLineItem, DemoOrderLineItem>().MapToType<DemoOrderLineItemEntity>();
+            AbstractTypeFactory<OrderLineItemEntity>.OverrideType<OrderLineItemEntity, DemoOrderLineItemEntity>();
+
+            AbstractTypeFactory<DemoOrderConfiguredGroup>.RegisterType<DemoOrderConfiguredGroup>().MapToType<DemoOrderConfiguredGroupEntity>();
+            AbstractTypeFactory<DemoOrderConfiguredGroupEntity>.RegisterType<DemoOrderConfiguredGroupEntity>();
+
+            AbstractTypeFactory<CustomerOrder>.OverrideType<CustomerOrder, DemoCustomerOrder>().MapToType<DemoCustomerOrderEntity>();
+            AbstractTypeFactory<CustomerOrderEntity>.OverrideType<CustomerOrderEntity, DemoCustomerOrderEntity>();
 
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
