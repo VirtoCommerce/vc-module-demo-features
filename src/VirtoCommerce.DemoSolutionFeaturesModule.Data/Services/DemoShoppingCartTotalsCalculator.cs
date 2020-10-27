@@ -31,9 +31,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
                 configuredGroup.PlacedPriceWithTax = configuredGroup.ListPriceWithTax;
                 configuredGroup.ExtendedPrice = configuredGroup.PlacedPrice * configuredGroup.Quantity;
                 configuredGroup.ExtendedPriceWithTax = configuredGroup.PlacedPriceWithTax * configuredGroup.Quantity;
-                configuredGroup.ExtendedPrice = lineItems.Sum(x => x.ExtendedPrice);
                 configuredGroup.TaxTotal = lineItems.Sum(x => x.TaxTotal);
-                configuredGroup.ExtendedPriceWithTax = lineItems.Sum(x => x.ExtendedPriceWithTax);
             }
         }
     }
