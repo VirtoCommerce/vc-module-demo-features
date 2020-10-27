@@ -1,5 +1,5 @@
 # v1
-name: Release alpha module
+name: Release alpha
 
 on:
   workflow_dispatch:
@@ -53,4 +53,3 @@ jobs:
         uses: VirtoCommerce/vc-github-actions/publish-blob-release@VP-5059
         with:
           blobSAS: ${{ secrets.BLOB_TOKEN }}
-
