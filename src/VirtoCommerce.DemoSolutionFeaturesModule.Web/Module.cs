@@ -115,6 +115,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
                     dbContext.Database.EnsureCreated();
                     dbContext.Database.Migrate();
                 }
+                using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<DemoOrderDbContext>())
+                {
+                    dbContext.Database.EnsureCreated();
+                    dbContext.Database.Migrate();
+                }
             }
         }
 
