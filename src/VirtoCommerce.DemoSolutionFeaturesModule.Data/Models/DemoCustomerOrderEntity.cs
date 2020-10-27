@@ -11,9 +11,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
     {
         public virtual ObservableCollection<DemoOrderConfiguredGroupEntity> ConfiguredGroups { get; set; } = new NullCollection<DemoOrderConfiguredGroupEntity>();
 
-        public override OrderOperation ToModel(OrderOperation order)
+        public override OrderOperation ToModel(OrderOperation operation)
         {
-            var orderExtended = (DemoCustomerOrder)base.ToModel(order);
+            var orderExtended = (DemoCustomerOrder)base.ToModel(operation);
 
             orderExtended.ConfiguredGroups =
                 ConfiguredGroups
@@ -23,11 +23,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             return orderExtended;
         }
 
-        public override OperationEntity FromModel(OrderOperation order, PrimaryKeyResolvingMap pkMap)
+        public override OperationEntity FromModel(OrderOperation operation, PrimaryKeyResolvingMap pkMap)
         {
-            base.FromModel(order, pkMap);
+            base.FromModel(operation, pkMap);
 
-            var orderExtended = (DemoCustomerOrder)order;
+            var orderExtended = (DemoCustomerOrder)operation;
 
             if (orderExtended.ConfiguredGroups != null)
             {
@@ -38,15 +38,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             return this;
         }
 
-        public override void Patch(OperationEntity target)
+        public override void Patch(OperationEntity operation)
         {
-            base.Patch(target);
+            base.Patch(operation);
 
-            var targetOrder = (DemoCustomerOrderEntity)target;
+            var orderdExtended = (DemoCustomerOrderEntity)operation;
 
             if (!ConfiguredGroups.IsNullCollection())
             {
-                ConfiguredGroups.Patch(targetOrder.ConfiguredGroups, (s, t) => s.Patch(t));
+                ConfiguredGroups.Patch(orderdExtended.ConfiguredGroups, (s, t) => s.Patch(t));
             }
         }
     }
