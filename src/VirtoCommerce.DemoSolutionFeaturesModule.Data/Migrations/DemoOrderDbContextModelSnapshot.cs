@@ -213,7 +213,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("EmployeeId")
                         .HasColumnType("nvarchar(64)")
@@ -441,7 +442,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("FulfillmentLocationCode")
                         .HasColumnType("nvarchar(64)")

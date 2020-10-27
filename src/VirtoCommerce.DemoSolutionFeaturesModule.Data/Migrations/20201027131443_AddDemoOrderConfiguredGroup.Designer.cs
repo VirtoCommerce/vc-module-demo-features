@@ -10,7 +10,7 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 {
     [DbContext(typeof(DemoOrderDbContext))]
-    [Migration("20201027072407_AddDemoOrderConfiguredGroup")]
+    [Migration("20201027131443_AddDemoOrderConfiguredGroup")]
     partial class AddDemoOrderConfiguredGroup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -215,7 +215,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("EmployeeId")
                         .HasColumnType("nvarchar(64)")
@@ -443,7 +444,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("FulfillmentLocationCode")
                         .HasColumnType("nvarchar(64)")

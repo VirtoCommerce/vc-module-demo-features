@@ -16,12 +16,14 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "Discriminator",
                 table: "OrderLineItem",
+                maxLength: 128,
                 nullable: false,
                 defaultValue: "");
 
             migrationBuilder.AddColumn<string>(
                 name: "Discriminator",
                 table: "CustomerOrder",
+                maxLength: 128,
                 nullable: false,
                 defaultValue: "");
 
