@@ -15,7 +15,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
                 public const string Update = "virtoCommerceDemoSolutionFeaturesModule:update";
                 public const string Delete = "virtoCommerceDemoSolutionFeaturesModule:delete";
 
-                public static string[] AllPermissions => new [] { Read, Create, Access, Update, Delete };
+                public static string[] AllPermissions => new[] { Read, Create, Access, Update, Delete };
             }
         }
 
@@ -38,7 +38,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
                     ValueType = SettingValueType.ShortText,
                     DefaultValue = "",
                 };
-
 
                 public static IEnumerable<SettingDescriptor> InvoicePaymentMethodSettings
                 {

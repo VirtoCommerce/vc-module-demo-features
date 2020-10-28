@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 {
     [DbContext(typeof(DemoCartDbContext))]
-    partial class DemoCartDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201022101732_AddDemoCartConfiguredGroup")]
+    partial class AddDemoCartConfiguredGroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -469,7 +471,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 
                     b.Property<decimal?>("Width")
                         .HasColumnType("decimal(18,2)");
-
+                    
                     b.HasKey("Id");
 
                     b.HasIndex("ShoppingCartId");
@@ -765,7 +767,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128); ;
+                        .HasMaxLength(128);
 
                     b.Property<decimal>("Fee")
                         .HasColumnType("Money");

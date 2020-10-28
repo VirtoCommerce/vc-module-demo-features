@@ -13,10 +13,24 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        {            
+            modelBuilder.Entity<ShoppingCartEntity>()
+               .HasDiscriminator()
+               .HasValue<DemoShoppingCartEntity>(nameof(DemoShoppingCartEntity));
+            modelBuilder.Entity<ShoppingCartEntity>().Property("Discriminator").HasMaxLength(128);
+            
             modelBuilder.Entity<LineItemEntity>()
                 .HasDiscriminator()
                 .HasValue<DemoCartLineItemEntity>(nameof(DemoCartLineItemEntity));
+            modelBuilder.Entity<LineItemEntity>().Property("Discriminator").HasMaxLength(128);
+
+            modelBuilder.Entity<DemoCartConfiguredGroupEntity>().ToTable("DemoCartConfiguredGroup").HasKey(x => x.Id);
+            modelBuilder.Entity<DemoCartConfiguredGroupEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
+            modelBuilder.Entity<DemoCartConfiguredGroupEntity>();
+            modelBuilder.Entity<DemoCartConfiguredGroupEntity>()
+                .HasOne(x => x.ShoppingCart).WithMany(x => x.ConfiguredGroups).HasForeignKey(x => x.ShoppingCartId).IsRequired();
+
+            modelBuilder.Entity<DemoCartLineItemEntity>().HasOne(x => x.ConfiguredGroup).WithMany(x => x.Items).HasForeignKey(x => x.ConfiguredGroupId).IsRequired(false).OnDelete(DeleteBehavior.ClientCascade);
 
             base.OnModelCreating(modelBuilder);
         }

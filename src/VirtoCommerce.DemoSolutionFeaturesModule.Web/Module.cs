@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using VirtoCommerce.CartModule.Core.Model;
+using VirtoCommerce.CartModule.Core.Services;
+using VirtoCommerce.CartModule.Data.Model;
+using VirtoCommerce.CartModule.Data.Repositories;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
@@ -18,9 +22,6 @@ using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
-using VirtoCommerce.CartModule.Core.Model;
-using VirtoCommerce.CartModule.Data.Model;
-using VirtoCommerce.CartModule.Data.Repositories;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 {
@@ -39,6 +40,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
             serviceCollection.AddTransient<ICustomerOrderBuilder, DemoCustomerOrderBuilder>();
             serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
+            serviceCollection.AddTransient<IShoppingCartTotalsCalculator, DemoShoppingCartTotalsCalculator>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
@@ -51,6 +53,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             //Cart
             AbstractTypeFactory<LineItem>.OverrideType<LineItem, DemoCartLineItem>().MapToType<DemoCartLineItemEntity>();
             AbstractTypeFactory<LineItemEntity>.OverrideType<LineItemEntity, DemoCartLineItemEntity>();
+
+            AbstractTypeFactory<DemoCartConfiguredGroup>.RegisterType<DemoCartConfiguredGroup>().MapToType<DemoCartConfiguredGroupEntity>();
+            AbstractTypeFactory<DemoCartConfiguredGroupEntity>.RegisterType<DemoCartConfiguredGroupEntity>();
+
+            AbstractTypeFactory<ShoppingCart>.OverrideType<ShoppingCart, DemoShoppingCart>().MapToType<DemoShoppingCartEntity>();
+            AbstractTypeFactory<ShoppingCartEntity>.OverrideType<ShoppingCartEntity, DemoShoppingCartEntity>();
 
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
@@ -93,7 +101,5 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
         {
             // do nothing in here
         }
-
     }
-
 }
