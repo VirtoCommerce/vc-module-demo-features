@@ -10,6 +10,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "Discriminator",
                 table: "CartLineItem",
+                maxLength: 128,
                 nullable: false,
                 defaultValue: "DemoCartLineItemEntity");
 
@@ -22,6 +23,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "Discriminator",
                 table: "Cart",
+                maxLength: 128,
                 nullable: false,
                 defaultValue: "DemoShoppingCartEntity");
 

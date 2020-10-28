@@ -13,16 +13,16 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ShoppingCartEntity>().Property("Discriminator").HasMaxLength(128);
+        {            
             modelBuilder.Entity<ShoppingCartEntity>()
                .HasDiscriminator()
                .HasValue<DemoShoppingCartEntity>(nameof(DemoShoppingCartEntity));
-
-            modelBuilder.Entity<LineItemEntity>().Property("Discriminator").HasMaxLength(128);
+            modelBuilder.Entity<ShoppingCartEntity>().Property("Discriminator").HasMaxLength(128);
+            
             modelBuilder.Entity<LineItemEntity>()
                 .HasDiscriminator()
                 .HasValue<DemoCartLineItemEntity>(nameof(DemoCartLineItemEntity));
+            modelBuilder.Entity<LineItemEntity>().Property("Discriminator").HasMaxLength(128);
 
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>().ToTable("DemoCartConfiguredGroup").HasKey(x => x.Id);
             modelBuilder.Entity<DemoCartConfiguredGroupEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
