@@ -6,6 +6,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql("DELETE FROM [CartDynamicPropertyObjectValue]");
+            migrationBuilder.Sql("DELETE FROM [CartAddress]");
+            migrationBuilder.Sql("DELETE FROM [CartDiscount]");
             migrationBuilder.Sql("DELETE FROM [Cart]");
 
             migrationBuilder.DropColumn(

@@ -15,7 +15,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
 
         private static void CalculateConfiguredGroups(ShoppingCart cart)
         {
-            var cartExtended = (DemoShoppingCart)cart;
+            var cartExtended = (DemoShoppingCart) cart;
 
             var configuredGroups = (cartExtended.ConfiguredGroups ?? Enumerable.Empty<DemoCartConfiguredGroup>()).ToArray();
 
