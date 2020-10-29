@@ -13,7 +13,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
         public override ShoppingCart ToModel(ShoppingCart cart)
         {
-            var cartExtended = (DemoShoppingCart)base.ToModel(cart);
+            var cartExtended = (DemoShoppingCart) base.ToModel(cart);
 
             cartExtended.ConfiguredGroups =
                 ConfiguredGroups
@@ -27,7 +27,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
         {
             base.FromModel(cart, pkMap);
 
-            var cartExtended = (DemoShoppingCart)cart;
+            var cartExtended = (DemoShoppingCart) cart;
 
             if (cartExtended.ConfiguredGroups != null)
             {
@@ -42,7 +42,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
         {
             base.Patch(target);
 
-            var targetCart = (DemoShoppingCartEntity)target;
+            var targetCart = (DemoShoppingCartEntity) target;
 
             if (!ConfiguredGroups.IsNullCollection())
             {

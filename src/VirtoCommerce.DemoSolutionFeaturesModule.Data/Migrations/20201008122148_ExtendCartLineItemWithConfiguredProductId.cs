@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore.Migrations;
-using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 {
