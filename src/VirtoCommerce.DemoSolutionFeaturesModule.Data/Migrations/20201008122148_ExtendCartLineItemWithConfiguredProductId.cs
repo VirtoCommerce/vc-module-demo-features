@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore.Migrations;
-using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 {
@@ -11,7 +10,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
                 name: "Discriminator",
                 table: "CartLineItem",
                 nullable: false,
-                defaultValue: nameof(DemoCartLineItemEntity));
+                defaultValue: "DemoCartLineItemEntity");
 
             migrationBuilder.AddColumn<string>(
                 name: "ConfiguredProductId",

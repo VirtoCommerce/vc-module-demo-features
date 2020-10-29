@@ -1,26 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <id>VirtoCommerce.DemoSolutionFeaturesModule</id>
-  <version>1.2.0</version>
+  <version>1.3.0</version>
   <version-tag />
   <platformVersion>3.0.0</platformVersion>
   <title>VirtoCommerce.DemoSolutionFeaturesModule</title>
   <description>Enter your module description here.</description>
   <authors>
     <author>Maksim Kopnov</author>
+    <author>Anton Veretennikov</author>
+    <author>Aleksandr Vishniakov</author>
   </authors>
   <owners>
     <owner />
   </owners>
   <requireLicenseAcceptance>false</requireLicenseAcceptance>
   <releaseNotes>First version.</releaseNotes>
-  <copyright>Copyright © 2020 . All rights reserved</copyright>
+  <copyright>Copyright © 2020 VirtoCommerce. All rights reserved</copyright>
   <tags>extension module</tags>
   <assemblyFile>VirtoCommerce.DemoSolutionFeaturesModule.Web.dll</assemblyFile>
   <moduleType>VirtoCommerce.DemoSolutionFeaturesModule.Web.Module, VirtoCommerce.DemoSolutionFeaturesModule.Web</moduleType>
   <dependencies>
     <dependency id="VirtoCommerce.Customer" version="3.9.0" />
-    <dependency id="VirtoCommerce.Orders" version="3.9.0" />
+    <dependency id="VirtoCommerce.Orders" version="3.11.0" />
     <dependency id="VirtoCommerce.Payment" version="3.2.0" />
     <dependency id="VirtoCommerce.Cart" version="3.7.0" />
   </dependencies>

@@ -1,25 +1,25 @@
 using System.ComponentModel.DataAnnotations;
-using VirtoCommerce.CartModule.Core.Model;
-using VirtoCommerce.CartModule.Data.Model;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
+using VirtoCommerce.OrdersModule.Core.Model;
+using VirtoCommerce.OrdersModule.Data.Model;
 using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 {
-    public class DemoCartLineItemEntity : LineItemEntity
+    public class DemoOrderLineItemEntity: LineItemEntity
     {
         [StringLength(128)]
         public string ConfiguredGroupId { get; set; }
 
-        public DemoCartConfiguredGroupEntity ConfiguredGroup { get; set; }
+        public DemoOrderConfiguredGroupEntity ConfiguredGroup { get; set; }
 
         public override LineItem ToModel(LineItem lineItem)
         {
             base.ToModel(lineItem);
 
-            if (lineItem is DemoCartLineItem demoCartLineItem)
+            if (lineItem is DemoOrderLineItem demoOrderLineItem)
             {
-                demoCartLineItem.ConfiguredGroupId = ConfiguredGroupId;
+                demoOrderLineItem.ConfiguredGroupId = ConfiguredGroupId;
             }
 
             return lineItem;
@@ -27,9 +27,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
         public override LineItemEntity FromModel(LineItem lineItem, PrimaryKeyResolvingMap pkMap)
         {
-            if (lineItem is DemoCartLineItem demoCartLineItem)
+            if (lineItem is DemoOrderLineItem demoOrderLineItem)
             {
-                ConfiguredGroupId = demoCartLineItem.ConfiguredGroupId;
+                ConfiguredGroupId = demoOrderLineItem.ConfiguredGroupId;
             }
 
             return base.FromModel(lineItem, pkMap);
@@ -39,9 +39,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
         {
             base.Patch(target);
 
-            if (target is DemoCartLineItemEntity demoCartLineItem)
+            if (target is DemoOrderLineItemEntity demoOrderLineItem)
             {
-                demoCartLineItem.ConfiguredGroupId = ConfiguredGroupId;
+                demoOrderLineItem.ConfiguredGroupId = ConfiguredGroupId;
             }
         }
     }
