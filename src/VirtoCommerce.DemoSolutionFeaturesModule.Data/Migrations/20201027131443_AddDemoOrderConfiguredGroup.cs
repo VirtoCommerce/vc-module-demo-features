@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
@@ -18,14 +18,14 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
                 table: "OrderLineItem",
                 maxLength: 128,
                 nullable: false,
-                defaultValue: "");
+                defaultValue: "DemoOrderLineItemEntity");
 
             migrationBuilder.AddColumn<string>(
                 name: "Discriminator",
                 table: "CustomerOrder",
                 maxLength: 128,
                 nullable: false,
-                defaultValue: "");
+                defaultValue: "DemoCustomerOrderEntity");
 
             migrationBuilder.CreateTable(
                 name: "DemoOrderConfiguredGroup",
