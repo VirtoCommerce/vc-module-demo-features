@@ -1,0 +1,7 @@
+Add-Migration MigrationName -Context VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories.DemoCartDbContext -Verbose -OutputDir Migrations -Project VirtoCommerce.DemoSolutionFeaturesModule.Data -StartupProject VirtoCommerce.DemoSolutionFeaturesModule.Data -Debug
+Update-Database MigrationName -Context VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories.DemoCartDbContext -Project VirtoCommerce.DemoSolutionFeaturesModule.Data -StartupProject VirtoCommerce.DemoSolutionFeaturesModule.Data -Debug
+Remove-Migration -Context VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories.DemoCartDbContext -Verbose -Project VirtoCommerce.DemoSolutionFeaturesModule.Data -StartupProject VirtoCommerce.DemoSolutionFeaturesModule.Data -Debug
+
+Add-Migration MigrationName -Context VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories.DemoOrderDbContext -Verbose -OutputDir Migrations -Project VirtoCommerce.DemoSolutionFeaturesModule.Data -StartupProject VirtoCommerce.DemoSolutionFeaturesModule.Data -Debug
+Update-Database MigrationName -Context VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories.DemoOrderDbContext -Project VirtoCommerce.DemoSolutionFeaturesModule.Data -StartupProject VirtoCommerce.DemoSolutionFeaturesModule.Data -Debug
+Remove-Migration -Context VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories.DemoOrderDbContext -Verbose -Project VirtoCommerce.DemoSolutionFeaturesModule.Data -StartupProject VirtoCommerce.DemoSolutionFeaturesModule.Data -Debug
