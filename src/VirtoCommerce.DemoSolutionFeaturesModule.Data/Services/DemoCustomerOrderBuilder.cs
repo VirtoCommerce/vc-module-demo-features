@@ -4,6 +4,7 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
 using VirtoCommerce.OrdersModule.Core.Model;
 using VirtoCommerce.OrdersModule.Core.Services;
 using VirtoCommerce.OrdersModule.Data.Services;
+using LineItem = VirtoCommerce.OrdersModule.Core.Model.LineItem;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
 {
@@ -22,6 +23,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
 
             orderExtended.ConfiguredGroups = cartExtended.ConfiguredGroups.Select(x => new DemoOrderConfiguredGroup
             {
+                Id = x.Id,
                 ProductId = x.ProductId,
                 ItemIds = x.ItemIds,
                 Quantity = x.Quantity,
@@ -36,6 +38,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
             }).ToList();
 
             return orderExtended;
+        }
+
+        protected override LineItem ToOrderModel(CartModule.Core.Model.LineItem lineItem)
+        {
+            var cartLineItem = (DemoCartLineItem)lineItem;
+            var orderLineItem = (DemoOrderLineItem)base.ToOrderModel(lineItem);
+            orderLineItem.Id = cartLineItem.Id;
+            orderLineItem.ConfiguredGroupId = cartLineItem.ConfiguredGroupId;
+            return orderLineItem;
         }
     }
 }
