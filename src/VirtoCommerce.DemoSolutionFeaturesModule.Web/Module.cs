@@ -78,7 +78,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             AbstractTypeFactory<DemoOrderConfiguredGroup>.RegisterType<DemoOrderConfiguredGroup>().MapToType<DemoOrderConfiguredGroupEntity>();
             AbstractTypeFactory<DemoOrderConfiguredGroupEntity>.RegisterType<DemoOrderConfiguredGroupEntity>();
 
-            AbstractTypeFactory<CustomerOrder>.OverrideType<CustomerOrder, DemoCustomerOrder>().MapToType<DemoCustomerOrderEntity>();
+            AbstractTypeFactory<CustomerOrder>.OverrideType<CustomerOrder, DemoCustomerOrder>()
+                .MapToType<DemoCustomerOrderEntity>()
+                .WithFactory(() => new DemoCustomerOrder { OperationType = "CustomerOrder" });
             AbstractTypeFactory<CustomerOrderEntity>.OverrideType<CustomerOrderEntity, DemoCustomerOrderEntity>();
 
             // register settings
