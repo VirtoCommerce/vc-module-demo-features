@@ -7,6 +7,7 @@ using VirtoCommerce.CartModule.Core.Model;
 using VirtoCommerce.CartModule.Core.Services;
 using VirtoCommerce.CartModule.Data.Model;
 using VirtoCommerce.CartModule.Data.Repositories;
+using VirtoCommerce.CoreModule.Core.Conditions;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
@@ -16,6 +17,7 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Data;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
+using VirtoCommerce.MarketingModule.Core.Model.Promotions;
 using VirtoCommerce.OrdersModule.Core.Model;
 using VirtoCommerce.OrdersModule.Core.Services;
 using VirtoCommerce.OrdersModule.Data.Model;
@@ -82,6 +84,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
                 .MapToType<DemoCustomerOrderEntity>()
                 .WithFactory(() => new DemoCustomerOrder { OperationType = "CustomerOrder" });
             AbstractTypeFactory<CustomerOrderEntity>.OverrideType<CustomerOrderEntity, DemoCustomerOrderEntity>();
+
+            //Marketing
+            AbstractTypeFactory<PromotionConditionAndRewardTreePrototype>.OverrideType<PromotionConditionAndRewardTreePrototype, DemoPromotionConditionAndRewardTreePrototype>();
+            // Implicitly register conditions because of bug in Marketing module
+            AbstractTypeFactory<IConditionTree>.RegisterType<DemoBlockCustomerSegmentCondition>();
+            AbstractTypeFactory<IConditionTree>.RegisterType<DemoCustomerSegmentCondition>();
 
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();

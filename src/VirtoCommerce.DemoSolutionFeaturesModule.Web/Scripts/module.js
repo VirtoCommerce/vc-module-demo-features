@@ -26,8 +26,8 @@ angular.module(moduleName, [])
                 });
         }
     ])
-    .run(['platformWebApp.mainMenuService', 'platformWebApp.widgetService', '$state',
-        function (mainMenuService, widgetService, $state) {
+    .run(['platformWebApp.mainMenuService', 'virtoCommerce.coreModule.common.dynamicExpressionService', '$http', '$state', '$compile',
+        function (mainMenuService, dynamicExpressionService, $http, $state, $compile) {
             //Register module in main menu
             var menuItem = {
                 path: 'browse/virtoCommerce.demoSolutionFeaturesModule',
@@ -38,5 +38,22 @@ angular.module(moduleName, [])
                 permission: 'virtoCommerceDemoSolutionFeaturesModule:access'
             };
             mainMenuService.addMenuItem(menuItem);
+
+            //Register Customer Segments expressions
+            dynamicExpressionService.registerExpression({
+                id: 'DemoBlockCustomerSegmentCondition',
+                newChildLabel: '+ add segment',
+                getValidationError: function () {
+                    return (this.children && this.children.length) ? undefined : 'Promotion requires at least one eligibility';
+                }
+            });
+            dynamicExpressionService.registerExpression({
+                id: 'DemoCustomerSegmentCondition',
+                displayName: 'Segment is []'
+            });
+            $http.get('Modules/$(virtoCommerce.demoSolutionFeaturesModule)/Scripts/dynamicConditions/all-templates.html').then(function (response) {
+                // compile the response, which will put stuff into the cache
+                $compile(response.data);
+            });
         }
     ]);
