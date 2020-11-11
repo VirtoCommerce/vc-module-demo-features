@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
 {
-    [Route("")]
     public class DemoSolutionFeaturesModuleController : Controller
     {
-        // GET: api/stores/url/{storeName}
         /// <summary>
         /// Get store URL
         /// </summary>
