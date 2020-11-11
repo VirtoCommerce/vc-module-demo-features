@@ -12,7 +12,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         [Route("/api/stores/url/{storeName}")]
         public ActionResult<string> Get([FromRoute] string storeName)
         {
-            var storeUrl = Environment.GetEnvironmentVariable($"VC_STORE_URL_{storeName}");
+            var storeUrl = Environment.GetEnvironmentVariable($"VC_STORE_URL_{storeName}".ToUpperInvariant());
 
             if (storeUrl != null)
             {
