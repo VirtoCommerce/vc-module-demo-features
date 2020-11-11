@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
@@ -10,6 +11,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         /// </summary>
         [HttpGet]
         [Route("/api/stores/url/{storeName}")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
         public ActionResult<string> Get([FromRoute] string storeName)
         {
             var storeUrl = Environment.GetEnvironmentVariable($"VC_STORE_URL_{storeName}".ToUpperInvariant());
