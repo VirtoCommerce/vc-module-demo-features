@@ -1,4 +1,4 @@
-# v1
+# v1.1.vc-module-demo-features
 name: Module CI
 
 on:
@@ -75,12 +75,12 @@ jobs:
       - name: Packaging
         run: vc-build Compress -skip Clean+Restore+Compile+Test
       
-      - name: Publish Nuget
-        if: ${{ github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'}}
-        uses: VirtoCommerce/vc-github-actions/publish-nuget@master
+#      - name: Publish Nuget
+#        if: ${{ github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'}}
+#        uses: VirtoCommerce/vc-github-actions/publish-nuget@master
 
       - name: Publish to Blob
-        if: ${{ github.ref == 'refs/heads/dev' }}
+        if: ${{ github.ref == 'refs/heads/dev' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master')}}
         id: blobRelease
         uses: VirtoCommerce/vc-github-actions/publish-blob-release@master
         with:
@@ -91,15 +91,3 @@ jobs:
         with:
           changelog: ${{ steps.changelog.outputs.changelog }}
         uses: VirtoCommerce/vc-github-actions/publish-github-release@master
-
-      - name: Setup Git Credentials
-        if: ${{ github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'}}
-        uses: VirtoCommerce/vc-github-actions/setup-git-credentials-github@master
-        with: 
-          githubToken: ${{ secrets.REPO_TOKEN }}
-        
-      - name: Publish Manifest
-        if: ${{ github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'}}
-        uses: VirtoCommerce/vc-github-actions/publish-manifest@master
-        with:
-          packageUrl: ${{ steps.blobRelease.outputs.packageUrl }}
