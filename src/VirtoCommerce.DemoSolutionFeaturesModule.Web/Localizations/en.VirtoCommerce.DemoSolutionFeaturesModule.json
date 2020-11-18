@@ -1,8 +1,13 @@
 {
-  "virtoCommerce.demoSolutionFeaturesModule": {
+  "demoSolutionFeaturesModule": {
     "blades": {
-      "hello-world": {
-        "title": "Hello world blade"
+      "customer-segments-detail": {
+        "segment-name": "Segment name",
+        "segment-description": "Description",
+        "main-parameters": "Main parameters",
+        "main-parameters-description": "0 of 8 properties filled",
+        "segment-rule": "Segment rule",
+        "segment-rule-description": "17 customers in the current filter"
       }
     }
   },
