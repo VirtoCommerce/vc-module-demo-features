@@ -15,17 +15,14 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
     [Route("/api/demo/customersegments")]
     public class DemoCustomerSegmentController: Controller
     {
-        private readonly IAuthorizationService _authorizationService;
         private readonly IDemoCustomerSegmentService _customerSegmentService;
         private readonly IDemoCustomerSegmentSearchService _customerSegmentSearchService;
         private readonly IDemoCustomerSegmentConditionEvaluator _customerSegmentConditionEvaluator;
 
-        public DemoCustomerSegmentController(IAuthorizationService authorizationService,
-            IDemoCustomerSegmentService customerSegmentService,
+        public DemoCustomerSegmentController(IDemoCustomerSegmentService customerSegmentService,
             IDemoCustomerSegmentSearchService customerSegmentSearchService,
             IDemoCustomerSegmentConditionEvaluator customerSegmentConditionEvaluator)
         {
-            _authorizationService = authorizationService;
             _customerSegmentService = customerSegmentService;
             _customerSegmentSearchService = customerSegmentSearchService;
             _customerSegmentConditionEvaluator = customerSegmentConditionEvaluator;
