@@ -22,12 +22,12 @@
 
                 <div class="form-group">
                     <ul class="list __items">
-                        <li class="list-item">
+                        <li class="list-item" ng-class="{'__selected': blade.activeBladeId === 'mainParameters'}" ng-click="mainParameters()">
                             <i class="list-ico fa fa-cogs"></i>
                             <span class="list-t">{{ 'demoSolutionFeaturesModule.blades.customer-segments-detail.main-parameters' | translate }}</span>
-                            <span class="list-descr">{{ 'demoSolutionFeaturesModule.blades.customer-segments-detail.main-parameters-description' | translate }}</span>
+                            <span class="list-descr">{{ 'demoSolutionFeaturesModule.blades.customer-segments-detail.main-parameters-description' | translate: {count: filledPropertiesCount, total: totalPropertiesCount} }}</span>
                         </li>
-                        <li class="list-item">
+                        <li class="list-item" ng-class="{'__disabled': blade.currentEntity.storeIds == null}">
                             <i class="list-ico fa fa-cogs"></i>
                             <span class="list-t">{{ 'demoSolutionFeaturesModule.blades.customer-segments-detail.segment-rule' | translate }}</span>
                             <span class="list-descr">{{ 'demoSolutionFeaturesModule.blades.customer-segments-detail.segment-rule-description' | translate }}</span>
