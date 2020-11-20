@@ -1,5 +1,5 @@
 angular.module('virtoCommerce.demoSolutionFeaturesModule')
-    .controller('virtoCommerce.demoSolutionFeaturesModule.customerSegmentsParametersController', ['$scope', 'platformWebApp.bladeNavigationService', 'virtoCommerce.storeModule.stores', function ($scope, bladeNavigationService, stores) {
+    .controller('virtoCommerce.demoSolutionFeaturesModule.customerSegmentsParametersController', ['$scope', 'platformWebApp.bladeNavigationService', 'virtoCommerce.storeModule.stores', function ($scope, bladeNavigationService, storeService) {
         var blade = $scope.blade;
         blade.isLoading = true;
         var formScope;
@@ -12,7 +12,7 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
         blade.currentEntity = {};
 
         blade.refresh = (parentRefresh) => {
-            stores.query({}, response => {
+            storeService.query({}, response => {
                 $scope.stores = response;
                 if (parentRefresh) {
                     blade.parentBlade.refresh();
