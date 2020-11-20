@@ -35,9 +35,10 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
 
             $scope.$watch('blade.currentEntity', (data) => {
                 if (data) {
-                    $scope.totalPropertiesCount = 3;
+                    $scope.totalPropertiesCount = 4;
                     $scope.filledPropertiesCount = 0;
 
+                    $scope.filledPropertiesCount += blade.currentEntity.isActive ? 1 : 0;
                     $scope.filledPropertiesCount += blade.currentEntity.startDate ? 1 : 0;
                     $scope.filledPropertiesCount += blade.currentEntity.endDate ? 1 : 0;
                     $scope.filledPropertiesCount += blade.currentEntity.storeIds ? 1 : 0;
