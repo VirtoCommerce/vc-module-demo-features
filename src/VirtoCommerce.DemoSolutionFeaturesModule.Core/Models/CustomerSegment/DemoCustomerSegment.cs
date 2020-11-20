@@ -6,6 +6,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
 {
     public class DemoCustomerSegment: AuditableEntity
     {
+        public DemoCustomerSegment()
+        {
+            StoreIds = new List<string>();
+        }
+
         public string Name { get; set; }
 
         public string Description { get; set; }

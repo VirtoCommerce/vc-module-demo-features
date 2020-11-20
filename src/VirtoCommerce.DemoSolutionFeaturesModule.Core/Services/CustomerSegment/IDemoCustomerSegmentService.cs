@@ -5,10 +5,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Services
 {
     public interface IDemoCustomerSegmentService
     {
-        public Task<DemoCustomerSegment[]> GetByIdsAsync(string[] ids);
+        Task<DemoCustomerSegment[]> GetByIdsAsync(string[] ids);
 
-        public Task SaveChangesAsync(DemoCustomerSegment[] customerSegments);
+        Task SaveChangesAsync(DemoCustomerSegment[] customerSegments);
 
-        public Task DeleteAsync(string[] ids);
+        Task DeleteAsync(string[] ids);
     }
 }

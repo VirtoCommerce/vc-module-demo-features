@@ -5,6 +5,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Services
 {
     public interface IDemoCustomerSegmentConditionEvaluator
     {
-        public Task<string[]> EvaluateCustomerSegmentConditionAsync(DemoCustomerSegmentConditionEvaluationRequest conditionRequest);
+        Task<string[]> EvaluateCustomerSegmentConditionAsync(DemoCustomerSegmentConditionEvaluationRequest conditionRequest);
     }
 }

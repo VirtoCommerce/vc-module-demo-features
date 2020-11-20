@@ -4,9 +4,10 @@ using VirtoCommerce.Platform.Core.Events;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Events
 {
-    public class DemoCustomerSegmentChangingEvent: GenericChangedEntryEvent<DemoCustomerSegment>
+    public class DemoCustomerSegmentChangingEvent : GenericChangedEntryEvent<DemoCustomerSegment>
     {
-        public DemoCustomerSegmentChangingEvent(IEnumerable<GenericChangedEntry<DemoCustomerSegment>> changedEntries) : base(changedEntries)
+        public DemoCustomerSegmentChangingEvent(IEnumerable<GenericChangedEntry<DemoCustomerSegment>> changedEntries)
+            : base(changedEntries)
         {
         }
     }

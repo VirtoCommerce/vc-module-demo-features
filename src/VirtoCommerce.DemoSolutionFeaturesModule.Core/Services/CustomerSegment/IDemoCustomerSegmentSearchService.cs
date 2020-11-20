@@ -5,6 +5,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Services
 {
     public interface IDemoCustomerSegmentSearchService
     {
-        public Task<DemoCustomerSegmentSearchResult> SearchCustomerSegmentsAsync(DemoCustomerSegmentSearchCriteria criteria);
+        Task<DemoCustomerSegmentSearchResult> SearchCustomerSegmentsAsync(DemoCustomerSegmentSearchCriteria criteria);
     }
 }

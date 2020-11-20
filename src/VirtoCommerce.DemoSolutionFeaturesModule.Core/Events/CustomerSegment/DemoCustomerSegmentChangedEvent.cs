@@ -6,8 +6,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Events
 {
     public class DemoCustomerSegmentChangedEvent : GenericChangedEntryEvent<DemoCustomerSegment>
     {
-        public DemoCustomerSegmentChangedEvent(IEnumerable<GenericChangedEntry<DemoCustomerSegment>> changedEntries) :
-            base(changedEntries)
+        public DemoCustomerSegmentChangedEvent(IEnumerable<GenericChangedEntry<DemoCustomerSegment>> changedEntries)
+            : base(changedEntries)
         {
         }
     }
