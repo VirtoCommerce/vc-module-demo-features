@@ -43,6 +43,10 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
         $scope.saveChanges = function() {
             blade.parentBlade.activeBladeId = null;
 
+            if (blade.currentEntity.isActive === undefined) {
+                blade.currentEntity.isActive = false;
+            }
+
             if (blade.onSelected) {
                 blade.onSelected(blade.currentEntity);
                 bladeNavigationService.closeBlade(blade);

@@ -38,7 +38,7 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
                     $scope.totalPropertiesCount = 4;
                     $scope.filledPropertiesCount = 0;
 
-                    $scope.filledPropertiesCount += blade.currentEntity.isActive ? 1 : 0;
+                    $scope.filledPropertiesCount += blade.currentEntity.isActive !== undefined ? 1 : 0;
                     $scope.filledPropertiesCount += blade.currentEntity.startDate ? 1 : 0;
                     $scope.filledPropertiesCount += blade.currentEntity.endDate ? 1 : 0;
                     $scope.filledPropertiesCount += blade.currentEntity.storeIds ? 1 : 0;
