@@ -5,9 +5,28 @@
         "segment-name": "Segment name",
         "segment-description": "Description",
         "main-parameters": "Main parameters",
-        "main-parameters-description": "0 of 8 properties filled",
+        "main-parameters-description": "{{count}} of {{total}} properties filled",
         "segment-rule": "Segment rule",
         "segment-rule-description": "17 customers in the current filter"
+      },
+      "customer-segments-parameters": {
+        "title": "Main parameters",
+        "subtitle": "Customer rule based segment",
+        "labels": {
+          "is-active": "Is Active",
+          "start-date": "Start date",
+          "expiration-date": "Expiration date",
+          "store": "Stores"
+        },
+        "descriptions": {
+          "is-active": "Flag controls Active/Inactive the rule",
+          "store": "Stores in which this segment will be active"
+        },
+        "placeholders": {
+          "start-date": "Please choose date...",
+          "expiration-date": "Please choose date...",
+          "store": "Please select store..."
+        }
       }
     }
   },
