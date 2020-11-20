@@ -5,7 +5,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
 {
     public class DemoCustomerSegmentConditionEvaluationRequest
     {
-        public IDictionary<string, string[]> PropertyValues { get; set; }
+        public IDictionary<string, string[]> Properties { get; set; }
 
         public string Sort { get; set; }
 
