@@ -64,6 +64,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddTransient<Func<IDemoCustomerSegmentRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IDemoCustomerSegmentRepository>());
             serviceCollection.AddTransient<IDemoCustomerSegmentService, DemoCustomerSegmentService>();
             serviceCollection.AddTransient<IDemoCustomerSegmentSearchService, DemoCustomerSegmentSearchService>();
+            serviceCollection.AddTransient<IDemoCustomerSegmentSearchRequestBuilder, DemoCustomerSegmentSearchRequestBuilder>();
             serviceCollection.AddTransient<IDemoCustomerSegmentConditionEvaluator, DemoCustomerSegmentConditionEvaluator>();
             // cart
             serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
