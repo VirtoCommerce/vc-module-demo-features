@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.CustomerSegment;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Search;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services;
 using VirtoCommerce.Platform.Core.Common;
@@ -123,6 +125,30 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
 
             var result = await _customerSegmentConditionEvaluator.EvaluateCustomerSegmentConditionAsync(conditionRequest);
 
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Get customer properties info
+        /// </summary>        
+        [HttpGet]
+        [Route("customer/properties")]
+        [Authorize(ModuleConstants.Security.Permissions.Read)]
+        public ActionResult<ICollection<DemoCustomerProperty>> GetCustomerProperties()
+        {
+            var result = new List<DemoCustomerProperty>();
+
+            result.Add(new DemoCustomerProperty("firstname"));
+            result.Add(new DemoCustomerProperty("lastname"));
+            result.Add(new DemoCustomerProperty("fullname"));
+            result.Add(new DemoCustomerProperty("salutation"));
+            result.Add(new DemoCustomerProperty("salutation"));
+            result.Add(new DemoCustomerProperty("birthdate") { ValueType = "DateTime" });
+            result.Add(new DemoCustomerProperty("emails"));
+            result.Add(new DemoCustomerProperty("preferredcommunication"));
+            result.Add(new DemoCustomerProperty("preferreddelivery"));
+            result.Add(new DemoCustomerProperty("taxpayerid"));
+                      
             return Ok(result);
         }
 
