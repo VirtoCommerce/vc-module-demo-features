@@ -8,10 +8,13 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
         public DemoCustomerSegmentConditionEvaluationRequest()
         {
             Properties = new Dictionary<string, string[]>();
+            StoreIds = new List<string>();
             SortInfos = new List<SortInfo>();
         }
 
         public IDictionary<string, string[]> Properties { get; set; }
+
+        public IList<string> StoreIds { get; set; }
 
         public string Sort { get; set; }
 
