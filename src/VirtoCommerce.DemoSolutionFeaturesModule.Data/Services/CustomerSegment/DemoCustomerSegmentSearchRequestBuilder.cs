@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.SearchModule.Core.Model;
 
@@ -36,6 +37,20 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.CustomerSegment
                         Values = propertyValue.Value
                     });
                 }
+            }
+
+            return this;
+        }
+
+        public virtual IDemoCustomerSegmentSearchRequestBuilder WithStores(IList<string> storeIds)
+        {
+            if (!storeIds.IsNullOrEmpty())
+            {
+                ((AndFilter)_searchRequest.Filter).ChildFilters.Add(new TermFilter
+                {
+                    FieldName = "stores",
+                    Values = storeIds
+                });
             }
 
             return this;

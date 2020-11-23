@@ -14,12 +14,14 @@ using VirtoCommerce.CoreModule.Core.Conditions;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
+using VirtoCommerce.CustomerModule.Data.Search.Indexing;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Search.Indexing;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.CustomerSegment;
 using VirtoCommerce.DemoSolutionFeaturesModule.Web.JsonConverters;
@@ -59,6 +61,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             // customer
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
+            serviceCollection.AddSingleton<MemberDocumentBuilder, DemoMemberDocumentBuilder>();
             // customer segments
             serviceCollection.AddTransient<IDemoCustomerSegmentRepository, DemoCustomerSegmentRepository>();
             serviceCollection.AddTransient<Func<IDemoCustomerSegmentRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IDemoCustomerSegmentRepository>());
