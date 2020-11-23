@@ -12,7 +12,7 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
             blade.activeBladeId = null;
 
             $scope.canSave = () => {
-                return formScope && formScope.$valid;
+                return false;
             };
 
             $scope.setForm = (form) => { formScope = form };
