@@ -33,6 +33,21 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
                 bladeNavigationService.showBlade(parametersBlade, blade);
             };
 
+            $scope.createCustomerFilter = function () {
+                var ruleCreationBlade = {
+                    id: "createCustomerSegmentRule",
+                    controller: 'virtoCommerce.demoSolutionFeaturesModule.ruleCreationController',
+                    title: 'demoSolutionFeaturesModule.blades.customer-segments-rule-creation.title',
+                    subtitle: 'demoSolutionFeaturesModule.blades.customer-segments-rule-creation.subtitle',
+                    template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/rule-creation.tpl.html',
+                    // onSelected: function (editedProperties) {
+                    // TODO: save the rule
+                    // }
+                };
+                blade.activeBladeId = ruleCreationBlade.id;
+                bladeNavigationService.showBlade(ruleCreationBlade, blade);
+            };
+
             $scope.$watch('blade.currentEntity', (data) => {
                 if (data) {
                     $scope.totalPropertiesCount = 4;
