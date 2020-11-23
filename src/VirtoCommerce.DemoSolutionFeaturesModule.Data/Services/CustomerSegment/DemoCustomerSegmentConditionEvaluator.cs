@@ -25,8 +25,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.CustomerSegment
         {
             _requestBuilder
                 .AddPropertySearch(conditionRequest.Properties)
-                .AddSortInfo(conditionRequest.SortInfos)
                 .WithStores(conditionRequest.StoreIds)
+                .AddSortInfo(conditionRequest.SortInfos)
                 .WithPaging(conditionRequest.Skip, conditionRequest.Take);
 
             var searchResult = await _searchProvider.SearchAsync(KnownDocumentTypes.Member, _requestBuilder.Build());

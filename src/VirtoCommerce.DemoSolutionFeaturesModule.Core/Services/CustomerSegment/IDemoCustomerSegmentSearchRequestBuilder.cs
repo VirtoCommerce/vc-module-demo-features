@@ -8,8 +8,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Services
     {
         SearchRequest Build();
         IDemoCustomerSegmentSearchRequestBuilder AddPropertySearch(IDictionary<string, string[]> propertyValues);
-        IDemoCustomerSegmentSearchRequestBuilder AddSortInfo(IList<SortInfo> sortInfos);
         IDemoCustomerSegmentSearchRequestBuilder WithStores(IList<string> storeIds);
+        IDemoCustomerSegmentSearchRequestBuilder AddSortInfo(IList<SortInfo> sortInfos);
         IDemoCustomerSegmentSearchRequestBuilder WithPaging(int skip, int take);
     }
 }
