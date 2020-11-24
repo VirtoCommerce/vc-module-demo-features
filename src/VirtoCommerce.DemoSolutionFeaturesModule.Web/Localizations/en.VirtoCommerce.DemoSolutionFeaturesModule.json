@@ -36,7 +36,8 @@
         "select-properties-blade-title": "Select properties for filtering",
         "set-value-to-properties": "Set value to selected properties",
         "set-value-to-properties-description": "{{count}} customers in the current filter",
-        "customer-properties": "Customer properties:"
+        "customer-properties": "Customer properties:",
+        "confirm": "Confirm"
       }
     }
   },
