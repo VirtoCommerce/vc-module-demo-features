@@ -3,7 +3,6 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
         ['$scope', 'platformWebApp.bladeNavigationService', function ($scope, bladeNavigationService) {
             const blade = $scope.blade;
             blade.headIcon = 'fa-pie-chart';
-            var formScope;
 
             blade.currentEntity = {};
 
@@ -14,8 +13,6 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
             $scope.canSave = () => {
                 return false;
             };
-
-            $scope.setForm = (form) => { formScope = form };
 
             $scope.mainParameters = function () {
                 const parametersBlade = {
