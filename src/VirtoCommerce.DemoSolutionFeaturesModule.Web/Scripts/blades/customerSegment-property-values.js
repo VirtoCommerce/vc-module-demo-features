@@ -1,5 +1,5 @@
 angular.module('virtoCommerce.demoSolutionFeaturesModule')
-.controller('virtoCommerce.demoSolutionFeaturesModule.propertyValuesController', ['$scope', 'platformWebApp.bladeNavigationService', 'platformWebApp.dynamicProperties.dictionaryItemsApi', function ($scope, bladeNavigationService, dictionaryItemsApi) {
+.controller('virtoCommerce.demoSolutionFeaturesModule.customerSegmentPropertyValuesController', ['$scope', 'platformWebApp.bladeNavigationService', 'platformWebApp.dynamicProperties.dictionaryItemsApi', function ($scope, bladeNavigationService, dictionaryItemsApi) {
     var blade = $scope.blade;
     blade.toolbarCommands = [
         {
