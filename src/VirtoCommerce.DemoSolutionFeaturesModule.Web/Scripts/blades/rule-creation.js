@@ -58,18 +58,7 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
                     },
                     toolbarCommands: [
                         {
-                            name: "platform.commands.preview", icon: 'fa fa-eye',
-                            // TODO: Preview functionality - not implemented
-                            // executeMethod: (pickingBlade) => {
-                            //     var viewerBlade = {
-                            //         id: 'propertiesSelector',
-                            //         controller: 'virtoCommerce.demoSolutionFeaturesModule.dynamicAssociationViewerController',
-                            //         template: 'Modules/$(virtoCommerce.demoSolutionFeaturesModule)/Scripts/blades/dynamicAssociation-viewer.tpl.html',
-                            //         properties: pickingBlade.currentEntities
-                            //     };
-                            //     bladeNavigationService.showBlade(viewerBlade, pickingBlade);
-                            // },
-                            //canExecuteMethod: () => true
+                            name: "platform.commands.preview", icon: 'fa fa-eye'
                         }]
                 };
                 blade.activeBladeId = newBlade.id;

@@ -40,9 +40,6 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
                     title: 'demoSolutionFeaturesModule.blades.customer-segments-rule-creation.title',
                     subtitle: 'demoSolutionFeaturesModule.blades.customer-segments-rule-creation.subtitle',
                     template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/rule-creation.tpl.html',
-                    // onSelected: function (editedProperties) {
-                    // TODO: save the rule
-                    // }
                 };
                 blade.activeBladeId = ruleCreationBlade.id;
                 bladeNavigationService.showBlade(ruleCreationBlade, blade);
