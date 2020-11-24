@@ -55,11 +55,7 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
                     entities: blade.editedProperties,
                     onSelected: function (editedProps) {
                         blade.editedProperties = editedProps;
-                    },
-                    toolbarCommands: [
-                        {
-                            name: "platform.commands.preview", icon: 'fa fa-eye'
-                        }]
+                    }
                 };
                 blade.activeBladeId = newBlade.id;
                 bladeNavigationService.showBlade(newBlade, blade);
