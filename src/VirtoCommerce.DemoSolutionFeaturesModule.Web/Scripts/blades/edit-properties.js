@@ -1,9 +1,6 @@
 angular.module('virtoCommerce.demoSolutionFeaturesModule')
 .controller('virtoCommerce.demoSolutionFeaturesModule.editPropertiesController', ['$scope', 'platformWebApp.bladeNavigationService', 'platformWebApp.dynamicProperties.dictionaryItemsApi', function ($scope, bladeNavigationService, dictionaryItemsApi) {
     var blade = $scope.blade;
-    var formScope;
-
-    $scope.setForm = function (form) { formScope = form; };
 
     blade.refresh = function () {
         blade.currentEntities = angular.copy(blade.entities);
