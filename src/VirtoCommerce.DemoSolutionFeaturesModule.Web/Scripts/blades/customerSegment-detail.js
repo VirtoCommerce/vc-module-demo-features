@@ -23,7 +23,7 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
                     title: "demoSolutionFeaturesModule.blades.customer-segments-parameters.title",
                     subtitle: 'demoSolutionFeaturesModule.blades.customer-segments-parameters.subtitle',
                     controller: 'virtoCommerce.demoSolutionFeaturesModule.customerSegmentsParametersController',
-                    template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/mainParameters.tpl.html',
+                    template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegment-main-parameters.tpl.html',
                     originalEntity: blade.currentEntity,
                     onSelected: function (entity) {
                         blade.currentEntity = entity;
@@ -39,7 +39,7 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
                     controller: 'virtoCommerce.demoSolutionFeaturesModule.ruleCreationController',
                     title: 'demoSolutionFeaturesModule.blades.customer-segments-rule-creation.title',
                     subtitle: 'demoSolutionFeaturesModule.blades.customer-segments-rule-creation.subtitle',
-                    template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/rule-creation.tpl.html',
+                    template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegment-rule.tpl.html',
                 };
                 blade.activeBladeId = ruleCreationBlade.id;
                 bladeNavigationService.showBlade(ruleCreationBlade, blade);

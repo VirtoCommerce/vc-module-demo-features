@@ -14,7 +14,7 @@ angular.module(moduleName, [])
                 entityName: 'customerSegment',
                 icon: 'fa fa-pie-chart',
                 controller: 'virtoCommerce.demoSolutionFeaturesModule.customerSegmentsDetailController',
-                template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegments-detail.tpl.html'
+                template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegment-detail.tpl.html'
         });
         }
     ]);
