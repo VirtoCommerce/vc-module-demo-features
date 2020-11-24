@@ -25,7 +25,7 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
                     });
 
                 blade.isLoading = false;
-            };
+            }
 
             $scope.selectProperties = function () {
                 var newBlade = {
