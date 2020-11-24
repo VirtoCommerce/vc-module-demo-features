@@ -19,7 +19,7 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
                     id: "mainParameters",
                     title: "demoSolutionFeaturesModule.blades.customer-segments-parameters.title",
                     subtitle: 'demoSolutionFeaturesModule.blades.customer-segments-parameters.subtitle',
-                    controller: 'virtoCommerce.demoSolutionFeaturesModule.customerSegmentsParametersController',
+                    controller: 'virtoCommerce.demoSolutionFeaturesModule.customerSegmentsMainParametersController',
                     template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegment-main-parameters.tpl.html',
                     originalEntity: blade.currentEntity,
                     onSelected: function (entity) {
@@ -33,7 +33,7 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
             $scope.createCustomerFilter = function () {
                 var ruleCreationBlade = {
                     id: "createCustomerSegmentRule",
-                    controller: 'virtoCommerce.demoSolutionFeaturesModule.ruleCreationController',
+                    controller: 'virtoCommerce.demoSolutionFeaturesModule.ruleController',
                     title: 'demoSolutionFeaturesModule.blades.customer-segments-rule-creation.title',
                     subtitle: 'demoSolutionFeaturesModule.blades.customer-segments-rule-creation.subtitle',
                     template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegment-rule.tpl.html',

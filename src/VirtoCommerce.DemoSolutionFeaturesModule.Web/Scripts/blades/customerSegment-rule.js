@@ -1,5 +1,5 @@
 angular.module('virtoCommerce.demoSolutionFeaturesModule')
-    .controller('virtoCommerce.demoSolutionFeaturesModule.ruleCreationController', [
+    .controller('virtoCommerce.demoSolutionFeaturesModule.ruleController', [
         '$scope',
         'platformWebApp.bladeNavigationService',
         'platformWebApp.dynamicProperties.api',
@@ -31,7 +31,7 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
                 var newBlade = {
                     id: 'propertiesSelector',
                     title: 'demoSolutionFeaturesModule.blades.customer-segments-rule-creation.select-properties-blade-title',
-                    controller: 'virtoCommerce.demoSolutionFeaturesModule.selectPropertiesController',
+                    controller: 'virtoCommerce.demoSolutionFeaturesModule.propertiesController',
                     template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegment-properties.tpl.html',
                     properties: allProperties,
                     includedProperties: blade.editedProperties,
@@ -50,7 +50,7 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
                     id: 'propertiesEditor',
                     title: 'demoSolutionFeaturesModule.blades.customer-segments-rule-creation.select-properties-blade-title',
                     headIcon: 'fa-pie-chart',
-                    controller: 'virtoCommerce.demoSolutionFeaturesModule.editPropertiesController',
+                    controller: 'virtoCommerce.demoSolutionFeaturesModule.propertyValuesController',
                     template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegment-property-values.tpl.html',
                     entities: blade.editedProperties,
                     onSelected: function (editedProps) {
