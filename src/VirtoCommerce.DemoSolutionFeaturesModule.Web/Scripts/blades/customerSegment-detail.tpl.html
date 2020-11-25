@@ -5,7 +5,7 @@
     <div class="blade-inner">
         <div class="inner-block">
             <form class="form" name="formScope">
-                <fieldset ng-init="setForm(formScope)">
+                <fieldset>
                     <div class="form-group __info list">
                         <label class="form-label">{{ 'demoSolutionFeaturesModule.blades.customer-segments-detail.segment-name' | translate }}</label>
                         <div class="form-input">
@@ -27,10 +27,9 @@
                             <span class="list-t">{{ 'demoSolutionFeaturesModule.blades.customer-segments-detail.main-parameters' | translate }}</span>
                             <span class="list-descr">{{ 'demoSolutionFeaturesModule.blades.customer-segments-detail.main-parameters-description' | translate: {count: filledPropertiesCount, total: totalPropertiesCount} }}</span>
                         </li>
-                        <li class="list-item" ng-class="{'__disabled': blade.currentEntity.storeIds == null}">
+                        <li class="list-item" ng-class="{'__selected': blade.activeBladeId === 'createCustomerSegmentRule', '__disabled': blade.currentEntity.storeIds == null}" ng-click="createCustomerFilter()">
                             <i class="list-ico fa fa-cogs" aria-hidden="true"></i>
                             <span class="list-t">{{ 'demoSolutionFeaturesModule.blades.customer-segments-detail.segment-rule' | translate }}</span>
-                            <span class="list-descr">{{ 'demoSolutionFeaturesModule.blades.customer-segments-detail.segment-rule-description' | translate }}</span>
                         </li>
                     </ul>
                 </div>

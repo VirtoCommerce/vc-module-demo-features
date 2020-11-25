@@ -27,6 +27,17 @@
           "expiration-date": "Please choose date...",
           "store": "Please select store..."
         }
+      },
+      "customer-segments-rule-creation": {
+        "title": "Segment rule",
+        "subtitle": "Build a filter for segment rule",
+        "select-properties": "Select properties",
+        "select-properties-description": "{{count}} of {{total}} selected",
+        "select-properties-blade-title": "Select properties for filtering",
+        "set-value-to-properties": "Set value to selected properties",
+        "set-value-to-properties-description": "{{count}} customers in the current filter",
+        "customer-properties": "Customer properties:",
+        "confirm": "Confirm"
       }
     }
   },
