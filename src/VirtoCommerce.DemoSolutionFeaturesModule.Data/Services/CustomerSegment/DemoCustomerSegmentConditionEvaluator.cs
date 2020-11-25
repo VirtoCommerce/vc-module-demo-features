@@ -24,6 +24,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.CustomerSegment
         public async Task<string[]> EvaluateCustomerSegmentConditionAsync(DemoCustomerSegmentConditionEvaluationRequest conditionRequest)
         {
             _requestBuilder
+                .AddKeywordSearch(conditionRequest.Keyword)
                 .AddPropertySearch(conditionRequest.Properties)
                 .WithStores(conditionRequest.StoreIds)
                 .AddSortInfo(conditionRequest.SortInfos)

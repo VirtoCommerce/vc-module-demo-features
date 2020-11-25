@@ -1,7 +1,7 @@
 {
   "demoSolutionFeaturesModule": {
     "blades": {
-      "customer-segments-detail": {
+      "customer-segment-detail": {
         "segment-name": "Segment name",
         "segment-description": "Description",
         "main-parameters": "Main parameters",
@@ -9,7 +9,7 @@
         "segment-rule": "Segment rule",
         "segment-rule-description": "17 customers in the current filter"
       },
-      "customer-segments-parameters": {
+      "customer-segment-parameters": {
         "title": "Main parameters",
         "subtitle": "Customer rule based segment",
         "labels": {
@@ -28,7 +28,7 @@
           "store": "Please select store..."
         }
       },
-      "customer-segments-rule-creation": {
+      "customer-segment-rule-creation": {
         "title": "Segment rule",
         "subtitle": "Build a filter for segment rule",
         "select-properties": "Select properties",
@@ -38,6 +38,13 @@
         "set-value-to-properties-description": "{{count}} customers in the current filter",
         "customer-properties": "Customer properties:",
         "confirm": "Confirm"
+      },
+      "customer-segment-preview": {
+        "title": "Organization & contacts",
+        "labels": {
+          "type": "Type",
+          "name": "Name"
+        }
       }
     }
   },

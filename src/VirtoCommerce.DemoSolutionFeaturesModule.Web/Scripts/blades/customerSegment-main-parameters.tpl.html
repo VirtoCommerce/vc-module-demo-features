@@ -7,14 +7,14 @@
                     <div class="form-group clearfix">
                         <div class="column">
                             <div class="form-group __info list">
-                                <label class="form-label">{{ 'demoSolutionFeaturesModule.blades.customer-segments-parameters.labels.is-active' | translate }}</label>
+                                <label class="form-label">{{ 'demoSolutionFeaturesModule.blades.customer-segment-parameters.labels.is-active' | translate }}</label>
                                 <div class="form-input">
                                     <label class="form-label __switch">
                                         <input type="checkbox" ng-model="blade.currentEntity.isActive" />
                                         <span class="switch"></span>
                                     </label>
                                 </div>
-                                <div class="list-descr">{{ 'demoSolutionFeaturesModule.blades.customer-segments-parameters.descriptions.is-active' | translate }}</div>
+                                <div class="list-descr">{{ 'demoSolutionFeaturesModule.blades.customer-segment-parameters.descriptions.is-active' | translate }}</div>
                             </div>
                         </div>
                     </div>
@@ -22,9 +22,9 @@
                     <div class="form-group clearfix">
                         <div class="column">
                             <div class="form-group __info list">
-                                <label class="form-label __info list">{{ 'demoSolutionFeaturesModule.blades.customer-segments-parameters.labels.start-date' | translate }}</label>
+                                <label class="form-label __info list">{{ 'demoSolutionFeaturesModule.blades.customer-segment-parameters.labels.start-date' | translate }}</label>
                                 <div class="form-input __calendar">
-                                    <input placeholder="{{ 'demoSolutionFeaturesModule.blades.customer-segments-parameters.placeholders.start-date' | translate }}" ng-model="blade.currentEntity.startDate" datepicker-popup="" is-open="datepickers.str"/>
+                                    <input placeholder="{{ 'demoSolutionFeaturesModule.blades.customer-segment-parameters.placeholders.start-date' | translate }}" ng-model="blade.currentEntity.startDate" datepicker-popup="" is-open="datepickers.str"/>
                                     <button class="btn" type="button" ng-click="open($event,'str')">
                                         <i class="btn-ico fa fa-calendar" aria-hidden="true"></i>
                                     </button>
@@ -33,9 +33,9 @@
                         </div>
                         <div class="column">
                             <div class="form-group __info list">
-                                <label class="form-label __info list">{{ 'demoSolutionFeaturesModule.blades.customer-segments-parameters.labels.expiration-date' | translate }}</label>
+                                <label class="form-label __info list">{{ 'demoSolutionFeaturesModule.blades.customer-segment-parameters.labels.expiration-date' | translate }}</label>
                                 <div class="form-input __calendar">
-                                    <input placeholder="{{ 'demoSolutionFeaturesModule.blades.customer-segments-parameters.placeholders.expiration-date' | translate }}" ng-model="blade.currentEntity.endDate" datepicker-popup="" is-open="datepickers.end"/>
+                                    <input placeholder="{{ 'demoSolutionFeaturesModule.blades.customer-segment-parameters.placeholders.expiration-date' | translate }}" ng-model="blade.currentEntity.endDate" datepicker-popup="" is-open="datepickers.end"/>
                                     <button class="btn" type="button" ng-click="open($event,'end')">
                                         <i class="btn-ico fa fa-calendar" aria-hidden="true"></i>
                                     </button>
@@ -47,16 +47,16 @@
                     <div class="form-group clearfix">
                         <div class="column">
                             <div class="form-group __info list">
-                                <label class="form-label">{{ 'demoSolutionFeaturesModule.blades.customer-segments-parameters.labels.store' | translate }}</label>
+                                <label class="form-label">{{ 'demoSolutionFeaturesModule.blades.customer-segment-parameters.labels.store' | translate }}</label>
                                 <div class="form-input">
                                     <ui-select multiple required ng-model="blade.currentEntity.storeIds">
-                                        <ui-select-match placeholder="{{'demoSolutionFeaturesModule.blades.customer-segments-parameters.placeholders.store' | translate}}">{{$item.name}}</ui-select-match>
+                                        <ui-select-match placeholder="{{'demoSolutionFeaturesModule.blades.customer-segment-parameters.placeholders.store' | translate}}">{{$item.name}}</ui-select-match>
                                         <ui-select-choices repeat="x.id as x in stores">
                                             <span ng-bind-html="x.name | highlight: $select.search"></span>
                                         </ui-select-choices>
                                     </ui-select>
                                 </div>
-                                <div class="list-descr">{{ 'demoSolutionFeaturesModule.blades.customer-segments-parameters.descriptions.store' | translate }}</div>
+                                <div class="list-descr">{{ 'demoSolutionFeaturesModule.blades.customer-segment-parameters.descriptions.store' | translate }}</div>
                             </div>
                         </div>
                     </div>

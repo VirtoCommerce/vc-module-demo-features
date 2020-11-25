@@ -12,6 +12,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
             SortInfos = new List<SortInfo>();
         }
 
+        public string Keyword { get; set; }
+
         public IDictionary<string, string[]> Properties { get; set; }
 
         public IList<string> StoreIds { get; set; }

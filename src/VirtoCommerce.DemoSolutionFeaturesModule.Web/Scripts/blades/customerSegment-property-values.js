@@ -1,9 +1,24 @@
-angular.module('virtoCommerce.demoSolutionFeaturesModule')
-.controller('virtoCommerce.demoSolutionFeaturesModule.customerSegmentPropertyValuesController', ['$scope', 'platformWebApp.bladeNavigationService', 'platformWebApp.dynamicProperties.dictionaryItemsApi', function ($scope, bladeNavigationService, dictionaryItemsApi) {
+angular.module('virtoCommerce.DemoSolutionFeaturesModule')
+.controller('virtoCommerce.DemoSolutionFeaturesModule.customerSegmentPropertyValuesController', ['$scope', 'platformWebApp.bladeNavigationService', 'platformWebApp.dynamicProperties.dictionaryItemsApi', function ($scope, bladeNavigationService, dictionaryItemsApi) {
     var blade = $scope.blade;
     blade.toolbarCommands = [
         {
-            name: "platform.commands.preview", icon: 'fa fa-eye'
+            name: "platform.commands.preview", icon: 'fa fa-eye',
+            executeMethod: (currentBlade) => {
+                var properties = currentBlade.currentEntities.reduce((properties, property) => {
+                    properties[property.name] = property.values.map(propertyValue => propertyValue.value.name || propertyValue.value);
+                    return properties;
+                }, {});
+                var previewBlade = {
+                    id: 'customerSegmentsPreview',
+                    controller: 'virtoCommerce.DemoSolutionFeaturesModule.customerSegmentsPreview',
+                    template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegments-preview.tpl.html',
+                    currentEntity: blade.currentEntity,
+                    properties: properties
+                };
+                bladeNavigationService.showBlade(previewBlade, currentBlade);
+            },
+            canExecuteMethod: () => true
         }
     ];
 

@@ -1,5 +1,5 @@
-angular.module('virtoCommerce.demoSolutionFeaturesModule')
-    .controller('virtoCommerce.demoSolutionFeaturesModule.customerSegmentRuleController', [
+angular.module('virtoCommerce.DemoSolutionFeaturesModule')
+    .controller('virtoCommerce.DemoSolutionFeaturesModule.customerSegmentRuleController', [
         '$scope',
         'platformWebApp.bladeNavigationService',
         'platformWebApp.dynamicProperties.api',
@@ -30,9 +30,10 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
             $scope.selectProperties = function () {
                 var newBlade = {
                     id: 'propertiesSelector',
-                    title: 'demoSolutionFeaturesModule.blades.customer-segments-rule-creation.select-properties-blade-title',
-                    controller: 'virtoCommerce.demoSolutionFeaturesModule.customerSegmentPropertiesController',
+                    title: 'demoSolutionFeaturesModule.blades.customer-segment-rule-creation.select-properties-blade-title',
+                    controller: 'virtoCommerce.DemoSolutionFeaturesModule.customerSegmentPropertiesController',
                     template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegment-properties.tpl.html',
+                    currentEntity: blade.currentEntity,
                     properties: allProperties,
                     includedProperties: blade.editedProperties,
                     onSelected: function (includedProperties) {
@@ -48,10 +49,11 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
             $scope.editProperties = function () {
                 var newBlade = {
                     id: 'propertiesEditor',
-                    title: 'demoSolutionFeaturesModule.blades.customer-segments-rule-creation.select-properties-blade-title',
+                    title: 'demoSolutionFeaturesModule.blades.customer-segment-rule-creation.select-properties-blade-title',
                     headIcon: 'fa-pie-chart',
-                    controller: 'virtoCommerce.demoSolutionFeaturesModule.customerSegmentPropertyValuesController',
+                    controller: 'virtoCommerce.DemoSolutionFeaturesModule.customerSegmentPropertyValuesController',
                     template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegment-property-values.tpl.html',
+                    currentEntity: blade.currentEntity,
                     entities: blade.editedProperties,
                     onSelected: function (editedProps) {
                         blade.editedProperties = editedProps;

@@ -25,16 +25,26 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.CustomerSegment
             return _searchRequest;
         }
 
-        public virtual IDemoCustomerSegmentSearchRequestBuilder AddPropertySearch(IDictionary<string, string[]> propertyValues)
+        public virtual IDemoCustomerSegmentSearchRequestBuilder AddKeywordSearch(string keyword)
         {
-            if (!propertyValues.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(keyword))
             {
-                foreach (var propertyValue in propertyValues)
+                _searchRequest.SearchKeywords = keyword;
+                _searchRequest.SearchFields = new[] { "__content" };
+            }
+
+            return this;
+        }
+
+        public virtual IDemoCustomerSegmentSearchRequestBuilder AddPropertySearch(IDictionary<string, string[]> properties)
+        {
+            if (!properties.IsNullOrEmpty())
+            {
+                foreach (var property in properties.Where(property => !property.Value.IsNullOrEmpty()))
                 {
-                    ((AndFilter)_searchRequest.Filter).ChildFilters.Add(new TermFilter
+                    ((AndFilter) _searchRequest.Filter).ChildFilters.Add(new TermFilter
                     {
-                        FieldName = propertyValue.Key,
-                        Values = propertyValue.Value
+                        FieldName = property.Key, Values = property.Value
                     });
                 }
             }

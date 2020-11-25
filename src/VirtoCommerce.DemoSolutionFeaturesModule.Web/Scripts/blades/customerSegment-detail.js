@@ -1,5 +1,5 @@
-angular.module('virtoCommerce.demoSolutionFeaturesModule')
-    .controller('virtoCommerce.demoSolutionFeaturesModule.customerSegmentDetailController',
+angular.module('virtoCommerce.DemoSolutionFeaturesModule')
+    .controller('virtoCommerce.DemoSolutionFeaturesModule.customerSegmentDetailController',
         ['$scope', 'platformWebApp.bladeNavigationService', function ($scope, bladeNavigationService) {
             const blade = $scope.blade;
             blade.headIcon = 'fa-pie-chart';
@@ -17,9 +17,9 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
             $scope.mainParameters = function () {
                 const parametersBlade = {
                     id: "mainParameters",
-                    title: "demoSolutionFeaturesModule.blades.customer-segments-parameters.title",
-                    subtitle: 'demoSolutionFeaturesModule.blades.customer-segments-parameters.subtitle',
-                    controller: 'virtoCommerce.demoSolutionFeaturesModule.customerSegmentMainParametersController',
+                    title: "demoSolutionFeaturesModule.blades.customer-segment-parameters.title",
+                    subtitle: 'demoSolutionFeaturesModule.blades.customer-segment-parameters.subtitle',
+                    controller: 'virtoCommerce.DemoSolutionFeaturesModule.customerSegmentMainParametersController',
                     template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegment-main-parameters.tpl.html',
                     originalEntity: blade.currentEntity,
                     onSelected: function (entity) {
@@ -33,10 +33,11 @@ angular.module('virtoCommerce.demoSolutionFeaturesModule')
             $scope.createCustomerFilter = function () {
                 var ruleCreationBlade = {
                     id: "createCustomerSegmentRule",
-                    controller: 'virtoCommerce.demoSolutionFeaturesModule.customerSegmentRuleController',
-                    title: 'demoSolutionFeaturesModule.blades.customer-segments-rule-creation.title',
-                    subtitle: 'demoSolutionFeaturesModule.blades.customer-segments-rule-creation.subtitle',
+                    controller: 'virtoCommerce.DemoSolutionFeaturesModule.customerSegmentRuleController',
+                    title: 'demoSolutionFeaturesModule.blades.customer-segment-rule-creation.title',
+                    subtitle: 'demoSolutionFeaturesModule.blades.customer-segment-rule-creation.subtitle',
                     template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegment-rule.tpl.html',
+                    currentEntity: blade.currentEntity
                 };
                 blade.activeBladeId = ruleCreationBlade.id;
                 bladeNavigationService.showBlade(ruleCreationBlade, blade);
