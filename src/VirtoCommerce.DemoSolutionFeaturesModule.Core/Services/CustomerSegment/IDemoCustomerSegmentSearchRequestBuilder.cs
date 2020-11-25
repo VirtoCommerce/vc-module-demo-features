@@ -8,7 +8,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Services
     {
         SearchRequest Build();
         IDemoCustomerSegmentSearchRequestBuilder AddKeywordSearch(string keyword);
-        IDemoCustomerSegmentSearchRequestBuilder AddPropertySearch(IDictionary<string, string[]> propertyValues);
+        IDemoCustomerSegmentSearchRequestBuilder AddPropertySearch(IDictionary<string, string[]> properties);
         IDemoCustomerSegmentSearchRequestBuilder WithStores(IList<string> storeIds);
         IDemoCustomerSegmentSearchRequestBuilder AddSortInfo(IList<SortInfo> sortInfos);
         IDemoCustomerSegmentSearchRequestBuilder WithPaging(int skip, int take);
