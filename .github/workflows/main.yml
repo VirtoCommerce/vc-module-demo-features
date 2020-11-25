@@ -29,6 +29,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       NUGET_KEY: ${{ secrets.NUGET_KEY }}
       BLOB_SAS: ${{ secrets.BLOB_TOKEN }}
+      MODULE_URL: ""
 
     steps:
       - uses: actions/checkout@v2
@@ -88,6 +89,20 @@ jobs:
         
       - name: Publish Github Release
         if: ${{ github.ref == 'refs/heads/master' }}
+        id: githubRelease
         with:
           changelog: ${{ steps.changelog.outputs.changelog }}
         uses: VirtoCommerce/vc-github-actions/publish-github-release@master
+
+      - name: Set MODULE_URL blobUrl
+        if: ${{ github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master' }}
+        run: |
+          echo "MODULE_URL=${{ steps.blobRelease.outputs.packageUrl }}" >> $GITHUB_ENV
+
+      - name: Invoke Module deployment workflow
+        if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master')}}
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Module deployment
+          token: ${{ secrets.REPO_TOKEN }}
+          inputs: '{ "blobUrl": "${{ steps.blobRelease.outputs.packageUrl }}", "moduleId": "${{ steps.image.outputs.moduleId }}", "artifactVersion": "${{ steps.image.outputs.taggedVersion }}"}'
