@@ -64,7 +64,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             };
 
             $scope.canSave = () => {
-                return false;
+                return blade.editedProperties && blade.editedProperties.length && blade.editedProperties.every(x => x.values && x.values.length);
             };
 
             $scope.saveRule = function() {

@@ -74,8 +74,8 @@ function($scope, customerSegmentsApi, membersApi, bladeUtils, uiGridHelper, grid
             properties: blade.properties,
             storeIds: blade.currentEntity.storeIds,
             sort: uiGridHelper.getSortExpression($scope),
-            skip: ($scope.pageSettings.currentPage - 1) * $scope.pageSettings.itemsPerPageCount,
-            take: $scope.pageSettings.itemsPerPageCount
+            skip: 0,
+            take: 1000
         };
         return conditionEvaluationRequest;
     }
