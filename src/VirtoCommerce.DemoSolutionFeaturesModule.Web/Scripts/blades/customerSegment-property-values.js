@@ -5,10 +5,12 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         {
             name: "platform.commands.preview", icon: 'fa fa-eye',
             executeMethod: (currentBlade) => {
-                let properties = currentBlade.currentEntities.reduce((propertiesAggregate, property) => {
-                    propertiesAggregate[property.name] = property.values.map(propertyValue => propertyValue.value.name || propertyValue.value);
-                    return propertiesAggregate;
-                }, {});
+                let properties = currentBlade.currentEntities
+                    .filter(property => property.valueType === 'Boolean' || property.values.length && property.values.every(value => !!value.value))
+                    .reduce((propertiesAggregate, property) => {
+                        propertiesAggregate[property.name] = property.values && property.values.length ? property.values.map(propertyValue => propertyValue.value.name || propertyValue.value) : [false];
+                        return propertiesAggregate;
+                    }, {});
                 let previewBlade = {
                     id: 'customerSegmentsPreview',
                     controller: 'virtoCommerce.DemoSolutionFeaturesModule.customerSegmentsPreview',
