@@ -25,7 +25,7 @@ jobs:
         run: dotnet tool install --global dotnet-sonarscanner
 
       - name: Add version suffix
-        uses: VirtoCommerce/vc-github-actions/add-version-suffix@VP-5059
+        uses: VirtoCommerce/vc-github-actions/add-version-suffix@master
 
       - name: SonarCloud Begin
         uses: VirtoCommerce/vc-github-actions/sonar-scanner-begin@master
@@ -40,7 +40,7 @@ jobs:
         uses: VirtoCommerce/vc-github-actions/sonar-scanner-end@master
 
       - name: Quality Gate
-        uses: VirtoCommerce/vc-github-actions/sonar-quality-gate@VP-5059
+        uses: VirtoCommerce/vc-github-actions/sonar-quality-gate@master
         with:
           login: ${{secrets.SONAR_TOKEN}}
           projectKey: "VirtoCommerce_vc-module-demo-features"
@@ -50,6 +50,6 @@ jobs:
       
       - name: Publish to Blob
         id: blobRelease
-        uses: VirtoCommerce/vc-github-actions/publish-blob-release@VP-5059
+        uses: VirtoCommerce/vc-github-actions/publish-blob-release@master
         with:
           blobSAS: ${{ secrets.BLOB_TOKEN }}

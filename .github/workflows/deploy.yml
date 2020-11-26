@@ -36,7 +36,7 @@ jobs:
         env: Development
         no_override: false
 
-    - name: Checkout VirtoCommerce/vc-deploy-apps
+    - name: Checkout ArgoCD repository 
       uses: actions/checkout@v2
       with:
         token: ${{ secrets.REPO_TOKEN }}
