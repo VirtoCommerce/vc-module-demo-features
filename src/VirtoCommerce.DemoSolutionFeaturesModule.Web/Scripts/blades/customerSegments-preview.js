@@ -83,7 +83,7 @@ function($scope, customerSegmentsApi, membersApi, bladeUtils, uiGridHelper, grid
     function getSearchCriteria(customerIds) {
         let searchCriteria = {
             objectIds: customerIds,
-            deepSearch: false,
+            deepSearch: true,
             objectType: 'Member'
         };
         return searchCriteria;
