@@ -5,6 +5,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         {
             name: "platform.commands.preview", icon: 'fa fa-eye',
             executeMethod: (currentBlade) => {
+                // We need to convert dynamic property object to key-value pair to pass into preview API
                 let properties = currentBlade.currentEntities
                     .filter(property => property.valueType === 'Boolean' || property.values.length && property.values.every(value => !!value.value))
                     .reduce((propertiesAggregate, property) => {
