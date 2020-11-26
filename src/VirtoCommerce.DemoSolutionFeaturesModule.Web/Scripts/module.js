@@ -1,5 +1,5 @@
 // Call this to register your module to main application
-var moduleName = "virtoCommerce.demoSolutionFeaturesModule";
+var moduleName = "virtoCommerce.DemoSolutionFeaturesModule";
 
 if (AppDependencies !== undefined) {
     AppDependencies.push(moduleName);
@@ -13,7 +13,7 @@ angular.module(moduleName, [])
                 name: 'Customer segments',
                 entityName: 'customerSegment',
                 icon: 'fa fa-pie-chart',
-                controller: 'virtoCommerce.demoSolutionFeaturesModule.customerSegmentDetailController',
+                controller: 'virtoCommerce.DemoSolutionFeaturesModule.customerSegmentDetailController',
                 template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegment-detail.tpl.html'
         });
         }

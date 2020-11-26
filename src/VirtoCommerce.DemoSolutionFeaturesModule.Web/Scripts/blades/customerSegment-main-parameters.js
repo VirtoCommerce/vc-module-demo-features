@@ -1,5 +1,5 @@
-angular.module('virtoCommerce.demoSolutionFeaturesModule')
-    .controller('virtoCommerce.demoSolutionFeaturesModule.customerSegmentMainParametersController', ['$scope', 'platformWebApp.bladeNavigationService', 'virtoCommerce.storeModule.stores', function ($scope, bladeNavigationService, storeService) {
+angular.module('virtoCommerce.DemoSolutionFeaturesModule')
+    .controller('virtoCommerce.DemoSolutionFeaturesModule.customerSegmentMainParametersController', ['$scope', 'platformWebApp.bladeNavigationService', 'virtoCommerce.storeModule.stores', function ($scope, bladeNavigationService, storeService) {
         var blade = $scope.blade;
         blade.isLoading = true;
         var formScope;

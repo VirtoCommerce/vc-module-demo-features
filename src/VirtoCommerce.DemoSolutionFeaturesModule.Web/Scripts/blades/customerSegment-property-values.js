@@ -1,9 +1,27 @@
-angular.module('virtoCommerce.demoSolutionFeaturesModule')
-.controller('virtoCommerce.demoSolutionFeaturesModule.customerSegmentPropertyValuesController', ['$scope', 'platformWebApp.bladeNavigationService', 'platformWebApp.dynamicProperties.dictionaryItemsApi', function ($scope, bladeNavigationService, dictionaryItemsApi) {
+angular.module('virtoCommerce.DemoSolutionFeaturesModule')
+.controller('virtoCommerce.DemoSolutionFeaturesModule.customerSegmentPropertyValuesController', ['$scope', 'platformWebApp.bladeNavigationService', 'platformWebApp.dynamicProperties.dictionaryItemsApi', function ($scope, bladeNavigationService, dictionaryItemsApi) {
     var blade = $scope.blade;
     blade.toolbarCommands = [
         {
-            name: "platform.commands.preview", icon: 'fa fa-eye'
+            name: "platform.commands.preview", icon: 'fa fa-eye',
+            executeMethod: (currentBlade) => {
+                // We need to convert dynamic property object to key-value pair to pass into preview API
+                let properties = currentBlade.currentEntities
+                    .filter(property => property.valueType === 'Boolean' || property.values.length && property.values.every(value => !!value.value))
+                    .reduce((propertiesAggregate, property) => {
+                        propertiesAggregate[property.name] = property.values && property.values.length ? property.values.map(propertyValue => propertyValue.value.name || propertyValue.value) : [false];
+                        return propertiesAggregate;
+                    }, {});
+                let previewBlade = {
+                    id: 'customerSegmentsPreview',
+                    controller: 'virtoCommerce.DemoSolutionFeaturesModule.customerSegmentsPreview',
+                    template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegments-preview.tpl.html',
+                    currentEntity: blade.currentEntity,
+                    properties: properties
+                };
+                bladeNavigationService.showBlade(previewBlade, currentBlade);
+            },
+            canExecuteMethod: () => true
         }
     ];
 

@@ -72,3 +72,7 @@ indent_size = 2
 #HTML code style settings
 [*.html]
 insert_final_newline = false
+
+#JavaScript code style settings
+[*.js]
+quote_type = single
