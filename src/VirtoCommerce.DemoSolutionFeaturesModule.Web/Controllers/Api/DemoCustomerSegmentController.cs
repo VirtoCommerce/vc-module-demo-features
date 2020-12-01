@@ -17,15 +17,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
     {
         private readonly IDemoCustomerSegmentService _customerSegmentService;
         private readonly IDemoCustomerSegmentSearchService _customerSegmentSearchService;
-        private readonly IDemoCustomerSegmentConditionEvaluator _customerSegmentConditionEvaluator;
 
         public DemoCustomerSegmentController(IDemoCustomerSegmentService customerSegmentService,
-            IDemoCustomerSegmentSearchService customerSegmentSearchService,
-            IDemoCustomerSegmentConditionEvaluator customerSegmentConditionEvaluator)
+            IDemoCustomerSegmentSearchService customerSegmentSearchService)
         {
             _customerSegmentService = customerSegmentService;
             _customerSegmentSearchService = customerSegmentSearchService;
-            _customerSegmentConditionEvaluator = customerSegmentConditionEvaluator;
         }
 
         /// <summary>
@@ -105,23 +102,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         public async Task<ActionResult<DemoCustomerSegmentSearchResult>> SearchCustomerSegments([FromBody] DemoCustomerSegmentSearchCriteria criteria)
         {
             var result = await _customerSegmentSearchService.SearchCustomerSegmentsAsync(criteria);
-
-            return Ok(result);
-        }
-
-        /// <summary>
-        /// Evaluate customer segment and return all IDs of all customers who meet criteria.
-        /// </summary>
-        /// <param name="conditionRequest">Request with customer segment criteria.</param>
-        /// <returns>IDs of all customers who meet specified criteria.</returns>
-        [HttpPost]
-        [Route("preview")]
-        [Authorize(ModuleConstants.Security.Permissions.Read)]
-        public async Task<ActionResult<string[]>> PreviewCustomerSegment([FromBody] DemoCustomerSegmentConditionEvaluationRequest conditionRequest)
-        {
-            ValidateParameters(conditionRequest);
-
-            var result = await _customerSegmentConditionEvaluator.EvaluateCustomerSegmentConditionAsync(conditionRequest);
 
             return Ok(result);
         }
