@@ -2,7 +2,8 @@
   "demoSolutionFeaturesModule": {
     "blades": {
       // place here blades localization terms
-    },
+    }
+  },
   "permissions": {
     "virtoCommerceDemoSolutionFeaturesModule:access": "Open VirtoCommerceDemoSolutionFeaturesModule menu",
     "virtoCommerceDemoSolutionFeaturesModule:create": "Create VirtoCommerceDemoSolutionFeaturesModule related data",
