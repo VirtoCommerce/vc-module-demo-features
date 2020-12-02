@@ -7,6 +7,14 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         blade.currentEntity = {};
 
         function initializeBlade() {
+            if (blade.selectedProperties && blade.selectedProperties.length) {
+                let selectedPropertyNames = blade.selectedProperties.map(property => property.name);
+                let notSelectedProperties = _.filter(blade.properties,
+                    property => !_.contains(selectedPropertyNames, property.name));
+                blade.availableProperties = _.union(blade.selectedProperties, notSelectedProperties);
+            } else {
+                blade.availableProperties = blade.properties;
+            }
             blade.currentEntity = angular.copy(blade.originalEntity);
             blade.isLoading = false;
         }
