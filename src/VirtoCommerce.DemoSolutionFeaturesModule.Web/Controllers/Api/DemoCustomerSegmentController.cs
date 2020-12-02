@@ -105,13 +105,5 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
 
             return Ok(result);
         }
-
-        private static void ValidateParameters(DemoCustomerSegmentConditionEvaluationRequest conditionRequest)
-        {
-            if (conditionRequest == null)
-            {
-                throw new ArgumentNullException(nameof(conditionRequest));
-            }
-        }
     }
 }

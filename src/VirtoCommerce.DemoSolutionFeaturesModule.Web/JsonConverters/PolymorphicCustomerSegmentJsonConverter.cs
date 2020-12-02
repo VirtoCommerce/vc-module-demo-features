@@ -13,8 +13,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.JsonConverters
         private static Type[] _knownTypes =
         {
             typeof(DemoCustomerSegment),
-            typeof(DemoCustomerSegmentSearchCriteria),
-            typeof(DemoCustomerSegmentConditionEvaluationRequest)
+            typeof(DemoCustomerSegmentSearchCriteria)
         };
 
         public override bool CanWrite => false;
