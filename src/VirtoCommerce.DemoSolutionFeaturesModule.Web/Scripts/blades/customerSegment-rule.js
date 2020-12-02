@@ -58,7 +58,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         $scope.editProperties = function () {
             var newBlade = {
                 id: 'propertiesEditor',
-                title: 'demoSolutionFeaturesModule.blades.customer-segment-property-value.title',
+                title: 'demoSolutionFeaturesModule.blades.customer-segment-property-values.title',
                 headIcon: 'fa-pie-chart',
                 controller: 'virtoCommerce.DemoSolutionFeaturesModule.customerSegmentPropertyValuesController',
                 template: 'Modules/$(virtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/customerSegment-property-values.tpl.html',
