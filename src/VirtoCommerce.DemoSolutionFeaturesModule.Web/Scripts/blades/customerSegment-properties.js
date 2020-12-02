@@ -1,29 +1,30 @@
 angular.module('virtoCommerce.DemoSolutionFeaturesModule')
-    .controller('virtoCommerce.DemoSolutionFeaturesModule.customerSegmentPropertiesController', ['$scope', 'platformWebApp.bladeNavigationService', function ($scope, bladeNavigationService) {
+.controller('virtoCommerce.DemoSolutionFeaturesModule.customerSegmentPropertiesController',
+    ['$scope', 'platformWebApp.bladeNavigationService',
+    function ($scope, bladeNavigationService) {
         var blade = $scope.blade;
-
         blade.isLoading = true;
+        blade.currentEntity = {};
 
         function initializeBlade() {
-            var allProperties = angular.copy(blade.properties);
-            allProperties = _.sortBy(allProperties, 'group', 'name');
-            var selectedProperties = angular.copy(blade.includedProperties);
-            selectedProperties = _.sortBy(selectedProperties, 'name');
-            blade.allEntities = _.groupBy(allProperties, 'group');
-            blade.selectedEntities = _.groupBy(selectedProperties, 'group');
+            blade.currentEntity = angular.copy(blade.originalEntity);
             blade.isLoading = false;
         }
 
-        $scope.selectAllInGroup = function (groupKey) {
-            blade.selectedEntities[groupKey] = blade.allEntities[groupKey];
+        $scope.selectAll = function () {
+            blade.selectedProperties = angular.copy(blade.properties);
         }
 
-        $scope.clearAllInGroup = function (groupKey) {
-            blade.selectedEntities[groupKey] = [];
+        $scope.clearAll = function () {
+            blade.selectedProperties = [];
         }
 
-        $scope.sortSelected = function (groupKey) {
-            blade.selectedEntities[groupKey] = _.sortBy(blade.selectedEntities[groupKey], 'name');
+        $scope.sortSelected = function ($item, $model) {
+            blade.selectedProperties = _.sortBy(blade.selectedProperties, 'name');
+        }
+
+        $scope.isValid = function () {
+            return blade.selectedProperties.length;
         }
 
         $scope.cancelChanges = function () {
@@ -31,15 +32,10 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             bladeNavigationService.closeBlade(blade);
         }
 
-        $scope.isValid = function () {
-            return _.some(blade.selectedEntities, function (item) { return item.length; });
-        }
-
         $scope.saveChanges = function () {
             blade.parentBlade.activeBladeId = null;
-            var includedProperties = _.flatten(_.map(blade.selectedEntities, _.values));
             if (blade.onSelected) {
-                blade.onSelected(includedProperties);
+                blade.onSelected(blade.currentEntity, blade.selectedProperties);
                 bladeNavigationService.closeBlade(blade);
             }
         };
