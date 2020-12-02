@@ -25,7 +25,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             blade.setProperties = angular.copy(blade.selectedProperties);
             blade.currentEntity = angular.copy(blade.originalEntity);
             blade.isLoading = false;
-        };
+        }
 
         $scope.getDictionaryValues = function (property, callback) {
             dictionaryItemsApi.query({ id: property.objectType, propertyId: property.id }, callback);
