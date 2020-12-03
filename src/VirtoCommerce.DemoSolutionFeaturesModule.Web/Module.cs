@@ -1,30 +1,23 @@
-using System;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using VirtoCommerce.CartModule.Core.Model;
 using VirtoCommerce.CartModule.Core.Services;
 using VirtoCommerce.CartModule.Data.Model;
 using VirtoCommerce.CartModule.Data.Repositories;
-using VirtoCommerce.CoreModule.Core.Conditions;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.CustomerModule.Data.Search.Indexing;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
-using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Search.Indexing;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
-using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.CustomerSegment;
-using VirtoCommerce.DemoSolutionFeaturesModule.Web.JsonConverters;
 using VirtoCommerce.OrdersModule.Core.Model;
 using VirtoCommerce.OrdersModule.Core.Services;
 using VirtoCommerce.OrdersModule.Data.Model;
@@ -53,22 +46,14 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             var connectionString =
                 configuration.GetConnectionString("VirtoCommerce.VirtoCommerceDemoSolutionFeaturesModule") ??
                 configuration.GetConnectionString("VirtoCommerce");
-            serviceCollection.AddDbContext<CustomerDemoDbContext>(options => options.UseSqlServer(connectionString));
-            serviceCollection.AddDbContext<DemoCustomerSegmentDbContext>(
-                options => options.UseSqlServer(connectionString));
+            serviceCollection.AddDbContext<CustomerDemoDbContext>(options => options.UseSqlServer(connectionString));            
             serviceCollection.AddDbContext<DemoCartDbContext>(options => options.UseSqlServer(connectionString));
             serviceCollection.AddDbContext<DemoOrderDbContext>(options => options.UseSqlServer(connectionString));
 
             // customer
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
             serviceCollection.AddSingleton<MemberDocumentBuilder, DemoMemberDocumentBuilder>();
-            // customer segments
-            serviceCollection.AddTransient<IDemoCustomerSegmentRepository, DemoCustomerSegmentRepository>();
-            serviceCollection.AddTransient<Func<IDemoCustomerSegmentRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IDemoCustomerSegmentRepository>());
-            serviceCollection.AddTransient<IDemoCustomerSegmentService, DemoCustomerSegmentService>();
-            serviceCollection.AddTransient<IDemoCustomerSegmentSearchService, DemoCustomerSegmentSearchService>();
-            serviceCollection.AddTransient<IDemoCustomerSegmentSearchRequestBuilder, DemoCustomerSegmentSearchRequestBuilder>();
-            serviceCollection.AddTransient<IDemoCustomerSegmentConditionEvaluator, DemoCustomerSegmentConditionEvaluator>();
+           
             // cart
             serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
             serviceCollection.AddTransient<IShoppingCartTotalsCalculator, DemoShoppingCartTotalsCalculator>();
@@ -84,13 +69,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             AbstractTypeFactory<Contact>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<Member>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<MemberEntity>.OverrideType<ContactEntity, ContactDemoEntity>();
-
-            // customer segments
-            var mvcJsonOptions = appBuilder.ApplicationServices.GetService<IOptions<MvcNewtonsoftJsonOptions>>();
-            mvcJsonOptions.Value.SerializerSettings.Converters.Add(new PolymorphicCustomerSegmentJsonConverter());
-
-            AbstractTypeFactory<IConditionTree>.RegisterType<DemoBlockCustomerSegmentRule>();
-            AbstractTypeFactory<IConditionTree>.RegisterType<DemoConditionPropertyValues>();
 
             // cart
             AbstractTypeFactory<CartLineItem>.OverrideType<CartLineItem, DemoCartLineItem>().MapToType<DemoCartLineItemEntity>();
@@ -140,12 +118,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             // customer
             using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<CustomerDemoDbContext>())
-            {
-                dbContext.Database.EnsureCreated();
-                dbContext.Database.Migrate();
-            }
-            // customer segments
-            using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<DemoCustomerSegmentDbContext>())
             {
                 dbContext.Database.EnsureCreated();
                 dbContext.Database.Migrate();
