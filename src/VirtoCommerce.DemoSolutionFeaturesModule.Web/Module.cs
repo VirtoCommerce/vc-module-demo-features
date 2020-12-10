@@ -10,13 +10,11 @@ using VirtoCommerce.CartModule.Data.Repositories;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
-using VirtoCommerce.CustomerModule.Data.Search.Indexing;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
-using VirtoCommerce.DemoSolutionFeaturesModule.Data.Search.Indexing;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 using VirtoCommerce.OrdersModule.Core.Model;
 using VirtoCommerce.OrdersModule.Core.Services;
@@ -52,8 +50,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             // customer
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
-            serviceCollection.AddSingleton<MemberDocumentBuilder, DemoMemberDocumentBuilder>();
-           
+
             // cart
             serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
             serviceCollection.AddTransient<IShoppingCartTotalsCalculator, DemoShoppingCartTotalsCalculator>();
