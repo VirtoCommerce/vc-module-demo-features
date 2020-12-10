@@ -13,11 +13,15 @@ using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Notifications;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Web.Infrastructure;
+using VirtoCommerce.NotificationsModule.Core.Model;
+using VirtoCommerce.NotificationsModule.Core.Services;
+using VirtoCommerce.NotificationsModule.Core.Types;
 using VirtoCommerce.OrdersModule.Core.Model;
 using VirtoCommerce.OrdersModule.Core.Services;
 using VirtoCommerce.OrdersModule.Data.Model;
@@ -69,6 +73,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
         public void PostInitialize(IApplicationBuilder appBuilder)
         {
+
+            var notificationRegistrar = appBuilder.ApplicationServices.GetService<INotificationRegistrar>();
+
+            notificationRegistrar.OverrideNotificationType<RegistrationInvitationEmailNotification, ExtendedRegistrationInvitationEmailNotification>().WithTemplates(new EmailNotificationTemplate()
+            {
+                Subject = "Registration by invite",
+                Body = "Please {{ message }} !!! to register by invite clicking <a href=\"{{ invite_url }}\">here</a>",
+            });
+
             // customer
             AbstractTypeFactory<Contact>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<Member>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
