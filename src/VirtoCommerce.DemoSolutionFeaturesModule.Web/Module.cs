@@ -77,10 +77,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
         {
             // notifications
             var notificationRegistrar = appBuilder.ApplicationServices.GetService<INotificationRegistrar>();
-            var moduleTemplatesPath = Path.Combine(ModuleInfo.FullPhysicalPath, "Templates");
+            var moduleTemplatesPath = Path.Join(ModuleInfo.FullPhysicalPath, "Templates");
 
             notificationRegistrar.OverrideNotificationType<RegistrationInvitationEmailNotification, ExtendedRegistrationInvitationEmailNotification>()
-                .WithTemplatesFromPath(Path.Combine(moduleTemplatesPath, "Custom"), Path.Combine(moduleTemplatesPath, "Default"));
+                .WithTemplatesFromPath(Path.Join(moduleTemplatesPath, "Custom"), Path.Join(moduleTemplatesPath, "Default"));
 
             // customer
             AbstractTypeFactory<Contact>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
