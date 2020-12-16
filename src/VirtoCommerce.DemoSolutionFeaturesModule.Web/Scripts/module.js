@@ -6,7 +6,7 @@ if (AppDependencies !== undefined) {
 }
 
 angular.module(moduleName, [])
-    .factory('virtoCommerce.demoFeatures.featureManager', ['$q', '$http', function($q, $http) {
+    .factory('virtoCommerce.demoFeatures.featureManager', ['$q', '$http', function ($q, $http) {
         return {
             isFeatureEnabled: (featureName) => {
                 var deferred = $q.defer();
@@ -21,9 +21,18 @@ angular.module(moduleName, [])
                                 deferred.reject();
                             }
                         }
-                );
+                    );
 
                 return deferred.promise;
             }
         }
+    }])
+    .run(['virtoCommerce.catalogModule.itemTypesResolverService',
+        function ( itemTypesResolverService) { 
+        itemTypesResolverService.registerType({
+            itemType: 'demoSolutionFeaturesModule.blades.categories-items-add.menu.configurable-product.title',
+            description: 'demoSolutionFeaturesModule.blades.categories-items-add.menu.configurable-product.description',
+            productType: 'Configurable',
+            icon: 'fa-cogs'
+        });
     }]);
