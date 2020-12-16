@@ -126,14 +126,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             var demoFeaturesSection = configuration.GetSection("DemoFeatures");
             featureStorage.AddHighPriorityFeatureDefinition(demoFeaturesSection);
             
-            featureStorage.TryAddFeatureDefinition(new FeatureDefinition
-            {
-                Name = "DevelopersOnly",
-                EnabledFor = new [] { new FeatureFilterConfiguration
-                {
-                    Name = "Developers"
-                } }
-            });
+            featureStorage.TryAddFeature("ConfigurableProduct", "Developers");
 
             // Ensure that any pending migrations are applied
             using var serviceScope = appBuilder.ApplicationServices.CreateScope();
