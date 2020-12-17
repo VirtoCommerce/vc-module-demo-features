@@ -17,9 +17,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         blade.toolbarCommands = [
             {
                 name: "platform.commands.add", icon: 'fa fa-plus',
-                canExecuteMethod: function () {
-                    return true;
-                },
+                canExecuteMethod: () => true,
                 permission: 'catalog:create'
             },
             {
@@ -34,7 +32,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             }
         ];
 
-        blade.refresh = function () {
+        blade.refresh = () => {
             blade.isLoading = true;
 
             productPartsApi.search({
@@ -42,7 +40,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 sort: 'priority:asc',
                 skip: ($scope.pageSettings.currentPage - 1) * $scope.pageSettings.itemsPerPageCount,
                 take: $scope.pageSettings.itemsPerPageCount
-            }, function (response) {
+            }, response => {
                 blade.isLoading = false;
                 $scope.pageSettings.totalItems = response.totalCount;
                 blade.currentEntities = response.results;
@@ -50,10 +48,10 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             });
         };
 
-        $scope.select = function () {};
-        $scope.delete = function() {};
+        $scope.select = () => {};
+        $scope.delete = () => {};
 
-        filter.criteriaChanged = function () {
+        filter.criteriaChanged = () => {
             if ($scope.pageSettings.currentPage > 1) {
                 $scope.pageSettings.currentPage = 1;
             } else {
@@ -61,9 +59,22 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             }
         };
 
-        $scope.setGridOptions = function (gridOptions) {
-            uiGridHelper.initialize($scope, gridOptions);
+        $scope.setGridOptions = (gridOptions) => {
+            uiGridHelper.initialize($scope, gridOptions, (gridApi) => {
+                gridApi.draggableRows.on.rowDropped($scope, () => {
+                    blade.isLoading = true;
+                    blade.currentEntities.forEach((entity, index) => {
+                        entity.priority = index + 1;
+                    })
+                    productPartsApi.update(blade.currentEntities, () => {
+                        blade.isLoading = false;
+                    }, () => {
+                        blade.refresh();
+                    });
+                });
+            });
             bladeUtils.initializePagination($scope);
+            $scope.pageSettings.itemsPerPageCount = 10;
         };
 
         function isAnySelected() {
