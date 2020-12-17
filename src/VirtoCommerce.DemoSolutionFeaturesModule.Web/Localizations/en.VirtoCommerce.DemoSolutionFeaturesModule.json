@@ -46,5 +46,11 @@
         "description": "Credit card payment method for B2B-theme"
       }
     }
+  },
+  "notificationTypes": {
+    "ExtendedRegistrationInvitationEmailNotification": {
+      "displayName": "Registration invitation notification",
+      "description": "This notification sends by email to client when registered invitation"
+    }
   }
-}
+ }
