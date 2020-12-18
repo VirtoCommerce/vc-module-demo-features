@@ -11,6 +11,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog
 
         public string ImgSrc { get; set; }
 
+        public int Priority { get; set; }
+
         public string DefaultItemId { get; set; }
 
         public string[] ItemsIds { get; set; }

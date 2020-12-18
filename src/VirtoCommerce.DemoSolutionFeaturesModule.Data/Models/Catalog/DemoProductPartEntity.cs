@@ -21,6 +21,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
         [StringLength(128)]
         public string DefaultItemId { get; set; }
 
+        public int Priority { get; set; }
+
         public virtual ObservableCollection<DemoProductPartItemEntity> PartItems { get; set; } = new NullCollection<DemoProductPartItemEntity>();
 
         public virtual DemoProductPart ToModel(DemoProductPart part)
@@ -39,6 +41,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
             part.ConfiguredProductId = ConfiguredProductId;
             part.Name = Name;
             part.ImgSrc = ImgSrc;
+            part.Priority = Priority;
             part.DefaultItemId = DefaultItemId;
 
             if (!PartItems.IsNullOrEmpty())
@@ -67,6 +70,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
             ConfiguredProductId = part.ConfiguredProductId;
             Name = part.Name;
             ImgSrc = part.ImgSrc;
+            Priority = part.Priority;
             DefaultItemId = part.DefaultItemId;
 
             if(part.ItemsIds != null)
@@ -82,6 +86,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
             target.ConfiguredProductId = ConfiguredProductId;
             target.Name = Name;
             target.ImgSrc = ImgSrc;
+            target.Priority = Priority;
             target.DefaultItemId = DefaultItemId;
 
             target.PartItems = PartItems;
