@@ -5,6 +5,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Services
 {
     public interface IDemoProductPartSerarchService
     {
-        Task<DemoProductPartSearchResult> SearchCategoriesAsync(DemoProductPartSearchCriteria criteria);
+        Task<DemoProductPartSearchResult> SearchProductPartsAsync(DemoProductPartSearchCriteria criteria);
     }
 }

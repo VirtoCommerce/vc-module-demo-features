@@ -5,10 +5,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog
 {
     public class DemoProductPart : AuditableEntity, IHasName
     {
-        public string ProductId { get; set; }
+        public string ConfiguredProductId { get; set; }
 
         public string Name { get; set; }
 
         public string ImgSrc { get; set; }
+
+        public string DefaultItemId { get; set; }
+
+        public string[] ItemsIds { get; set; }
+
     }
 }

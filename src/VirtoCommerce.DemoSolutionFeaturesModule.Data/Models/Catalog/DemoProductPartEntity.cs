@@ -1,4 +1,8 @@
 using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using VirtoCommerce.CatalogModule.Data.Model;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog;
 using VirtoCommerce.Platform.Core.Common;
 
@@ -6,11 +10,18 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
 {
     public class DemoProductPartEntity : AuditableEntity
     {
-        public string ProductId { get; set; }
-
+        public DemoItemEntity ConfiguredProduct { get; set; }
+        [StringLength(128)]
+        public string ConfiguredProductId { get; set; }
+        [StringLength(512)]
         public string Name { get; set; }
-
+        [StringLength(1024)]
         public string ImgSrc { get; set; }
+
+        [StringLength(128)]
+        public string DefaultItemId { get; set; }
+
+        public virtual ObservableCollection<DemoProductPartItemEntity> PartItems { get; set; } = new NullCollection<DemoProductPartItemEntity>();
 
         public virtual DemoProductPart ToModel(DemoProductPart part)
         {
@@ -25,9 +36,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
             part.ModifiedDate = ModifiedDate;
             part.ModifiedBy = ModifiedBy;
 
-            part.ProductId = ProductId;
+            part.ConfiguredProductId = ConfiguredProductId;
             part.Name = Name;
             part.ImgSrc = ImgSrc;
+            part.DefaultItemId = DefaultItemId;
+
+            if (!PartItems.IsNullOrEmpty())
+            {
+                part.ItemsIds = PartItems.Select(x => x.ItemId).ToArray();
+            }
 
             return part;
         }
@@ -47,18 +64,27 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
             ModifiedDate = part.ModifiedDate;
             ModifiedBy = part.ModifiedBy;
 
-            ProductId = part.ProductId;
+            ConfiguredProductId = part.ConfiguredProductId;
             Name = part.Name;
             ImgSrc = part.ImgSrc;
+            DefaultItemId = part.DefaultItemId;
+
+            if(part.ItemsIds != null)
+            {
+                PartItems = new ObservableCollection<DemoProductPartItemEntity>(part.ItemsIds.Select(x => new DemoProductPartItemEntity { ConfiguredProductPartId = part.Id, ItemId = x }));
+            }
 
             return this;
         }
 
         public virtual void Patch(DemoProductPartEntity target)
         {
-            target.ProductId = ProductId;
+            target.ConfiguredProductId = ConfiguredProductId;
             target.Name = Name;
             target.ImgSrc = ImgSrc;
+            target.DefaultItemId = DefaultItemId;
+
+            target.PartItems = PartItems;
         }
     }
 }
