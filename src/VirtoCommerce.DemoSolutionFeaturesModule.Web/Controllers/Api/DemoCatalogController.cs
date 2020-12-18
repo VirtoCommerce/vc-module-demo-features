@@ -28,42 +28,36 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         }
 
         [HttpGet]
-        [Route("product/{productId}/parts/search")]
-        public async Task<ActionResult<DemoProductPartSearchResult>> Search( [FromRoute] string productId, DemoProductPartSearchCriteria criteria)
+        [Route("product/parts/{id}")]
+        public async Task<ActionResult<DemoProductPart>> Search(string id)
         {
-            if (criteria.ConfiguredProductId != productId)
-            {
-                return BadRequest();
-            }
-
-            var result = await _partsSerarchService.SearchCategoriesAsync(criteria);
-
+            var result = (await _partsService.GetByIdsAsync(new[] { id })).FirstOrDefault();
             return Ok(result);
         }
 
         [HttpPost]
-        [Route("product/{productId}/parts")]
-        public async Task<ActionResult> SaveProductPart( [FromRoute] string productId, [FromBody] DemoProductPart[] parts)
+        [Route("product/parts/search")]
+        public async Task<ActionResult<DemoProductPartSearchResult>> Search( DemoProductPartSearchCriteria criteria)
+        {            
+            var result = await _partsSerarchService.SearchProductPartsAsync(criteria);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("product/parts")]
+        public async Task<ActionResult> SaveProductPart( [FromBody] DemoProductPart[] parts)
         {
-
-            if(parts.Any(x=>x.ConfiguredProductId !=  productId))
-            {
-                return BadRequest();
-            }
-
             await _partsService.SaveChangesAsync(parts);
-
             return Ok();
         }
 
 
         [HttpDelete]
-        [Route("product/{productId}/parts")]
+        [Route("product/parts")]
         [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
         public async Task<ActionResult> DeleteParts([FromQuery] string[] ids)
         {
             await _partsService.DeleteAsync(ids);
-
             return NoContent();
         }
     }
