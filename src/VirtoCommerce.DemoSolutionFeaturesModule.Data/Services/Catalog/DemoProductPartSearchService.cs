@@ -18,7 +18,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
 {
     public class DemoProductPartSearchService : IDemoProductPartSerarchService
     {
-
         private readonly Func<ICatalogRepository> _repositoryFactory;
         private readonly IPlatformMemoryCache _platformMemoryCache;
         private readonly IDemoProductPartService _productPartService;
@@ -70,7 +69,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
             });
         }
 
-
         protected virtual IQueryable<DemoProductPartEntity> BuildQuery(ICatalogRepository catalogRepository, DemoProductPartSearchCriteria criteria)
         {
             var query = ((DemoCatalogRepository)catalogRepository).ConfiguredProductParts;
@@ -79,7 +77,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
             {
                 query = query.Where(x => x.Name.Contains(criteria.Keyword));
             }
-           
+
             if (criteria.ConfiguredProductId != null)
             {
                 query = query.Where(x => x.ConfiguredProductId == criteria.ConfiguredProductId);
@@ -87,7 +85,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
 
             return query;
         }
-
 
         protected virtual IList<SortInfo> BuildSortExpression(DemoProductPartSearchCriteria criteria)
         {

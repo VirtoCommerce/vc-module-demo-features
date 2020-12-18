@@ -19,7 +19,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
 {
     public class DemoProductPartService : IDemoProductPartService
     {
-
         private readonly Func<ICatalogRepository> _repositoryFactory;
         private readonly IPlatformMemoryCache _platformMemoryCache;
         private readonly IEventPublisher _eventPublisher;
@@ -103,7 +102,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
 
         public async Task DeleteAsync(string[] ids)
         {
-
             var parts = await GetByIdsAsync(ids);
             var changedEntries = parts
                 .Select(x => new GenericChangedEntry<DemoProductPart>(x, EntryState.Deleted))
@@ -126,7 +124,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
 
             await _eventPublisher.Publish(new DemoProductPartChangedEvent(changedEntries));
         }
-
 
         protected virtual void ClearCache(IEnumerable<DemoProductPart> productParts)
         {

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -37,20 +35,19 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
 
         [HttpPost]
         [Route("product/parts/search")]
-        public async Task<ActionResult<DemoProductPartSearchResult>> Search( DemoProductPartSearchCriteria criteria)
-        {            
+        public async Task<ActionResult<DemoProductPartSearchResult>> Search(DemoProductPartSearchCriteria criteria)
+        {
             var result = await _partsSerarchService.SearchProductPartsAsync(criteria);
             return Ok(result);
         }
 
         [HttpPost]
         [Route("product/parts")]
-        public async Task<ActionResult> SaveProductPart( [FromBody] DemoProductPart[] parts)
+        public async Task<ActionResult> SaveProductPart([FromBody] DemoProductPart[] parts)
         {
             await _partsService.SaveChangesAsync(parts);
             return Ok();
         }
-
 
         [HttpDelete]
         [Route("product/parts")]

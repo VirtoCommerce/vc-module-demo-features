@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using VirtoCommerce.CatalogModule.Data.Model;
 using VirtoCommerce.Platform.Core.Common;
 

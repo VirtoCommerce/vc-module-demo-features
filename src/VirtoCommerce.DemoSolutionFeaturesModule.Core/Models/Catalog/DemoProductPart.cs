@@ -16,6 +16,5 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog
         public string DefaultItemId { get; set; }
 
         public string[] ItemsIds { get; set; }
-
     }
 }

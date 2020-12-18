@@ -10,7 +10,6 @@ using VirtoCommerce.CartModule.Core.Model;
 using VirtoCommerce.CartModule.Core.Services;
 using VirtoCommerce.CartModule.Data.Model;
 using VirtoCommerce.CartModule.Data.Repositories;
-using VirtoCommerce.CatalogModule.Core.Model;
 using VirtoCommerce.CatalogModule.Data.Model;
 using VirtoCommerce.CatalogModule.Data.Repositories;
 using VirtoCommerce.CustomerModule.Core.Model;
@@ -59,7 +58,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             var connectionString =
                 configuration.GetConnectionString("VirtoCommerce.VirtoCommerceDemoSolutionFeaturesModule") ??
                 configuration.GetConnectionString("VirtoCommerce");
-            serviceCollection.AddDbContext<CustomerDemoDbContext>(options => options.UseSqlServer(connectionString));            
+            serviceCollection.AddDbContext<CustomerDemoDbContext>(options => options.UseSqlServer(connectionString));
             serviceCollection.AddDbContext<DemoCartDbContext>(options => options.UseSqlServer(connectionString));
             serviceCollection.AddDbContext<DemoOrderDbContext>(options => options.UseSqlServer(connectionString));
             serviceCollection.AddDbContext<DemoCatalogDbContext>(options => options.UseSqlServer(connectionString));
@@ -129,7 +128,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             AbstractTypeFactory<DemoProductPart>.RegisterType<DemoProductPart>().MapToType<DemoProductPartEntity>();
             AbstractTypeFactory<DemoProductPartEntity>.RegisterType<DemoProductPartEntity>();
 
-
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
             settingsRegistrar.RegisterSettings(ModuleConstants.Settings.General.AllSettings, ModuleInfo.Id);
@@ -153,13 +151,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             var configuration = appBuilder.ApplicationServices.GetService<IConfiguration>();
 
-
             // features registration
             var featureStorage = appBuilder.ApplicationServices.GetService<IFeaturesStorage>();
 
             var demoFeaturesSection = configuration.GetSection("DemoFeatures");
             featureStorage.AddHighPriorityFeatureDefinition(demoFeaturesSection);
-            
+
             featureStorage.TryAddFeature("ConfigurableProduct", "Developers");
 
             // Ensure that any pending migrations are applied

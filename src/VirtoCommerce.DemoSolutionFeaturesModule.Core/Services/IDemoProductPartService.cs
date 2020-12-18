@@ -5,7 +5,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Services
 {
     public interface IDemoProductPartService
     {
-        Task<DemoProductPart[]> GetByIdsAsync(string[] partIds);        
+        Task<DemoProductPart[]> GetByIdsAsync(string[] partIds);
 
         Task SaveChangesAsync(DemoProductPart[] parts);
 

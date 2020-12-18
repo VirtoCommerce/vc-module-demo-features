@@ -18,14 +18,13 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
         {
         }
 
-
         public virtual async Task<DemoProductPartEntity[]> GetProductPartsByIdsAsync(string[] ids)
         {
             var result = Array.Empty<DemoProductPartEntity>();
 
             if (!ids.IsNullOrEmpty())
             {
-                result = await ConfiguredProductParts.Where(x => ids.Contains(x.Id)).ToArrayAsync();                
+                result = await ConfiguredProductParts.Where(x => ids.Contains(x.Id)).ToArrayAsync();
             }
 
             return result;

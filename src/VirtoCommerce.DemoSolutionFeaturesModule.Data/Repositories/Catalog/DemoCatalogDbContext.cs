@@ -16,7 +16,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
             modelBuilder.Entity<DemoItemEntity>()
                .HasDiscriminator()
                .HasValue<DemoItemEntity>(nameof(DemoItemEntity));
-            modelBuilder.Entity<DemoItemEntity>().Property("Discriminator").HasMaxLength(128);           
+            modelBuilder.Entity<DemoItemEntity>().Property("Discriminator").HasMaxLength(128);
 
             modelBuilder.Entity<DemoProductPartEntity>().ToTable("DemoProductPart").HasKey(x => x.Id);
             modelBuilder.Entity<DemoProductPartEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
@@ -33,7 +33,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
             modelBuilder.Entity<DemoProductPartItemEntity>()
                 .HasKey(x => new { x.ConfiguredProductPartId, x.ItemId });
 
-
             modelBuilder.Entity<DemoItemEntity>()
                .HasMany(x => x.PartItems)
                .WithOne(x => x.Item)
@@ -43,9 +42,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
             modelBuilder.Entity<DemoProductPartEntity>()
                 .HasMany(x => x.PartItems)
                 .WithOne(x => x.ConfiguredProductPart)
-                .HasForeignKey(x=>x.ConfiguredProductPartId)
+                .HasForeignKey(x => x.ConfiguredProductPartId)
                 .OnDelete(DeleteBehavior.ClientCascade);
-
 
             base.OnModelCreating(modelBuilder);
         }
