@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
@@ -9,16 +10,23 @@ using VirtoCommerce.CartModule.Core.Model;
 using VirtoCommerce.CartModule.Core.Services;
 using VirtoCommerce.CartModule.Data.Model;
 using VirtoCommerce.CartModule.Data.Repositories;
+using VirtoCommerce.CatalogModule.Core.Model;
+using VirtoCommerce.CatalogModule.Data.Model;
+using VirtoCommerce.CatalogModule.Data.Repositories;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Notifications;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Web.Infrastructure;
 using VirtoCommerce.NotificationsModule.Core.Services;
 using VirtoCommerce.NotificationsModule.Core.Types;
@@ -54,6 +62,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddDbContext<CustomerDemoDbContext>(options => options.UseSqlServer(connectionString));            
             serviceCollection.AddDbContext<DemoCartDbContext>(options => options.UseSqlServer(connectionString));
             serviceCollection.AddDbContext<DemoOrderDbContext>(options => options.UseSqlServer(connectionString));
+            serviceCollection.AddDbContext<DemoCatalogDbContext>(options => options.UseSqlServer(connectionString));
 
             // customer
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
@@ -70,6 +79,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddSingleton<DemoFeatureDefinitionProvider>();
             serviceCollection.AddSingleton<IFeaturesStorage>(s => s.GetService<DemoFeatureDefinitionProvider>());
             serviceCollection.AddSingleton<IFeatureDefinitionProvider>(s => s.GetService<DemoFeatureDefinitionProvider>());
+
+            // catalog
+            serviceCollection.AddTransient<ICatalogRepository, DemoCatalogRepository>();
+            serviceCollection.AddTransient<Func<ICatalogRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<ICatalogRepository>());
+            serviceCollection.AddTransient<IDemoProductPartService, DemoProductPartService>();
+            serviceCollection.AddTransient<IDemoProductPartSerarchService, DemoProductPartSearchService>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
@@ -107,6 +122,13 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
                 .MapToType<DemoCustomerOrderEntity>()
                 .WithFactory(() => new DemoCustomerOrder { OperationType = "CustomerOrder" });
             AbstractTypeFactory<CustomerOrderEntity>.OverrideType<CustomerOrderEntity, DemoCustomerOrderEntity>();
+
+            // catalog
+            AbstractTypeFactory<ItemEntity>.OverrideType<ItemEntity, DemoItemEntity>();
+
+            AbstractTypeFactory<DemoProductPart>.RegisterType<DemoProductPart>().MapToType<DemoProductPartEntity>();
+            AbstractTypeFactory<DemoProductPartEntity>.RegisterType<DemoProductPartEntity>();
+
 
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
@@ -157,6 +179,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             }
             // order
             using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<DemoOrderDbContext>())
+            {
+                dbContext.Database.EnsureCreated();
+                dbContext.Database.Migrate();
+            }
+            // catalog
+            using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<DemoCatalogDbContext>())
             {
                 dbContext.Database.EnsureCreated();
                 dbContext.Database.Migrate();
