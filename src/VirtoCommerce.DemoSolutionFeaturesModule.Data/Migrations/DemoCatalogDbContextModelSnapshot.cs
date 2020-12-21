@@ -1072,7 +1072,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("DemoProductPartItemEntity");
+                    b.ToTable("DemoProductPartItem");
                 });
 
             modelBuilder.Entity("VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog.DemoItemEntity", b =>

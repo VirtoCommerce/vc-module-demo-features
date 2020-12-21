@@ -41,7 +41,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DemoProductPartItemEntity",
+                name: "DemoProductPartItem",
                 columns: table => new
                 {
                     ConfiguredProductPartId = table.Column<string>(maxLength: 128, nullable: false),
@@ -49,15 +49,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DemoProductPartItemEntity", x => new { x.ConfiguredProductPartId, x.ItemId });
+                    table.PrimaryKey("PK_DemoProductPartItem", x => new { x.ConfiguredProductPartId, x.ItemId });
                     table.ForeignKey(
-                        name: "FK_DemoProductPartItemEntity_DemoProductPart_ConfiguredProductPartId",
+                        name: "FK_DemoProductPartItem_DemoProductPart_ConfiguredProductPartId",
                         column: x => x.ConfiguredProductPartId,
                         principalTable: "DemoProductPart",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_DemoProductPartItemEntity_Item_ItemId",
+                        name: "FK_DemoProductPartItem_Item_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Item",
                         principalColumn: "Id",
@@ -70,15 +70,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
                 column: "ConfiguredProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DemoProductPartItemEntity_ItemId",
-                table: "DemoProductPartItemEntity",
+                name: "IX_DemoProductPartItem_ItemId",
+                table: "DemoProductPartItem",
                 column: "ItemId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DemoProductPartItemEntity");
+                name: "DemoProductPartItem");
 
             migrationBuilder.DropTable(
                 name: "DemoProductPart");

@@ -26,6 +26,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 
             // PartItems many to many defenition
             modelBuilder.Entity<DemoProductPartItemEntity>()
+                .ToTable("DemoProductPartItem");
+            modelBuilder.Entity<DemoProductPartItemEntity>()
                 .Property(x => x.ConfiguredProductPartId).HasMaxLength(128);
             modelBuilder.Entity<DemoProductPartItemEntity>()
                 .Property(x => x.ItemId).HasMaxLength(128);
