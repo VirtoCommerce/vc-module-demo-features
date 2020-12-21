@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using VirtoCommerce.CatalogModule.Data.Repositories;
-using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog;
 using VirtoCommerce.Platform.Core.Common;
 
