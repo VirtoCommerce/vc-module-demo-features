@@ -94,7 +94,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
             target.Priority = Priority;
             target.DefaultItemId = DefaultItemId;
 
-            target.PartItems = PartItems;
+            if (!PartItems.IsNullCollection())
+            {
+                target.PartItems = PartItems;
+            }
         }
     }
 }
