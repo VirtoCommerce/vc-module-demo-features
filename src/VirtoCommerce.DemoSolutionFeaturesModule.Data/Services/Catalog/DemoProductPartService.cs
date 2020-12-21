@@ -33,7 +33,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
             _eventPublisher = eventPublisher;
         }
 
-        public async Task<DemoProductPart[]> GetByIdsAsync(string[] partIds)
+        public virtual async Task<DemoProductPart[]> GetByIdsAsync(string[] partIds)
         {
             var cacheKey = CacheKey.With(GetType(), nameof(GetByIdsAsync), string.Join("-", partIds.OrderBy(x => x)));
 
@@ -63,7 +63,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
             return result;
         }
 
-        public async Task SaveChangesAsync(DemoProductPart[] parts)
+        public virtual async Task SaveChangesAsync(DemoProductPart[] parts)
         {
             var pkMap = new PrimaryKeyResolvingMap();
             var changedEntries = new List<GenericChangedEntry<DemoProductPart>>();
@@ -100,9 +100,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
             await _eventPublisher.Publish(new DemoProductPartChangedEvent(changedEntries));
         }
 
-        public async Task DeleteAsync(string[] ids)
+        public virtual async Task DeleteAsync(string[] partIds)
         {
-            var parts = await GetByIdsAsync(ids);
+            var parts = await GetByIdsAsync(partIds);
             var changedEntries = parts
                 .Select(x => new GenericChangedEntry<DemoProductPart>(x, EntryState.Deleted))
                 .ToArray();
@@ -111,7 +111,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
 
             await _eventPublisher.Publish(new DemoProductPartChangingEvent(changedEntries));
 
-            var partEntities = await repository.GetProductPartsByIdsAsync(ids);
+            var partEntities = await repository.GetProductPartsByIdsAsync(partIds);
 
             foreach (var part in partEntities)
             {

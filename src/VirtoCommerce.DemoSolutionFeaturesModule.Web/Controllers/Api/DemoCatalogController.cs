@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using catalogCore = VirtoCommerce.CatalogModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services;
 
@@ -13,21 +14,19 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
     {
         private readonly IDemoProductPartSerarchService _partsSerarchService;
         private readonly IDemoProductPartService _partsService;
-        private readonly IAuthorizationService _authorizationService;
 
         public DemoCatalogController(
             IDemoProductPartService partsService
-            , IDemoProductPartSerarchService partsSerarchService
-            , IAuthorizationService authorizationService)
+            , IDemoProductPartSerarchService partsSerarchService)
         {
             _partsSerarchService = partsSerarchService;
             _partsService = partsService;
-            _authorizationService = authorizationService;
         }
 
         [HttpGet]
         [Route("product/parts/{id}")]
-        public async Task<ActionResult<DemoProductPart>> Search(string id)
+        [Authorize(catalogCore.ModuleConstants.Security.Permissions.Read)]
+        public async Task<ActionResult<DemoProductPart>> GetProductPartById(string id)
         {
             var result = (await _partsService.GetByIdsAsync(new[] { id })).FirstOrDefault();
             return Ok(result);
@@ -35,6 +34,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
 
         [HttpPost]
         [Route("product/parts/search")]
+        [Authorize(catalogCore.ModuleConstants.Security.Permissions.Read)]
         public async Task<ActionResult<DemoProductPartSearchResult>> Search(DemoProductPartSearchCriteria criteria)
         {
             var result = await _partsSerarchService.SearchProductPartsAsync(criteria);
@@ -43,6 +43,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
 
         [HttpPost]
         [Route("product/parts")]
+        [Authorize(catalogCore.ModuleConstants.Security.Permissions.Update)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
         public async Task<ActionResult> SaveProductPart([FromBody] DemoProductPart[] parts)
         {
             await _partsService.SaveChangesAsync(parts);
@@ -51,6 +53,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
 
         [HttpDelete]
         [Route("product/parts")]
+        [Authorize(catalogCore.ModuleConstants.Security.Permissions.Delete)]
         [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
         public async Task<ActionResult> DeleteParts([FromQuery] string[] ids)
         {
