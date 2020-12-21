@@ -9,6 +9,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
     <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.2.0" />
     <PackageReference Include="System.Linq.Async" Version="5.0.0" />
+    <PackageReference Include="VirtoCommerce.CatalogModule.Core" Version="3.19.0" />
     <PackageReference Include="VirtoCommerce.NotificationsModule.TemplateLoader.FileSystem" Version="3.10.0" />
     <PackageReference Include="VirtoCommerce.PaymentModule.Core" Version="3.2.0" />
   </ItemGroup>
@@ -28,7 +29,7 @@
     <Folder Include="JsonConverters\" />
   </ItemGroup>
   <ItemGroup>
-      <NotificationTemplates Include="Templates/**"/>
+      <NotificationTemplates Include="Templates/**" />
   </ItemGroup>
   <Target Name="CopyCustomContentOnPublish" AfterTargets="Publish">
       <Copy SourceFiles="@(NotificationTemplates)" DestinationFiles="$(PublishDir)\..\%(Identity)" />

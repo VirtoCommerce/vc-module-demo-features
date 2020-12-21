@@ -12,9 +12,4 @@
     <PackageReference Include="VirtoCommerce.Platform.Core" Version="3.16.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Events\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
