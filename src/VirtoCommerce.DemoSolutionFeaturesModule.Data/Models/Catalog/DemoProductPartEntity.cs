@@ -12,12 +12,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
         public DemoItemEntity ConfiguredProduct { get; set; }
 
         [StringLength(128)]
+        [Required]
         public string ConfiguredProductId { get; set; }
 
-        [StringLength(512)]
+        [StringLength(1024)]
+        [Required]
         public string Name { get; set; }
 
-        [StringLength(1024)]
+        [StringLength(2083)]
+        [Required]
         public string ImgSrc { get; set; }
 
         [StringLength(128)]

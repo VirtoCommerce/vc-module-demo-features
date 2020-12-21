@@ -81,7 +81,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             // catalog
             serviceCollection.AddTransient<ICatalogRepository, DemoCatalogRepository>();
-            serviceCollection.AddTransient<Func<ICatalogRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<ICatalogRepository>());
             serviceCollection.AddTransient<IDemoProductPartService, DemoProductPartService>();
             serviceCollection.AddTransient<IDemoProductPartSerarchService, DemoProductPartSearchService>();
         }
