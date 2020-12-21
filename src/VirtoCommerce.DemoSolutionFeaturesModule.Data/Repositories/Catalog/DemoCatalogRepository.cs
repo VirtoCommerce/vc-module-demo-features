@@ -23,7 +23,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 
             if (!ids.IsNullOrEmpty())
             {
-                result = await ConfiguredProductParts.Where(x => ids.Contains(x.Id)).ToArrayAsync();
+                result = await ConfiguredProductParts.Include(x=>x.PartItems).Where(x => ids.Contains(x.Id)).ToArrayAsync();
             }
 
             return result;
