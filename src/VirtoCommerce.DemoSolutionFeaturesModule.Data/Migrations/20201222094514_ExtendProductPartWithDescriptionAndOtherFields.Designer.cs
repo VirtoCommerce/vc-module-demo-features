@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 {
     [DbContext(typeof(DemoCatalogDbContext))]
-    partial class DemoCatalogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201222094514_ExtendProductPartWithDescriptionAndOtherFields")]
+    partial class ExtendProductPartWithDescriptionAndOtherFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
