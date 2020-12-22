@@ -19,14 +19,23 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
         [Required]
         public string Name { get; set; }
 
+        [StringLength(1024)]
+        public string Description { get; set; }
+
+        public bool IsRequired { get; set; }
+
         [StringLength(2083)]
         [Required]
         public string ImgSrc { get; set; }
 
+        public int Priority { get; set; }
+
+        public int MinQuantity { get; set; }
+
+        public int MaxQuantity { get; set; }
+
         [StringLength(128)]
         public string DefaultItemId { get; set; }
-
-        public int Priority { get; set; }
 
         public virtual ObservableCollection<DemoProductPartItemEntity> PartItems { get; set; } = new NullCollection<DemoProductPartItemEntity>();
 
@@ -45,8 +54,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
 
             part.ConfiguredProductId = ConfiguredProductId;
             part.Name = Name;
+            part.Description = Description;
+            part.IsRequired = IsRequired;
             part.ImgSrc = ImgSrc;
             part.Priority = Priority;
+            part.MinQuantity = MinQuantity;
+            part.MaxQuantity = MaxQuantity;
             part.DefaultItemId = DefaultItemId;
 
             if (!PartItems.IsNullOrEmpty())
@@ -74,8 +87,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
 
             ConfiguredProductId = part.ConfiguredProductId;
             Name = part.Name;
+            Description = part.Description;
+            IsRequired = part.IsRequired;
             ImgSrc = part.ImgSrc;
             Priority = part.Priority;
+            MinQuantity = part.MinQuantity;
+            MaxQuantity = part.MaxQuantity;
             DefaultItemId = part.DefaultItemId;
 
             if (part.ItemsIds != null)
@@ -90,8 +107,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
         {
             target.ConfiguredProductId = ConfiguredProductId;
             target.Name = Name;
+            target.Description = Description;
+            target.IsRequired = IsRequired;
             target.ImgSrc = ImgSrc;
             target.Priority = Priority;
+            target.MinQuantity = MinQuantity;
+            target.MaxQuantity = MaxQuantity;
             target.DefaultItemId = DefaultItemId;
 
             if (!PartItems.IsNullCollection())
