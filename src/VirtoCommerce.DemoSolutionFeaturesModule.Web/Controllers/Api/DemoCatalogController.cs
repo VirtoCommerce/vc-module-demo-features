@@ -36,7 +36,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         [HttpPost]
         [Route("product/parts/search")]
         [Authorize(catalogCore.ModuleConstants.Security.Permissions.Read)]
-        public async Task<ActionResult<DemoProductPartSearchResult>> Search(DemoProductPartSearchCriteria criteria)
+        public async Task<ActionResult<DemoProductPartSearchResult>> Search([FromBody] DemoProductPartSearchCriteria criteria)
         {
             var result = await _partsSerarchService.SearchProductPartsAsync(criteria);
             return Ok(result);
