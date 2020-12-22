@@ -37,6 +37,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
 
             productPartsApi.search({
                 searchPhrase: filter.keyword ? filter.keyword : undefined,
+                configuredProductId: blade.itemId,
                 sort: 'priority:asc',
                 skip: ($scope.pageSettings.currentPage - 1) * $scope.pageSettings.itemsPerPageCount,
                 take: $scope.pageSettings.itemsPerPageCount
@@ -66,7 +67,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                     blade.currentEntities.forEach((entity, index) => {
                         entity.priority = index + 1;
                     })
-                    productPartsApi.update(blade.currentEntities, () => {
+                    productPartsApi.save(blade.currentEntities, () => {
                         blade.isLoading = false;
                     }, () => {
                         blade.refresh();
