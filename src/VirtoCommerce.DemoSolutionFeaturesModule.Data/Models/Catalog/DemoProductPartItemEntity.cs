@@ -9,5 +9,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
         public string ItemId { get; set; }
 
         public DemoItemEntity Item { get; set; }
+
+        public int Priority { get; set; }
     }
 }

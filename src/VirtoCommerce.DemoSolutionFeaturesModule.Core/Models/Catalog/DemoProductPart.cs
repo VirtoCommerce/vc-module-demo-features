@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using VirtoCommerce.CatalogModule.Core.Model;
 using VirtoCommerce.Platform.Core.Common;
 
@@ -23,6 +24,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog
 
         public string DefaultItemId { get; set; }
 
-        public string[] ItemsIds { get; set; }
+        //public string[] ItemsIds { get; set; }
+
+        public IEnumerable<ProductPartItemInfo> PartItems { get; set; }
     }
 }
