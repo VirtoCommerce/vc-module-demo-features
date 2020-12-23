@@ -25,7 +25,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
         public bool IsRequired { get; set; }
 
         [StringLength(2083)]
-        [Required]
         public string ImgSrc { get; set; }
 
         public int Priority { get; set; }
