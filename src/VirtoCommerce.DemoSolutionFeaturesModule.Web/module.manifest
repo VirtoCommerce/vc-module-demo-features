@@ -5,7 +5,7 @@
   <version-tag />
   <platformVersion>3.24.0</platformVersion>
   <title>Demo solution features module</title>
-  <description>Module contains additions, extensions & customization for platform developed by Demo Solution Team.</description>
+  <description>Module contains additions, extensions and customization for platform developed by Demo Solution Team.</description>
   <authors>
     <author>Maksim Kopnov</author>
     <author>Anton Veretennikov</author>
