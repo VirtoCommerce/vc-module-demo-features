@@ -21,7 +21,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog
 
         public int MaxQuantity { get; set; }
 
-        public string DefaultItemId { get; set; }       
+        public string DefaultItemId { get; set; }
 
         public ProductPartItemInfo[] PartItems { get; set; }
     }
