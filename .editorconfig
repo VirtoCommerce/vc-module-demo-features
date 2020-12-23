@@ -69,10 +69,6 @@ csharp_new_line_before_members_in_anonymous_types = true
 indent_style = space
 indent_size = 2
 
-#HTML code style settings
-[*.html]
-insert_final_newline = false
-
 #JavaScript code style settings
 [*.js]
 quote_type = single
