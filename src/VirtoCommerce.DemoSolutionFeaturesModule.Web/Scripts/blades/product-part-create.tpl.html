@@ -1,0 +1,62 @@
+<div class="blade-content __normal">
+    <div class="blade-inner">
+        <div class="inner-block">
+            <form class="form" name="formScope">
+                <fieldset ng-init="setForm(formScope)">
+                    <div class="form-group __info list">
+                        <label class="form-label">{{ 'demoSolutionFeaturesModule.blades.create-product-part.labels.name' | translate }}</label>
+                        <div class="form-input">
+                            <input focus-on="" ng-model="blade.currentEntity.name" required ng-maxlength="128">
+                        </div>
+                    </div>
+                    <div class="form-group __info list">
+                        <label class="form-label">{{ 'demoSolutionFeaturesModule.blades.create-product-part.labels.description' | translate }}</label>
+                        <div class="form-input">
+                            <textarea cols="30" rows="5" ng-model="blade.currentEntity.description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="column">
+                            <label class="form-label">{{ 'demoSolutionFeaturesModule.blades.create-product-part.labels.min-quantity' | translate }}</label>
+                            <div class="form-input __number">
+                                <input num-type="integer" min="0" smart-float ng-model="blade.currentEntity.minQuantity">
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="form-group __info list">
+                                <label class="form-label">{{ 'demoSolutionFeaturesModule.blades.create-product-part.labels.max-quantity' | translate }}</label>
+                                <div class="form-input __number">
+                                    <input num-type="integer" min="0" smart-float ng-model="blade.currentEntity.maxQuantity">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group __info list">
+                        <label class="form-label">{{ 'demoSolutionFeaturesModule.blades.create-product-part.labels.is-required' | translate }}</label>
+                        <div class="form-input">
+                            <label class="form-label __switch">
+                                <input type="checkbox" ng-model="blade.currentEntity.isRequired" />
+                                <span class="switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-group">
+                    <ul class="list __items">
+                        <li class="list-item" ng-click="openUploadIconBlade()">
+                            <i class="list-ico fa fa-image" aria-hidden="true"></i>
+                            <span class="list-t">{{ 'demoSolutionFeaturesModule.blades.create-product-part.icon-title' | translate }}</span>
+                            <span class="list-descr">{{ 'demoSolutionFeaturesModule.blades.create-product-part.icon-description' | translate }}</span>
+                        </li>
+                        <li class="list-item" ng-click="openProductList()">
+                            <i class="list-ico fa fa-cogs" aria-hidden="true"></i>
+                            <span class="list-t">{{ 'demoSolutionFeaturesModule.blades.create-product-part.product-list-title' | translate }}</span>
+                            <span class="list-descr">{{ 'demoSolutionFeaturesModule.blades.create-product-part.product-list-description' | translate }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

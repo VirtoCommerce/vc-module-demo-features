@@ -3,12 +3,13 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
     '$scope',
     'uiGridConstants',
     'platformWebApp.uiGridHelper',
-    'platformWebApp.bladeUtils', 
+    'platformWebApp.bladeUtils',
     'virtoCommerce.DemoSolutionFeaturesModule.productPartsApi',
     function($scope, uiGridConstants, uiGridHelper, bladeUtils, productPartsApi) {
         $scope.uiGridConstants = uiGridConstants;
         var blade = $scope.blade;
         var filter = $scope.filter = {};
+        const bladeNavigationService = bladeUtils.bladeNavigationService;
 
         blade.headIcon = 'fa-cogs';
         blade.title = 'demoSolutionFeaturesModule.blades.product-part-list.title';
@@ -17,12 +18,41 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         blade.toolbarCommands = [
             {
                 name: "platform.commands.add", icon: 'fa fa-plus',
+                executeMethod: () => {
+                    bladeNavigationService.closeChildrenBlades(blade, function () {
+                        var newBlade = {
+                            id: 'createProductPart',
+                            title: 'demoSolutionFeaturesModule.blades.create-product-part.title',
+                            subtitle: 'demoSolutionFeaturesModule.blades.create-product-part.subtitle-create',
+                            isNew: true,
+                            partsLength: $scope.pageSettings.totalItems,
+                            configuredProductId: blade.itemId,
+                            controller: 'virtoCommerce.DemoSolutionFeaturesModule.createProductPartController',
+                            template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-create.tpl.html'
+                        };
+                        bladeNavigationService.showBlade(newBlade, blade);
+                    });
+                },
                 canExecuteMethod: () => true,
                 permission: 'catalog:create'
             },
             {
                 name: "platform.commands.edit", icon: 'fa fa-pencil',
-                canExecuteMethod: isAnySelected,
+                executeMethod: () => {
+                    var selectedNode = $scope.gridApi.selection.getSelectedRows()[0];
+                    bladeNavigationService.closeChildrenBlades(blade, function () {
+                        var newBlade = {
+                            id: 'editProductPart',
+                            title: 'demoSolutionFeaturesModule.blades.create-product-part.title',
+                            subtitle: 'demoSolutionFeaturesModule.blades.create-product-part.subtitle-edit',
+                            originalEntity: selectedNode,
+                            controller: 'virtoCommerce.DemoSolutionFeaturesModule.createProductPartController',
+                            template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-create.tpl.html'
+                        };
+                        bladeNavigationService.showBlade(newBlade, blade);
+                    });
+                },
+                canExecuteMethod: isOnlyOneSelected,
                 permission: 'catalog:update'
             },
             {
@@ -49,7 +79,21 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             });
         };
 
-        $scope.select = () => {};
+        $scope.select = (node) => {
+            $scope.selectedNodeId = node.id;
+
+            var newBlade = {
+                id: 'editProductPart',
+                title: 'demoSolutionFeaturesModule.blades.create-product-part.title',
+                subtitle: 'demoSolutionFeaturesModule.blades.create-product-part.subtitle-edit',
+                originalEntity: node,
+                controller: 'virtoCommerce.DemoSolutionFeaturesModule.createProductPartController',
+                template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-create.tpl.html'
+            };
+            bladeNavigationService.showBlade(newBlade, blade);
+
+        };
+
         $scope.delete = () => {};
 
         filter.changeKeyword = ($event) => {
@@ -80,7 +124,9 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                         entity.priority = index + 1;
                     })
                     productPartsApi.save(blade.currentEntities, () => {
-                        blade.isLoading = false;
+                        bladeNavigationService.closeChildrenBlades(blade, () => {
+                            blade.isLoading = false;
+                        });
                     }, () => {
                         blade.refresh();
                     });
@@ -92,5 +138,9 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
 
         function isAnySelected() {
             return $scope.gridApi && _.any($scope.gridApi.selection.getSelectedRows());
+        }
+
+        function isOnlyOneSelected() {
+            return $scope.gridApi && $scope.gridApi.selection.getSelectedRows().length === 1;
         }
     }]);
