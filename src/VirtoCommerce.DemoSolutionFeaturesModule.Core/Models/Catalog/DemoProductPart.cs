@@ -23,6 +23,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog
 
         public string DefaultItemId { get; set; }
 
-        public string[] ItemsIds { get; set; }
+        public ProductPartItemInfo[] PartItems { get; set; }
     }
 }

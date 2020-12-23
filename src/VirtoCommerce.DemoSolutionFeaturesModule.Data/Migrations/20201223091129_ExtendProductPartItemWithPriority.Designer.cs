@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 {
     [DbContext(typeof(DemoCatalogDbContext))]
-    partial class DemoCatalogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201223091129_ExtendProductPartItemWithPriority")]
+    partial class ExtendProductPartItemWithPriority
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1036,6 +1038,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
                         .HasMaxLength(1024);
 
                     b.Property<string>("ImgSrc")
+                        .IsRequired()
                         .HasColumnType("nvarchar(2083)")
                         .HasMaxLength(2083);
 

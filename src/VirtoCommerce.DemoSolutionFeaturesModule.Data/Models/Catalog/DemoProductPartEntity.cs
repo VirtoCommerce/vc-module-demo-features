@@ -25,7 +25,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
         public bool IsRequired { get; set; }
 
         [StringLength(2083)]
-        [Required]
         public string ImgSrc { get; set; }
 
         public int Priority { get; set; }
@@ -64,7 +63,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
 
             if (!PartItems.IsNullOrEmpty())
             {
-                part.ItemsIds = PartItems.Select(x => x.ItemId).ToArray();
+                part.PartItems = PartItems.Select(x => new ProductPartItemInfo { ItemId = x.ItemId, Priority = x.Priority } ).ToArray();
             }
 
             return part;
@@ -95,9 +94,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
             MaxQuantity = part.MaxQuantity;
             DefaultItemId = part.DefaultItemId;
 
-            if (part.ItemsIds != null)
+            if (part.PartItems != null)
             {
-                PartItems = new ObservableCollection<DemoProductPartItemEntity>(part.ItemsIds.Select(x => new DemoProductPartItemEntity { ConfiguredProductPartId = part.Id, ItemId = x }));
+                PartItems = new ObservableCollection<DemoProductPartItemEntity>(part.PartItems.Select(x =>
+                    new DemoProductPartItemEntity { ConfiguredProductPartId = part.Id, ItemId = x.ItemId, Priority = x.Priority }
+                ));
             }
 
             return this;
