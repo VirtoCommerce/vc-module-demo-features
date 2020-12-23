@@ -3,7 +3,7 @@
         <div class="form-input __search">
             <input ng-model="filter.keyword"
                    placeholder="{{'platform.placeholders.search-keyword' | translate}}"
-                   ng-keyup="filter.changeKeyword()" />
+                   ng-keyup="filter.changeKeyword($event)" />
             <button class="btn __other"
                     style="position: relative; right: 45px;">
                 <i class="btn-ico fa fa-times-circle"
@@ -57,7 +57,7 @@
 </div>
 
 <script id="product-part-row.html" type="text/ng-template">
-    <div grid="grid" class="ui-grid-draggable-row" draggable="!filter.keyword">
+    <div grid="grid" class="ui-grid-draggable-row" draggable="{{ !grid.appScope.filter.keyword }}">
         <div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.uid"
              role="{{col.isRowHeader ? 'rowheader' : 'gridcell' }}"
              class="ui-grid-cell"
