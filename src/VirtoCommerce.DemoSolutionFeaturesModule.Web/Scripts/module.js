@@ -6,8 +6,18 @@ if (AppDependencies !== undefined) {
 }
 
 angular.module(moduleName, [])
-    .run(['virtoCommerce.catalogModule.itemTypesResolverService', 'platformWebApp.widgetService', 'virtoCommerce.demoFeatures.featureManager',
-        function (itemTypesResolverService, widgetService, featureManager) {
+    .run(['$rootScope', '$window', 'virtoCommerce.catalogModule.itemTypesResolverService', 'platformWebApp.widgetService', 'virtoCommerce.demoFeatures.featureManager',
+        function ($rootScope, $window, itemTypesResolverService, widgetService, featureManager) {
+            // Refresh page & reinitialize application after login/logout.
+            // We need this workaround to toggle features depending on current user permissions
+            let isFreshPageLoad = true;
+            $rootScope.$on('loginStatusChanged', function(_, authContext) {
+                if (!isFreshPageLoad && authContext.isAuthenticated) {
+                    $window.location.reload();
+                }
+                isFreshPageLoad = false;
+            });
+
             const configurableProductType = 'Configurable';
             featureManager.isFeatureEnabled('ConfigurableProduct').then(() => {
                 itemTypesResolverService.registerType({
