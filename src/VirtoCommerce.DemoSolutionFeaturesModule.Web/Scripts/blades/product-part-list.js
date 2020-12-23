@@ -52,7 +52,19 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         $scope.select = () => {};
         $scope.delete = () => {};
 
-        filter.criteriaChanged = () => {
+        filter.changeKeyword = ($event) => {
+            const enterKeyCode = 13;
+            if ($event.which === enterKeyCode) {
+                filter.update();
+            }
+        }
+
+        filter.clearKeyword = () => {
+            filter.keyword = null;
+            filter.update();
+        }
+
+        filter.update = () => {
             if ($scope.pageSettings.currentPage > 1) {
                 $scope.pageSettings.currentPage = 1;
             } else {
@@ -82,4 +94,3 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             return $scope.gridApi && _.any($scope.gridApi.selection.getSelectedRows());
         }
     }]);
-

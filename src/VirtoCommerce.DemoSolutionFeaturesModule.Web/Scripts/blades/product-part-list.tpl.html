@@ -3,12 +3,12 @@
         <div class="form-input __search">
             <input ng-model="filter.keyword"
                    placeholder="{{'platform.placeholders.search-keyword' | translate}}"
-                   ng-keyup="$event.which === 13 && filter.criteriaChanged()" />
+                   ng-keyup="filter.changeKeyword()" />
             <button class="btn __other"
                     style="position: relative; right: 45px;">
                 <i class="btn-ico fa fa-times-circle"
                    title="Clear"
-                   ng-click="filter.keyword=null;filter.criteriaChanged()"
+                   ng-click="filter.clearKeyword()"
                    aria-hidden="true">
                 </i>
             </button>
