@@ -41,7 +41,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         ];
 
         blade.onClose = (closeCallback) => {
-            bladeNavigationService.showConfirmationIfNeeded(isDirty() && !blade.isNew && !isPriorityChanged(), $scope.isValid(), blade, $scope.saveChanges, closeCallback, "demoCustomerSegmentsModule.dialogs.customer-segment-save.title", "demoCustomerSegmentsModule.dialogs.customer-segment-save.message");
+            bladeNavigationService.showConfirmationIfNeeded(isDirty() && !blade.isNew && !isPriorityChanged(), $scope.isValid(), blade, $scope.saveChanges, closeCallback, "demoSolutionFeaturesModule.dialogs.product-part-create.title", "demoSolutionFeaturesModule.dialogs.product-part-create.message");
         };
 
         var formScope;

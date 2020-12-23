@@ -34,6 +34,12 @@
         "product-list-title": "Product list",
         "product-list-description": "0 products"
       }
+    },
+    "dialogs": {
+      "product-part-create": {
+        "title": "Save changes",
+        "message": "The part has been modified. Do you want to save changes?"
+      }
     }
   },
   "permissions": {
