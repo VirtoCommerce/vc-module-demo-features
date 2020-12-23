@@ -4,8 +4,8 @@
   <version>1.6.0</version>
   <version-tag />
   <platformVersion>3.24.0</platformVersion>
-  <title>VirtoCommerce.DemoSolutionFeaturesModule</title>
-  <description>Enter your module description here.</description>
+  <title>Demo solution features module</title>
+  <description>Module contains additions, extensions & customization for platform developed by Demo Solution Team.</description>
   <authors>
     <author>Maksim Kopnov</author>
     <author>Anton Veretennikov</author>
