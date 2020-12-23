@@ -10,6 +10,7 @@ angular.module(moduleName, [])
         function ($rootScope, $window, itemTypesResolverService, widgetService, featureManager) {
             // Refresh page & reinitialize application after login/logout.
             // We need this workaround to toggle features depending on current user permissions
+            // It doesn't work by default because blades, widgets registration occurs during app initialization
             let isFreshPageLoad = true;
             $rootScope.$on('loginStatusChanged', function(_, authContext) {
                 if (!isFreshPageLoad && authContext.isAuthenticated) {
