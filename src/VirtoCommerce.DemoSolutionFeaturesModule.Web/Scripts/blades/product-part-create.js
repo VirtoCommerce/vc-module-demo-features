@@ -62,7 +62,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         $scope.saveChanges = () => {
             productPartsApi.save({}, [blade.currentEntity], () => {
                 if (blade.isNew) {
-                    blade.isNew = undefined;
+                    blade.isNew = false;
                 }
                 blade.refresh(true);
                 $scope.closeBlade();
