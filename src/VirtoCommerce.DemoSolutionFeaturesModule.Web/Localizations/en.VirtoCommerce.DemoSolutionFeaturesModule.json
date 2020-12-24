@@ -1,4 +1,4 @@
-{  
+{
   "demoSolutionFeaturesModule": {
     "blades": {
       "categories-items-add": {
@@ -15,9 +15,31 @@
         "labels": {
           "name": "Name",
           "priority": "Priority",
-          "picture": "Pic" 
+          "picture": "Pic"
         }
-      } 
+      },
+      "product-part-detail": {
+        "title": "Parts",
+        "subtitle-create": "Create new part",
+        "subtitle-edit": "Edit part",
+        "labels": {
+          "name": "Part name",
+          "description": "Description",
+          "min-quantity": "Min. quantity",
+          "max-quantity": "Max. quantity",
+          "is-required": "Required part"
+        },
+        "icon-title": "Upload part icon",
+        "icon-description": "No icon",
+        "product-list-title": "Product list",
+        "product-list-description": "0 products"
+      }
+    },
+    "dialogs": {
+      "product-part-create": {
+        "title": "Save changes",
+        "message": "The part has been modified. Do you want to save changes?"
+      }
     }
   },
   "permissions": {
