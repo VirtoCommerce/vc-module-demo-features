@@ -1,9 +1,26 @@
 angular.module('virtoCommerce.DemoSolutionFeaturesModule')
-.controller('virtoCommerce.DemoSolutionFeaturesModule.createProductPartController',
+.controller('virtoCommerce.DemoSolutionFeaturesModule.productPartDetailController',
     ['$scope', 'platformWebApp.bladeNavigationService', 'virtoCommerce.DemoSolutionFeaturesModule.productPartsApi',
     function ($scope, bladeNavigationService, productPartsApi) {
         const blade = $scope.blade;
         blade.headIcon = 'fa-cogs';
+        blade.toolbarCommands = [];
+
+        if (blade.isNew) {
+            blade.toolbarCommands.push({
+                name: "platform.commands.create", icon: 'fa fa-check',
+                executeMethod: () => $scope.saveChanges(),
+                canExecuteMethod: () => blade.isNew && $scope.canSave(),
+                permission: 'catalog:create'
+            });
+        } else {
+            blade.toolbarCommands.push({
+                name: "platform.commands.update", icon: 'fa fa-save',
+                executeMethod: () => $scope.saveChanges(),
+                canExecuteMethod: () => !blade.isNew && $scope.canSave(),
+                permission: 'catalog:update'
+            });
+        }
 
         blade.refresh = (parentRefresh) => {
             if (blade.isNew) {
@@ -24,21 +41,6 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 blade.parentBlade.refresh();
             }
         };
-
-        blade.toolbarCommands = [
-            {
-                name: "platform.commands.create", icon: 'fa fa-check',
-                executeMethod: () => $scope.saveChanges(),
-                canExecuteMethod: () => blade.isNew && $scope.canSave(),
-                permission: 'catalog:create'
-            },
-            {
-                name: "platform.commands.update", icon: 'fa fa-save',
-                executeMethod: () => $scope.saveChanges(),
-                canExecuteMethod: () => !blade.isNew && $scope.canSave(),
-                permission: 'catalog:update'
-            }
-        ];
 
         blade.onClose = (closeCallback) => {
             bladeNavigationService.showConfirmationIfNeeded(isDirty() && !blade.isNew && !isPriorityChanged(), $scope.isValid(), blade, $scope.saveChanges, closeCallback, "demoSolutionFeaturesModule.dialogs.product-part-create.title", "demoSolutionFeaturesModule.dialogs.product-part-create.message");

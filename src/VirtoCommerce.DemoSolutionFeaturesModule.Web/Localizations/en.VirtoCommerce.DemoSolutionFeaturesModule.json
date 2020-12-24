@@ -18,7 +18,7 @@
           "picture": "Pic"
         }
       },
-      "create-product-part": {
+      "product-part-detail": {
         "title": "Parts",
         "subtitle-create": "Create new part",
         "subtitle-edit": "Edit part",

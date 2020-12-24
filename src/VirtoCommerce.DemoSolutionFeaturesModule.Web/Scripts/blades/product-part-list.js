@@ -22,13 +22,13 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                     bladeNavigationService.closeChildrenBlades(blade, function () {
                         var newBlade = {
                             id: 'createProductPart',
-                            title: 'demoSolutionFeaturesModule.blades.create-product-part.title',
-                            subtitle: 'demoSolutionFeaturesModule.blades.create-product-part.subtitle-create',
+                            title: 'demoSolutionFeaturesModule.blades.product-part-detail.title',
+                            subtitle: 'demoSolutionFeaturesModule.blades.product-part-detail.subtitle-create',
                             isNew: true,
                             partsLength: $scope.pageSettings.totalItems,
                             configuredProductId: blade.itemId,
-                            controller: 'virtoCommerce.DemoSolutionFeaturesModule.createProductPartController',
-                            template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-create.tpl.html'
+                            controller: 'virtoCommerce.DemoSolutionFeaturesModule.productPartDetailController',
+                            template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-detail.tpl.html'
                         };
                         bladeNavigationService.showBlade(newBlade, blade);
                     });
@@ -43,11 +43,11 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                     bladeNavigationService.closeChildrenBlades(blade, function () {
                         var newBlade = {
                             id: 'editProductPart',
-                            title: 'demoSolutionFeaturesModule.blades.create-product-part.title',
-                            subtitle: 'demoSolutionFeaturesModule.blades.create-product-part.subtitle-edit',
+                            title: 'demoSolutionFeaturesModule.blades.product-part-detail.title',
+                            subtitle: 'demoSolutionFeaturesModule.blades.product-part-detail.subtitle-edit',
                             originalEntity: selectedNode,
-                            controller: 'virtoCommerce.DemoSolutionFeaturesModule.createProductPartController',
-                            template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-create.tpl.html'
+                            controller: 'virtoCommerce.DemoSolutionFeaturesModule.productPartDetailController',
+                            template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-detail.tpl.html'
                         };
                         bladeNavigationService.showBlade(newBlade, blade);
                     });
@@ -84,11 +84,11 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
 
             var newBlade = {
                 id: 'editProductPart',
-                title: 'demoSolutionFeaturesModule.blades.create-product-part.title',
-                subtitle: 'demoSolutionFeaturesModule.blades.create-product-part.subtitle-edit',
+                title: 'demoSolutionFeaturesModule.blades.product-part-detail.title',
+                subtitle: 'demoSolutionFeaturesModule.blades.product-part-detail.subtitle-edit',
                 originalEntity: node,
-                controller: 'virtoCommerce.DemoSolutionFeaturesModule.createProductPartController',
-                template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-create.tpl.html'
+                controller: 'virtoCommerce.DemoSolutionFeaturesModule.productPartDetailController',
+                template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-detail.tpl.html'
             };
             bladeNavigationService.showBlade(newBlade, blade);
 
