@@ -15,7 +15,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             });
         } else {
             blade.toolbarCommands.push({
-                name: "platform.commands.update", icon: 'fa fa-save',
+                name: "platform.commands.save", icon: 'fa fa-save',
                 executeMethod: () => $scope.saveChanges(),
                 canExecuteMethod: () => !blade.isNew && $scope.canSave(),
                 permission: 'catalog:update'
