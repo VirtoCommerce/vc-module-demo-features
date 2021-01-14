@@ -18,7 +18,6 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         function initialize () {
             let uploader = $scope.uploader = new FileUploader({
                 scope: $scope,
-                //headers: { Accept: 'application/json' }
                 autoUpload: true,
                 removeAfterUpload: true
             });
@@ -54,10 +53,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         }
 
         $scope.browse = () => {
-            $timeout(() => {
-                var element = $document[0].querySelector('#selectPartIcon');
-                element.click();
-            }, 0);
+            $timeout(() => $document[0].querySelector('#selectPartIcon').click());
         }
 
         $scope.addImageFromUrl = () => {
