@@ -6,6 +6,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         $scope.openBlade = function () {
             var newBlade = {
                 id: "productPartList",
+                item: blade.item,
                 itemId: blade.itemId,
                 controller: 'virtoCommerce.DemoSolutionFeaturesModule.productPartListController',
                 template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-list.tpl.html'
