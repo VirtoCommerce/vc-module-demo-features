@@ -44,10 +44,10 @@
                </div>
                <ul class="menu __context" role="menu" id="prl_menu">
                    <li class="menu-item" ng-click='setDefault(contextMenuEntity)'>
-                       <i class="menu-ico fa fa-check"></i> {{'demoSolutionFeaturesModule.blades.part-product-list.context-menu.default' | translate}}
+                       <i class="menu-ico fa fa-check" aria-hidden="true"></i> {{'demoSolutionFeaturesModule.blades.part-product-list.context-menu.default' | translate}}
                    </li>
                    <li class="menu-item" ng-click='delete(contextMenuEntity)'>
-                       <i class="menu-ico fa fa-trash-o"></i> {{'platform.commands.delete' | translate}}
+                       <i class="menu-ico fa fa-trash-o" aria-hidden="true"></i> {{'platform.commands.delete' | translate}}
                    </li>
                </ul>
                <div ng-if="!blade.currentEntities.length" class="position-absolute no-products-message">
@@ -78,7 +78,7 @@
 
 <script type="text/ng-template" id="list-actions.cell.html">
     <div class="ui-grid-actions" left-click-menu="grid.appScope.contextMenuEntity = row.entity" data-target="prl_menu">
-        <i class="fa fa-ellipsis-v"></i>
+        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
     </div>
 </script>
 
