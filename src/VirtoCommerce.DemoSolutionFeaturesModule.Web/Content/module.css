@@ -3,3 +3,52 @@
     font-size: 29px;
     padding-bottom: 12px;
 }
+
+.d-flex {
+    display: flex;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.default-product-badge {
+    right: -25px;
+    top: -15px;
+    z-index: 500;
+}
+
+.default-product-badge .fa-circle {
+    color: #43b0e6;
+}
+
+.default-product-badge .fa-check {
+    font-size: 10px;
+}
+
+.no-products-message {
+    text-align: center;
+    z-index: 1000;
+    top: 50%;
+    transform: translateY(-50%);
+    max-height: max(0px, calc((100% - 156px)*999));
+    width: 100%;
+    overflow: hidden;
+}
+
+.no-products-message .fa-coffee {
+    color: #43b0e6;
+}
+
+.no-products-message p {
+    font-size: 20px;
+    margin-bottom: 20px;
+}

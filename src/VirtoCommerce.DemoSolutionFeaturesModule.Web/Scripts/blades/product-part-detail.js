@@ -61,6 +61,22 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             return !angular.equals(blade.currentEntity.priority, blade.originalEntity.priority);
         }
 
+        $scope.openProductList = () => {
+            var newBlade = {
+                id: 'partProductList',
+                title: 'demoSolutionFeaturesModule.blades.part-product-list.title',
+                subtitle: 'demoSolutionFeaturesModule.blades.part-product-list.subtitle',
+                originalEntity: blade.currentEntity,
+                controller: 'virtoCommerce.DemoSolutionFeaturesModule.partProductListController',
+                template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/part-product-list.tpl.html',
+                onConfirm: (entity) => {
+                    blade.currentEntity = entity;
+                }
+            };
+            bladeNavigationService.showBlade(newBlade, blade);
+
+        };
+
         $scope.saveChanges = () => {
             productPartsApi.save({}, [blade.currentEntity], () => {
                 if (blade.isNew) {
