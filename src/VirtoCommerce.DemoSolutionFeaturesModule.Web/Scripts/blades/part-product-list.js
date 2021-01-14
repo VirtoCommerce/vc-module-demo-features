@@ -76,9 +76,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             }
         };
 
-        $scope.canSave = () => {
-            return isDirty();
-        };
+        $scope.canSave = () => isDirty();
 
         $scope.saveChanges = () => {
             blade.onConfirm(blade.currentEntity);
@@ -127,17 +125,13 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
 
         function deleteProducts(selectedNodesId) {
             _.each(selectedNodesId, (nodeId) => {
-                blade.currentEntity.partItems = _.filter(blade.currentEntity.partItems, (part) => {
-                    return part.itemId !== nodeId;
-                });
+                blade.currentEntity.partItems = _.filter(blade.currentEntity.partItems, (part) => part.itemId !== nodeId);
             });
             blade.refresh();
         }
 
         function deleteProduct(selectedNodeId) {
-            blade.currentEntity.partItems = _.filter(blade.currentEntity.partItems, (part) => {
-                return part.itemId !== selectedNodeId;
-            });
+            blade.currentEntity.partItems = _.filter(blade.currentEntity.partItems, (part) => part.itemId !== selectedNodeId);
             blade.refresh();
         }
 
