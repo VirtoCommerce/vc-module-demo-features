@@ -26,7 +26,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 executeMethod: () => {
                     const selectedNodesId = _.pluck($scope.gridApi.selection.getSelectedRows(), "id");
                     if (_.some(selectedNodesId, (nodeId) => nodeId === blade.currentEntity.defaultItemId)) {
-                        bladeNavigationService.showConfirmationIfNeeded(true, true, blade, deleteProducts(selectedNodesId), ()=>{}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
+                        bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => {deleteProducts(selectedNodesId)}, ()=>{}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
                     } else {
                         deleteProducts(selectedNodesId);
                     }
@@ -104,7 +104,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         $scope.delete = (contextMenuEntity) => {
             const selectedNodeId = contextMenuEntity.id;
             if (selectedNodeId === blade.currentEntity.defaultItemId) {
-                bladeNavigationService.showConfirmationIfNeeded(true, true, blade, deleteProduct(selectedNodeId), ()=>{}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
+                bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => {deleteProduct(selectedNodeId)}, ()=>{}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
             } else {
                 deleteProduct(selectedNodeId);
             }
