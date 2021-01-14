@@ -63,9 +63,11 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                         });
                         return response.items;
                     });
+            } else {
+                $scope.pageSettings.totalItems = 0;
+                blade.currentEntities = [];
+                blade.isLoading = false;
             }
-
-            blade.isLoading = false;
         };
 
         filter.criteriaChanged = () => {
