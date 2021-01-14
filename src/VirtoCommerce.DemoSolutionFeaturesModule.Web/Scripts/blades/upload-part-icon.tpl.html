@@ -49,12 +49,12 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="sub-t" ng-if-start="blade.currentEntity.imgSrc">{{ 'demoSolutionFeaturesModule.blades.upload-part-icon.preview.title' | translate }}</div>
-                        <table class="table preview" ng-if-end>
+                        <div ng-if-start="blade.currentEntity.imgSrc" class="sub-t">{{ 'demoSolutionFeaturesModule.blades.upload-part-icon.preview.title' | translate }}</div>
+                        <table ng-if-end class="table preview" role="presentation">
                             <tbody>
                                 <tr class="table-item">
                                     <td class="table-col __product-img">
-                                        <img ng-src="{{blade.currentEntity.imgSrc ? blade.currentEntity.imgSrc : ''}}">
+                                        <img ng-src="{{blade.currentEntity.imgSrc ? blade.currentEntity.imgSrc : ''}}" alt="">
                                     </td>
                                     <td class="table-col">
                                         <div class="table-t">{{ blade.currentEntity.name ? blade.currentEntity.name : ('demoSolutionFeaturesModule.blades.upload-part-icon.preview.image.title' | translate) }}</div>

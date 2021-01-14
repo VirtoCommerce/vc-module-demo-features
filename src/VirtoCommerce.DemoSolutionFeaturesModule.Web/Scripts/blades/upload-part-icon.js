@@ -38,7 +38,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             };
 
             blade.currentEntity = angular.copy(blade.originalEntity);
-        };
+        }
 
         function getFolderUrl(path) {
             return `catalog/${path}`;

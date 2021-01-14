@@ -351,3 +351,6 @@ MigrationBackup/
 
 # Webpack output
 dist/
+
+# SonarLint
+.sonarlint/

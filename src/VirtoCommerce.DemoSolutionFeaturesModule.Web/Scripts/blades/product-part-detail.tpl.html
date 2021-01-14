@@ -46,7 +46,7 @@
                     <ul class="list __items">
                         <li class="list-item" ng-click="openUploadPartIconBlade()" va-permission="hasAssetPermissions">
                             <i ng-if="!blade.currentEntity.imgSrc" class="list-ico fa fa-image" aria-hidden="true"></i>
-                            <img ng-if="blade.currentEntity.imgSrc" class="list-img" ng-src="{{ blade.currentEntity.imgSrc }}">
+                            <img ng-if="blade.currentEntity.imgSrc" class="list-img" ng-src="{{ blade.currentEntity.imgSrc }}" alt="">
                             <div class="list-container">
                                 <span class="list-t">{{ 'demoSolutionFeaturesModule.blades.product-part-detail.icon-title' | translate }}</span>
                                 <span ng-if="!blade.currentEntity.imgSrc" class="list-descr">{{ 'demoSolutionFeaturesModule.blades.product-part-detail.icon-description' | translate }}</span>
