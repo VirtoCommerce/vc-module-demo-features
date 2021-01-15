@@ -62,7 +62,11 @@
       },
       "default-product-delete": {
         "title": "Delete product",
-        "message": "One of the products is set as default. Are you sure you want to delete it?"
+        "message": "One of the selected products is set as default and after deletion the first item in the list will be set as default. Are you sure you want to delete the default product?"
+      },
+      "part-product-delete": {
+        "title": "Delete product",
+        "message": "Are you sure you want to delete selected product(s)?"
       },
       "add-products-to-part": {
         "title": "Save changes",

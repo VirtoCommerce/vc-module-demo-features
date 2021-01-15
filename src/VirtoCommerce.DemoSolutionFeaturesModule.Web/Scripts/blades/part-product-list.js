@@ -28,7 +28,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                     if (_.some(selectedNodesId, (nodeId) => nodeId === blade.currentEntity.defaultItemId)) {
                         bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProducts(selectedNodesId, true); }, () => {}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
                     } else {
-                        bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProducts(selectedNodesId, false); }, () => {}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
+                        bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProducts(selectedNodesId, false); }, () => {}, "demoSolutionFeaturesModule.dialogs.part-product-delete.title", "demoSolutionFeaturesModule.dialogs.part-product-delete.message");
                     }
                 },
                 canExecuteMethod: isAnySelected
@@ -106,7 +106,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             if (selectedNodeId === blade.currentEntity.defaultItemId) {
                 bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProduct(selectedNodeId, true); }, () => {}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
             } else {
-                bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProduct(selectedNodeId, false); }, () => {}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
+                bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProduct(selectedNodeId, false); }, () => {}, "demoSolutionFeaturesModule.dialogs.part-product-delete.title", "demoSolutionFeaturesModule.dialogs.part-product-delete.message");
             }
         };
 
