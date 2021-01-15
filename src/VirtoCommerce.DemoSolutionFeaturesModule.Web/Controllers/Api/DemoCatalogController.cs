@@ -64,7 +64,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
                 .Results
                 .FirstOrDefault();
 
-            if (part != null)
+            if (part != null && !part.PartItems.IsNullOrEmpty())
             {
                 var partItems = part.PartItems;
 
@@ -72,10 +72,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
                 {
                     ObjectIds = partItems.Select(x => x.ItemId).ToArray(),
                     ObjectType = KnownDocumentTypes.Product,
-                    Take = criteria.Take,
-                    Skip = criteria.Skip,
                     Keyword = criteria.Keyword,
                     SearchPhrase = criteria.SearchPhrase,
+                    Take = partItems.Length,
+                    Skip = 0,
                 }))
                     .Items;
 
@@ -86,7 +86,13 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
                         catalogProduct.Priority;
                 }
 
-                result.Results = products;
+                result.Results = products
+                    .AsQueryable()
+                    .OrderBySortInfos(criteria.SortInfos)
+                    .Skip(criteria.Skip)
+                    .Take(criteria.Take)
+                    .ToArray();
+
                 result.TotalCount = part.PartItems.Length;
             }
 
