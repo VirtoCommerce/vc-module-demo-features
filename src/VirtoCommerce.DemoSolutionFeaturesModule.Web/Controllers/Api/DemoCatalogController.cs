@@ -22,8 +22,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         private readonly IProductIndexedSearchService _productIndexedSearchService;
 
         public DemoCatalogController(
-            IDemoProductPartService partsService
-            , IDemoProductPartSearchService partsSearchService, IProductIndexedSearchService productIndexedSearchService)
+            IDemoProductPartService partsService,
+            IDemoProductPartSearchService partsSearchService,
+            IProductIndexedSearchService productIndexedSearchService
+            )
         {
             _partsSearchService = partsSearchService;
             _partsService = partsService;
