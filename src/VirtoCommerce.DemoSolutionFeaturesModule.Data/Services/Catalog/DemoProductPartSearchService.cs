@@ -80,12 +80,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
 
             if (!string.IsNullOrEmpty(criteria.ConfiguredProductId))
             {
-                query = query.Where(x => x.ConfiguredProductId.EqualsInvariant(criteria.ConfiguredProductId));
+                query = query.Where(x => x.ConfiguredProductId == criteria.ConfiguredProductId);
             }
 
             if (!string.IsNullOrEmpty(criteria.PartId))
             {
-                query = query.Where(x => x.Id.EqualsInvariant(criteria.PartId));
+                query = query.Where(x => x.Id == criteria.PartId);
             }
 
             return query;
