@@ -18,7 +18,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         blade.toolbarCommands = [
             {
                 name: "platform.commands.add", icon: 'fa fa-plus',
-                executeMethod: () => {},
+                executeMethod: () => $scope.addNewProduct(),
                 canExecuteMethod: () => true
             },
             {
@@ -110,6 +110,53 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             }
         };
 
+        $scope.addNewProduct = function() {
+            const options = {
+                showCheckingMultiple: false,
+                allowCheckingCategory: false,
+                allowCheckingItem: true,
+                selectedItemIds: [],
+                checkItemFn: (listItem, isSelected) => {
+                    if (isSelected) {
+                        if (!_.find(options.selectedItemIds, (x) => x === listItem.id)) {
+                            options.selectedItemIds.push(listItem.id);
+                        }
+                    }
+                    else {
+                        options.selectedItemIds = _.reject(options.selectedItemIds, (x) => x === listItem.id);
+                    }
+                }
+            };
+
+            const newBlade = {
+                id: "CatalogItemsSelect",
+                controller: 'virtoCommerce.catalogModule.catalogItemSelectController',
+                template: 'Modules/$(virtoCommerce.catalog)/Scripts/blades/common/catalog-items-select.tpl.html',
+                title: 'catalog.selectors.blades.titles.select-categories',
+                options: options,
+                breadcrumbs: [],
+                catalogId: blade.catalogId,
+                toolbarCommands: [
+                    {
+                        name: "platform.commands.confirm", icon: 'fa fa-check',
+                        executeMethod: function (pickingBlade) {
+                            const newIds = _.difference(options.selectedItemIds, blade.productIds);
+                            newIds.forEach((id, index) => {
+                                if (!blade.productIds.length && index === 0) {
+                                    blade.currentEntity.defaultItemId = id;
+                                }
+                                blade.currentEntity.partItems.push({itemId: id, priority: blade.currentEntity.partItems.length + (index + 1)});
+                            });
+                            bladeNavigationService.closeBlade(pickingBlade);
+                            blade.refresh();
+                        },
+                        canExecuteMethod: () => _.any(options.selectedItemIds)
+                    }]
+            };
+            bladeNavigationService.showBlade(newBlade, blade);
+
+        };
+
         $scope.setGridOptions = (gridOptions) => {
             uiGridHelper.initialize($scope, gridOptions, (gridApi) => {
                 gridApi.draggableRows.on.rowDropped($scope, () => {
@@ -136,6 +183,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                     blade.currentEntity.defaultItemId = '';
                 }
             }
+            bladeNavigationService.closeChildrenBlades(blade);
             blade.refresh();
         }
 
@@ -148,6 +196,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                     blade.currentEntity.defaultItemId = '';
                 }
             }
+            bladeNavigationService.closeChildrenBlades(blade);
             blade.refresh();
         }
 

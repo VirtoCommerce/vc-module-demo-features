@@ -87,6 +87,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 title: 'demoSolutionFeaturesModule.blades.product-part-detail.title',
                 subtitle: 'demoSolutionFeaturesModule.blades.product-part-detail.subtitle-edit',
                 originalEntity: node,
+                catalogId: blade.catalogId,
                 controller: 'virtoCommerce.DemoSolutionFeaturesModule.productPartDetailController',
                 template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-detail.tpl.html'
             };

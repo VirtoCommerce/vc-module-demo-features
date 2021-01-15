@@ -71,6 +71,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 title: 'demoSolutionFeaturesModule.blades.part-product-list.title',
                 subtitle: 'demoSolutionFeaturesModule.blades.part-product-list.subtitle',
                 originalEntity: blade.currentEntity,
+                catalogId: blade.catalogId,
                 controller: 'virtoCommerce.DemoSolutionFeaturesModule.partProductListController',
                 template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/part-product-list.tpl.html',
                 onConfirm: (entity) => {
