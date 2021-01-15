@@ -26,9 +26,9 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 executeMethod: () => {
                     const selectedNodesId = _.pluck($scope.gridApi.selection.getSelectedRows(), "id");
                     if (_.some(selectedNodesId, (nodeId) => nodeId === blade.currentEntity.defaultItemId)) {
-                        bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProducts(selectedNodesId); }, () => {}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
+                        bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProducts(selectedNodesId, true); }, () => {}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
                     } else {
-                        deleteProducts(selectedNodesId);
+                        bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProducts(selectedNodesId, false); }, () => {}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
                     }
                 },
                 canExecuteMethod: isAnySelected
@@ -104,9 +104,9 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         $scope.delete = (contextMenuEntity) => {
             const selectedNodeId = contextMenuEntity.id;
             if (selectedNodeId === blade.currentEntity.defaultItemId) {
-                bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProduct(selectedNodeId); }, () => {}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
+                bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProduct(selectedNodeId, true); }, () => {}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
             } else {
-                deleteProduct(selectedNodeId);
+                bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProduct(selectedNodeId, false); }, () => {}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
             }
         };
 
@@ -125,15 +125,29 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             $scope.pageSettings.itemsPerPageCount = 10;
         };
 
-        function deleteProducts(selectedNodesId) {
+        function deleteProducts(selectedNodesId, defaultDeleted) {
             _.each(selectedNodesId, (nodeId) => {
                 blade.currentEntity.partItems = _.filter(blade.currentEntity.partItems, (part) => part.itemId !== nodeId);
             });
+            if (defaultDeleted) {
+                if (blade.currentEntity.partItems.length) {
+                    blade.currentEntity.defaultItemId = _.min(blade.currentEntity.partItems, (item) => item.priority).itemId;
+                } else {
+                    blade.currentEntity.defaultItemId = '';
+                }
+            }
             blade.refresh();
         }
 
-        function deleteProduct(selectedNodeId) {
+        function deleteProduct(selectedNodeId, defaultDeleted) {
             blade.currentEntity.partItems = _.filter(blade.currentEntity.partItems, (part) => part.itemId !== selectedNodeId);
+            if (defaultDeleted) {
+                if (blade.currentEntity.partItems.length) {
+                    blade.currentEntity.defaultItemId = _.min(blade.currentEntity.partItems, (item) => item.priority).itemId;
+                } else {
+                    blade.currentEntity.defaultItemId = '';
+                }
+            }
             blade.refresh();
         }
 
