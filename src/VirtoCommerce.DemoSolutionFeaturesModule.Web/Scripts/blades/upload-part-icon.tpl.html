@@ -59,7 +59,12 @@
                                     <td class="table-col">
                                         <div class="table-t">{{ blade.currentEntity.name ? blade.currentEntity.name : ('demoSolutionFeaturesModule.blades.upload-part-icon.preview.image.title' | translate) }}</div>
                                         <div class="table-descr">
-                                            {{ 'demoSolutionFeaturesModule.blades.upload-part-icon.preview.image.description' | translate: { count: blade.currentEntity.partItems ? blade.currentEntity.partItems.length : 0 } }}
+                                            <span ng-if="blade.currentEntity.partItems && blade.currentEntity.partItems.length === 1">
+                                                {{ 'demoSolutionFeaturesModule.blades.upload-part-icon.preview.image.description-single' }}
+                                            </span>
+                                            <span ng-if="!blade.currentEntity.partItems || blade.currentEntity.partItems.length !== 1">
+                                                {{ 'demoSolutionFeaturesModule.blades.upload-part-icon.preview.image.description-plural' | translate: { count: blade.currentEntity.partItems ? blade.currentEntity.partItems.length : 0 } }}
+                                            </span>
                                         </div>
                                     </td>
                                 </tr>

@@ -57,8 +57,9 @@
         "preview": {
           "title": "Preview",
           "image": {
-            "title":  "Product part", 
-            "description": "{{ count }} products added"
+            "title": "Product part",
+            "description-single": "1 product added",
+            "description-plural": "{{ count }} products added"
           } 
         } 
       } 
