@@ -74,6 +74,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
                     ObjectType = KnownDocumentTypes.Product,
                     Take = criteria.Take,
                     Skip = criteria.Skip,
+                    Keyword = criteria.Keyword,
+                    SearchPhrase = criteria.SearchPhrase,
                 }))
                     .Items;
 
