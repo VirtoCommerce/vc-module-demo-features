@@ -16,7 +16,7 @@ using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
 {
-    public class DemoProductPartSearchService : IDemoProductPartSerarchService
+    public class DemoProductPartSearchService : IDemoProductPartSearchService
     {
         private readonly Func<ICatalogRepository> _repositoryFactory;
         private readonly IPlatformMemoryCache _platformMemoryCache;
@@ -78,9 +78,14 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
                 query = query.Where(x => x.Name.Contains(criteria.Keyword));
             }
 
-            if (criteria.ConfiguredProductId != null)
+            if (!string.IsNullOrEmpty(criteria.ConfiguredProductId))
             {
-                query = query.Where(x => x.ConfiguredProductId == criteria.ConfiguredProductId);
+                query = query.Where(x => x.ConfiguredProductId.EqualsInvariant(criteria.ConfiguredProductId));
+            }
+
+            if (!string.IsNullOrEmpty(criteria.PartId))
+            {
+                query = query.Where(x => x.Id.EqualsInvariant(criteria.PartId));
             }
 
             return query;

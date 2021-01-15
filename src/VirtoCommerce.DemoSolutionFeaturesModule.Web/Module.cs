@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
@@ -82,7 +81,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             // catalog
             serviceCollection.AddTransient<ICatalogRepository, DemoCatalogRepository>();
             serviceCollection.AddTransient<IDemoProductPartService, DemoProductPartService>();
-            serviceCollection.AddTransient<IDemoProductPartSerarchService, DemoProductPartSearchService>();
+            serviceCollection.AddTransient<IDemoProductPartSearchService, DemoProductPartSearchService>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)

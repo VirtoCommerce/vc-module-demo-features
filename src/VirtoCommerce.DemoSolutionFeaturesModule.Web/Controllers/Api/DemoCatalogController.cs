@@ -1,27 +1,33 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using catalogCore = VirtoCommerce.CatalogModule.Core;
+using VirtoCommerce.CatalogModule.Core.Model.Search;
+using VirtoCommerce.CatalogModule.Core.Search;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.SearchModule.Core.Model;
+using catalogCore = VirtoCommerce.CatalogModule.Core;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
 {
     [Route("api/demo/catalog")]
     public class DemoCatalogController : Controller
     {
-        private readonly IDemoProductPartSerarchService _partsSerarchService;
+        private readonly IDemoProductPartSearchService _partsSearchService;
         private readonly IDemoProductPartService _partsService;
+        private readonly IProductIndexedSearchService _productIndexedSearchService;
 
         public DemoCatalogController(
             IDemoProductPartService partsService
-            , IDemoProductPartSerarchService partsSerarchService)
+            , IDemoProductPartSearchService partsSearchService, IProductIndexedSearchService productIndexedSearchService)
         {
-            _partsSerarchService = partsSerarchService;
+            _partsSearchService = partsSearchService;
             _partsService = partsService;
+            _productIndexedSearchService = productIndexedSearchService;
         }
 
         [HttpGet]
@@ -38,7 +44,50 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         [Authorize(catalogCore.ModuleConstants.Security.Permissions.Read)]
         public async Task<ActionResult<DemoProductPartSearchResult>> Search([FromBody] DemoProductPartSearchCriteria criteria)
         {
-            var result = await _partsSerarchService.SearchProductPartsAsync(criteria);
+            var result = await _partsSearchService.SearchProductPartsAsync(criteria);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("product/parts/search/items")]
+        [Authorize(catalogCore.ModuleConstants.Security.Permissions.Read)]
+        public async Task<ActionResult<DemoProductPartItemSearchResult>> SearchPartItems([FromBody] DemoProductPartItemSearchCriteria criteria)
+        {
+            if (criteria == null)
+            {
+                throw new ArgumentNullException(nameof(criteria));
+            }
+
+            var result = new DemoProductPartItemSearchResult();
+
+            var part = (await _partsSearchService.SearchProductPartsAsync(new DemoProductPartSearchCriteria { PartId = criteria.ConfiguredProductPartId }))
+                .Results
+                .FirstOrDefault();
+
+            if (part != null)
+            {
+                var partItems = part.PartItems;
+
+                var products = (await _productIndexedSearchService.SearchAsync(new ProductIndexedSearchCriteria
+                {
+                    ObjectIds = partItems.Select(x => x.ItemId).ToArray(),
+                    ObjectType = KnownDocumentTypes.Product,
+                    Take = criteria.Take,
+                    Skip = criteria.Skip,
+                }))
+                    .Items;
+
+                foreach (var catalogProduct in products)
+                {
+                    catalogProduct.Priority =
+                        partItems.FirstOrDefault(x => x.ItemId.EqualsInvariant(catalogProduct.Id))?.Priority ??
+                        catalogProduct.Priority;
+                }
+
+                result.Results = products;
+                result.TotalCount = part.PartItems.Length;
+            }
+
             return Ok(result);
         }
 

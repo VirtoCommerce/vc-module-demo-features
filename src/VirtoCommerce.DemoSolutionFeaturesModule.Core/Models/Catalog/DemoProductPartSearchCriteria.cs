@@ -5,5 +5,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog
     public class DemoProductPartSearchCriteria : SearchCriteriaBase
     {
         public string ConfiguredProductId { get; set; }
+
+        public string PartId { get; set; }
     }
 }
