@@ -118,6 +118,10 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                     else {
                         options.selectedItemIds = _.reject(options.selectedItemIds, (x) => x === listItem.id);
                     }
+                },
+                onItemsLoaded: (entries) => {
+                    const filteredEntries = _.reject(entries, (x) => x.type === 'product' && x.productType === 'Configurable');
+                    entries.splice(0, entries.length, ...filteredEntries);
                 }
             };
 
