@@ -24,6 +24,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                             id: 'createProductPart',
                             title: 'demoSolutionFeaturesModule.blades.product-part-detail.title',
                             subtitle: 'demoSolutionFeaturesModule.blades.product-part-detail.subtitle-create',
+                            catalogId: blade.catalogId,
                             isNew: true,
                             partsLength: $scope.pageSettings.totalItems,
                             configuredProductId: blade.itemId,
