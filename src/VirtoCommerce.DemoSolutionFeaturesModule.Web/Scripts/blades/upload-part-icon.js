@@ -67,7 +67,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         $scope.downloadImageFromUrl = () => {
             if (blade.imageUrl) {
                 assetsApi.uploadFromUrl({ folderUrl: getFolderUrl(blade.folderPath), url: blade.imageUrl }, x => {
-                    setImageUrl(x.Url);
+                    setImageUrl(x[0].url);
                     blade.imageUrl = null;
                 });
             }
