@@ -141,11 +141,12 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                         name: "platform.commands.confirm", icon: 'fa fa-check',
                         executeMethod: function (pickingBlade) {
                             const newIds = _.difference(options.selectedItemIds, blade.productIds);
+                            const oldPartItemsLength = blade.currentEntity.partItems.length;
                             newIds.forEach((id, index) => {
                                 if (!blade.productIds.length && index === 0) {
                                     blade.currentEntity.defaultItemId = id;
                                 }
-                                blade.currentEntity.partItems.push({itemId: id, priority: blade.currentEntity.partItems.length + (index + 1)});
+                                blade.currentEntity.partItems.push({itemId: id, priority: oldPartItemsLength + (index + 1)});
                             });
                             bladeNavigationService.closeBlade(pickingBlade);
                             blade.refresh();
