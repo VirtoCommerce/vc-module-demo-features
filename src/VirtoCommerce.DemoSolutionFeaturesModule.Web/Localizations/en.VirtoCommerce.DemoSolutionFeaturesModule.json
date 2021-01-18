@@ -43,7 +43,8 @@
         "labels": {
           "name": "Name",
           "sku": "SKU",
-          "picture": "Pic"
+          "picture": "Pic",
+          "priority": "Priority"
         },
         "toolbar-commands": {
           "default": "Default"

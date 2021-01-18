@@ -52,9 +52,8 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                     {
                         objectIds: blade.productIds,
                         searchPhrase: filter.keyword ? filter.keyword : undefined,
-                        sort: 'priority:asc',
-                        skip: ($scope.pageSettings.currentPage - 1) * $scope.pageSettings.itemsPerPageCount,
-                        take: $scope.pageSettings.itemsPerPageCount
+                        skip: 0,
+                        take: blade.productIds.length
                     }, response => {
                         blade.isLoading = false;
                         $scope.pageSettings.totalItems = response.totalCount;
@@ -70,13 +69,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             }
         };
 
-        filter.criteriaChanged = () => {
-            if ($scope.pageSettings.currentPage > 1) {
-                $scope.pageSettings.currentPage = 1;
-            } else {
-                blade.refresh();
-            }
-        };
+        filter.criteriaChanged = () => blade.refresh();
 
         $scope.canSave = () => isDirty();
 
@@ -170,7 +163,6 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 });
             });
             bladeUtils.initializePagination($scope);
-            $scope.pageSettings.itemsPerPageCount = 10;
         };
 
         function deleteProducts(selectedNodesId, defaultDeleted) {

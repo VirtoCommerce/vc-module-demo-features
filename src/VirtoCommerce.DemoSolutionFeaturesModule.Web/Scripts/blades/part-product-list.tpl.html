@@ -8,7 +8,6 @@
     <button class="btn" ng-click="saveChanges()" ng-disabled="!canSave()">
         <span>{{ 'demoCustomerSegmentsModule.blades.customer-segment-rule-creation.confirm' | translate }}</span>
     </button>
-    <div ng-if="pageSettings.itemsPerPageCount < pageSettings.totalItems" ng-include="'pagerTemplate.html'"></div>
 </div>
 <div class="blade-content __medium-wide">
     <div class="blade-inner">
@@ -30,7 +29,15 @@
                      displayName: 'demoSolutionFeaturesModule.blades.part-product-list.labels.name',
                      cellTemplate: 'part-product-name.html'
                  },
-                 { name: 'code', displayName: 'demoSolutionFeaturesModule.blades.part-product-list.labels.sku', width: 170, cellTemplate: 'part-product-SKU.cell.html' }]
+                 { name: 'code', displayName: 'demoSolutionFeaturesModule.blades.part-product-list.labels.sku', width: 170, cellTemplate: 'part-product-SKU.cell.html' },
+                 {
+                    name: 'priority',
+                    displayName: 'demoSolutionFeaturesModule.blades.part-product-list.labels.priority',
+                    sort: {
+                        direction: uiGridConstants.ASC
+                    },
+                    width: 75
+               }]
            })">
                <div ui-grid="gridOptions"
                     ui-grid-auto-resize
