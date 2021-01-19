@@ -18,7 +18,9 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         blade.toolbarCommands = [
             {
                 name: "platform.commands.add", icon: 'fa fa-plus',
-                executeMethod: () => $scope.addNewProduct(),
+                executeMethod: () => {
+                    $scope.addNewProduct();
+                },
                 canExecuteMethod: () => true
             },
             {
@@ -69,7 +71,9 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             }
         };
 
-        filter.criteriaChanged = () => blade.refresh();
+        filter.criteriaChanged = () => {
+            blade.refresh();
+        };
 
         $scope.canSave = () => isDirty();
 
