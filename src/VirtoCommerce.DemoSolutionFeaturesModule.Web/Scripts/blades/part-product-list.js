@@ -101,9 +101,9 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         $scope.delete = (contextMenuEntity) => {
             const selectedNodeId = contextMenuEntity.id;
             if (selectedNodeId === blade.currentEntity.defaultItemId) {
-                bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProduct(selectedNodeId, true); }, () => {}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
+                bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProducts([selectedNodeId], true); }, () => {}, "demoSolutionFeaturesModule.dialogs.default-product-delete.title", "demoSolutionFeaturesModule.dialogs.default-product-delete.message");
             } else {
-                bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProduct(selectedNodeId, false); }, () => {}, "demoSolutionFeaturesModule.dialogs.part-product-delete.title", "demoSolutionFeaturesModule.dialogs.part-product-delete.message");
+                bladeNavigationService.showConfirmationIfNeeded(true, true, blade, () => { deleteProducts([selectedNodeId], false); }, () => {}, "demoSolutionFeaturesModule.dialogs.part-product-delete.title", "demoSolutionFeaturesModule.dialogs.part-product-delete.message");
             }
         };
 
@@ -177,19 +177,6 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             _.each(selectedNodesId, (nodeId) => {
                 blade.currentEntity.partItems = _.filter(blade.currentEntity.partItems, (part) => part.itemId !== nodeId);
             });
-            if (defaultDeleted) {
-                if (blade.currentEntity.partItems.length) {
-                    blade.currentEntity.defaultItemId = _.min(blade.currentEntity.partItems, (item) => item.priority).itemId;
-                } else {
-                    blade.currentEntity.defaultItemId = '';
-                }
-            }
-            bladeNavigationService.closeChildrenBlades(blade);
-            blade.refresh();
-        }
-
-        function deleteProduct(selectedNodeId, defaultDeleted) {
-            blade.currentEntity.partItems = _.filter(blade.currentEntity.partItems, (part) => part.itemId !== selectedNodeId);
             if (defaultDeleted) {
                 if (blade.currentEntity.partItems.length) {
                     blade.currentEntity.defaultItemId = _.min(blade.currentEntity.partItems, (item) => item.priority).itemId;
