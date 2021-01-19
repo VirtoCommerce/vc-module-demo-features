@@ -26,6 +26,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                             subtitle: 'demoSolutionFeaturesModule.blades.product-part-detail.subtitle-create',
                             isNew: true,
                             partsLength: $scope.pageSettings.totalItems,
+                            configuredProduct: blade.item,
                             configuredProductId: blade.itemId,
                             controller: 'virtoCommerce.DemoSolutionFeaturesModule.productPartDetailController',
                             template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-detail.tpl.html'
@@ -45,6 +46,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                             id: 'editProductPart',
                             title: 'demoSolutionFeaturesModule.blades.product-part-detail.title',
                             subtitle: 'demoSolutionFeaturesModule.blades.product-part-detail.subtitle-edit',
+                            configuredProduct: blade.item,
                             originalEntity: selectedNode,
                             controller: 'virtoCommerce.DemoSolutionFeaturesModule.productPartDetailController',
                             template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-detail.tpl.html'
@@ -86,6 +88,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 id: 'editProductPart',
                 title: 'demoSolutionFeaturesModule.blades.product-part-detail.title',
                 subtitle: 'demoSolutionFeaturesModule.blades.product-part-detail.subtitle-edit',
+                configuredProduct: blade.item,
                 originalEntity: node,
                 controller: 'virtoCommerce.DemoSolutionFeaturesModule.productPartDetailController',
                 template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-detail.tpl.html'

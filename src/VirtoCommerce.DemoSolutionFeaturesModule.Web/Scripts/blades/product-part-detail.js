@@ -8,15 +8,24 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
 
         if (blade.isNew) {
             blade.toolbarCommands.push({
-                name: "platform.commands.create", icon: 'fa fa-check',
+                name: "platform.commands.create",
+                icon: 'fa fa-check',
                 executeMethod: () => $scope.saveChanges(),
                 canExecuteMethod: () => blade.isNew && $scope.canSave(),
                 permission: 'catalog:create'
             });
         } else {
             blade.toolbarCommands.push({
-                name: "platform.commands.save", icon: 'fa fa-save',
+                name: "platform.commands.save",
+                icon: 'fa fa-save',
                 executeMethod: () => $scope.saveChanges(),
+                canExecuteMethod: () => !blade.isNew && $scope.canSave(),
+                permission: 'catalog:update'
+            });
+            blade.toolbarCommands.push({
+                name: "platform.commands.reset",
+                icon: 'fa fa-undo',
+                executeMethod: () => $scope.cancelChanges(),
                 canExecuteMethod: () => !blade.isNew && $scope.canSave(),
                 permission: 'catalog:update'
             });
@@ -61,6 +70,10 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             return !angular.equals(blade.currentEntity.priority, blade.originalEntity.priority);
         }
 
+        $scope.cancelChanges = () => {
+            blade.currentEntity = angular.copy(blade.originalEntity);
+        };
+
         $scope.saveChanges = () => {
             productPartsApi.save({}, [blade.currentEntity], () => {
                 if (blade.isNew) {
@@ -69,11 +82,27 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 blade.refresh(true);
                 $scope.closeBlade();
             });
-        }
+        };
 
         $scope.closeBlade = () => {
             bladeNavigationService.closeBlade(blade);
         };
+
+        $scope.hasAssetPermissions = bladeNavigationService.checkPermission('platform:asset:create') && bladeNavigationService.checkPermission('platform:asset:delete');
+
+        $scope.openUploadPartIconBlade = () => {
+            var newBlade = {
+                id: 'uploadPartItem',
+                title: 'demoSolutionFeaturesModule.blades.upload-part-icon.title',
+                subtitle: 'demoSolutionFeaturesModule.blades.upload-part-icon.subtitle',
+                configuredProduct: blade.configuredProduct,
+                originalEntity: blade.currentEntity,
+                onSelect: (entity) => blade.currentEntity = entity,
+                controller: 'virtoCommerce.DemoSolutionFeaturesModule.uploadPartIconController',
+                template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/upload-part-icon.tpl.html'
+            };
+            bladeNavigationService.showBlade(newBlade, blade);
+        }
 
         blade.refresh();
     }]);
