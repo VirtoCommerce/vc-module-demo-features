@@ -62,6 +62,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                         blade.currentEntities = _.map(response.items, item => {
                             return _.extend(item, _.findWhere(blade.currentEntity.partItems, {itemId: item.id}));
                         });
+                        blade.currentEntities = _.sortBy(blade.currentEntities, 'priority');
                         return response.items;
                     });
             } else {
