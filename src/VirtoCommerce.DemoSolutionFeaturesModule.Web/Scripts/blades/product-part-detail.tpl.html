@@ -54,10 +54,9 @@
                         </li>
                         <li class="list-item" ng-click="openProductList()">
                             <i class="list-ico fa fa-cogs" aria-hidden="true"></i>
-                            <div class="list-container">
-                                <span class="list-t">{{ 'demoSolutionFeaturesModule.blades.product-part-detail.product-list-title' | translate }}</span>
-                                <span class="list-descr">{{ 'demoSolutionFeaturesModule.blades.product-part-detail.product-list-description' | translate }}</span>
-                            </div>
+                            <span class="list-t">{{ 'demoSolutionFeaturesModule.blades.product-part-detail.product-list-title' | translate }}</span>
+                            <span class="list-descr" ng-if="blade.currentEntity.partItems.length !== 1">{{ 'demoSolutionFeaturesModule.blades.product-part-detail.product-list-description-plural' | translate: {count: blade.currentEntity.partItems.length} }}</span>
+                            <span class="list-descr" ng-if="blade.currentEntity.partItems.length === 1">{{ 'demoSolutionFeaturesModule.blades.product-part-detail.product-list-description-single' | translate: {count: blade.currentEntity.partItems.length} }}</span>
                         </li>
                     </ul>
                 </div>

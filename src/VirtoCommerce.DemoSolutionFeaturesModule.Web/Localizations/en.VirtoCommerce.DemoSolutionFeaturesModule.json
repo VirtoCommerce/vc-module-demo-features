@@ -16,7 +16,9 @@
           "name": "Name",
           "priority": "Priority",
           "picture": "Pic"
-        }
+        },
+        "part-description-single": "{{count}} product added",
+        "part-description-plural": "{{count}} products added"
       },
       "product-part-detail": {
         "title": "Parts",
@@ -32,7 +34,26 @@
         "icon-title": "Part icon",
         "icon-description": "No icon",
         "product-list-title": "Product list",
-        "product-list-description": "0 products"
+        "product-list-description-plural": "{{count}} products",
+        "product-list-description-single": "{{count}} product"
+      },
+      "part-product-list": {
+        "title": "Products",
+        "subtitle": "List of products",
+        "labels": {
+          "name": "Name",
+          "sku": "SKU",
+          "picture": "Pic",
+          "priority": "Priority"
+        },
+        "toolbar-commands": {
+          "default": "Default"
+        },
+        "context-menu": {
+          "default": "Set default"
+        },
+        "no-products-message": "There are no products yet",
+        "add-new-button": "Add new"
       },
       "upload-part-icon": {
         "title": "Upload",
@@ -67,6 +88,18 @@
       "product-part-create": {
         "title": "Save changes",
         "message": "The part has been modified. Do you want to save changes?"
+      },
+      "default-product-delete": {
+        "title": "Delete product",
+        "message": "One of the selected products is set as default and after deletion the first item in the list will be set as default. Are you sure you want to delete the default product?"
+      },
+      "part-product-delete": {
+        "title": "Delete product",
+        "message": "Are you sure you want to delete selected product(s)?"
+      },
+      "add-products-to-part": {
+        "title": "Save changes",
+        "message": "Part products have been modified. Do you want to save changes?"
       }
     }
   },

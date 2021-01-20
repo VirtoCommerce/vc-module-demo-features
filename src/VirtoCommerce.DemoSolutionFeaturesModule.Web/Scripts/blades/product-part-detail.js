@@ -35,6 +35,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             if (blade.isNew) {
                 blade.originalEntity = {
                     configuredProductId: blade.configuredProductId,
+                    partItems: [],
                     priority: blade.partsLength + 1,
                     maxQuantity: 0,
                     minQuantity: 0
@@ -42,6 +43,9 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 blade.currentEntity = angular.copy(blade.originalEntity);
                 blade.isLoading = false;
             } else {
+                if (!blade.originalEntity.partItems) {
+                    blade.originalEntity.partItems = [];
+                }
                 blade.currentEntity = angular.copy(blade.originalEntity);
                 blade.isLoading = false;
             }
@@ -72,6 +76,23 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
 
         $scope.cancelChanges = () => {
             blade.currentEntity = angular.copy(blade.originalEntity);
+        };
+
+        $scope.openProductList = () => {
+            var newBlade = {
+                id: 'partProductList',
+                title: 'demoSolutionFeaturesModule.blades.part-product-list.title',
+                subtitle: 'demoSolutionFeaturesModule.blades.part-product-list.subtitle',
+                originalEntity: blade.currentEntity,
+                catalogId: blade.catalogId,
+                controller: 'virtoCommerce.DemoSolutionFeaturesModule.partProductListController',
+                template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/part-product-list.tpl.html',
+                onConfirm: (entity) => {
+                    blade.currentEntity = entity;
+                }
+            };
+            bladeNavigationService.showBlade(newBlade, blade);
+
         };
 
         $scope.saveChanges = () => {

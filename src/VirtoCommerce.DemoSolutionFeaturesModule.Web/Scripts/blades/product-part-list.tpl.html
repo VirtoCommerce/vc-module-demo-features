@@ -74,7 +74,8 @@
     <div class="ui-grid-cell-contents">
         <div class="inner-contents">
             <div class="table-t">{{COL_FIELD}}</div>
-            <div class="table-descr">0 products added</div>
+            <div class="table-descr" ng-if="row.entity.partItems.length !== 1">{{ 'demoSolutionFeaturesModule.blades.product-part-list.part-description-plural' | translate: {count: row.entity.partItems ? row.entity.partItems.length : 0} }}</div>
+            <div class="table-descr" ng-if="row.entity.partItems.length === 1">{{ 'demoSolutionFeaturesModule.blades.product-part-list.part-description-single' | translate: {count: row.entity.partItems.length} }}</div>
         </div>
     </div>
 </script>
