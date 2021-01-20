@@ -31,7 +31,7 @@
           "max-quantity": "Max. quantity",
           "is-required": "Required part"
         },
-        "icon-title": "Upload part icon",
+        "icon-title": "Part icon",
         "icon-description": "No icon",
         "product-list-title": "Product list",
         "product-list-description-plural": "{{count}} products",
@@ -54,7 +54,35 @@
         },
         "no-products-message": "There are no products yet",
         "add-new-button": "Add new"
-      }
+      },
+      "upload-part-icon": {
+        "title": "Upload",
+        "subtitle": "Manage images",
+        "labels": {
+          "progress": "Progress" 
+        },
+        "drag-and-drop": {
+          "placeholder": "Drag and drop images here",
+          "or": "or ",
+          "link": "browse your files"
+        },
+        "image-url": {
+          "title": "Upload with image URL",
+          "label": "Image URL",
+          "placeholder": "Please enter link address here",
+          "labels": {
+            "download": "Download image",
+            "add": "Add image"
+          }
+        },
+        "preview": {
+          "title": "Preview",
+          "image": {
+            "title": "Product part",
+            "description": "{{ count }} product(s) added"
+          } 
+        } 
+      } 
     },
     "dialogs": {
       "product-part-create": {

@@ -52,3 +52,28 @@
     font-size: 20px;
     margin-bottom: 20px;
 }
+
+.upload-part-icon .drag-area {
+    padding: 20px;
+}
+
+.upload-part-icon fieldset {
+    display: flex;
+    flex-direction: column;
+}
+
+.upload-part-icon .table.preview {
+    border: 1px solid #eee;
+    min-width: 0;
+}
+
+.upload-part-icon .table.preview .table-item {
+    background: none;
+    cursor: auto;
+}
+
+.product-part-detail .list-ico ~ .list-container,
+.product-part-detail .list-img ~ .list-container {
+    display: inline-block;
+    vertical-align: middle;
+}
