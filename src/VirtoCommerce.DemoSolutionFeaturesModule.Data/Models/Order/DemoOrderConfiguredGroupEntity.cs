@@ -49,6 +49,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             group.PriceWithTax = PriceWithTax;
 
             group.ItemIds = Items.Select(x => x.Id).ToList();
+            group.Items = Items.Select(x => (DemoOrderLineItem)x.ToModel(AbstractTypeFactory<DemoOrderLineItem>.TryCreateInstance())).ToList();
 
             return group;
         }

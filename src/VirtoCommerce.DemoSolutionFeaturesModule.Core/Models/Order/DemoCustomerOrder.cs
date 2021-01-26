@@ -6,6 +6,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
 {
     public class DemoCustomerOrder: CustomerOrder
     {
+
+        public ICollection<LineItem> UsualItems => Items.Where(x => !ConfiguredGroups.Any(y => y.Items.Contains(x))).ToArray();
+
         public ICollection<DemoOrderConfiguredGroup> ConfiguredGroups { get; set; }
 
         public override object Clone()
