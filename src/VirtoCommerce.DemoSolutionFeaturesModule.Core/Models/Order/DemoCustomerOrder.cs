@@ -9,7 +9,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
 
         public ICollection<LineItem> UsualItems => Items.Where(x => !ConfiguredGroups.Any(y => y.Items.Contains(x))).ToArray();
 
-        public ICollection<DemoOrderConfiguredGroup> ConfiguredGroups { get; set; }
+        public ICollection<DemoOrderConfiguredGroup> ConfiguredGroups { get; set; } = new List<DemoOrderConfiguredGroup>();
 
         public override object Clone()
         {
