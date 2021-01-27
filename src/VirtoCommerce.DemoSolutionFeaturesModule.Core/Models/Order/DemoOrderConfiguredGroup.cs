@@ -10,7 +10,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
     {
         public string ProductId { get; set; }
         public ICollection<string> ItemIds { get; set; } = new List<string>();
-        public virtual ICollection<DemoOrderLineItem> Items { get; set; }
+        public virtual ICollection<DemoOrderLineItem> Items { get; set; } = new List<DemoOrderLineItem>();
         public int Quantity { get; set; }
 
         #region Pricing
@@ -31,9 +31,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
 
         public object Clone()
         {
-            var result = MemberwiseClone() as DemoCartConfiguredGroup;
+            var result = MemberwiseClone() as DemoOrderConfiguredGroup;
 
             result.ItemIds = ItemIds?.Select(x => x.ToString()).ToList();
+            result.Items = Items?.Select(x => x.Clone()).OfType<DemoOrderLineItem>().ToList();
 
             return result;
         }
