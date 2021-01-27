@@ -10,7 +10,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
     {
         public string ProductId { get; set; }
         public ICollection<string> ItemIds { get; set; }
-        public virtual ICollection<DemoOrderLineItem> Items { get; set; }
+        public ICollection<DemoOrderLineItem> Items { get; set; }
         public int Quantity { get; set; }
 
         #region Pricing
