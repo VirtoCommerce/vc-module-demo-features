@@ -7,7 +7,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 {
-    public class DemoCustomerOrderEntity: CustomerOrderEntity
+    public class DemoCustomerOrderEntity : CustomerOrderEntity
     {
         public virtual ObservableCollection<DemoOrderConfiguredGroupEntity> ConfiguredGroups { get; set; } = new NullCollection<DemoOrderConfiguredGroupEntity>();
 

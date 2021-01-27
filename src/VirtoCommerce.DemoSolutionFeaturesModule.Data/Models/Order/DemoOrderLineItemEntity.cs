@@ -6,7 +6,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 {
-    public class DemoOrderLineItemEntity: LineItemEntity
+    public class DemoOrderLineItemEntity : LineItemEntity
     {
         [StringLength(128)]
         public string ConfiguredGroupId { get; set; }

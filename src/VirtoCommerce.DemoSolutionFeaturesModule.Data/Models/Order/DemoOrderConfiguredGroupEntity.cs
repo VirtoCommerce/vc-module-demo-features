@@ -8,7 +8,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 {
-    public class DemoOrderConfiguredGroupEntity: AuditableEntity
+    public class DemoOrderConfiguredGroupEntity : AuditableEntity
     {
         public string ProductId { get; set; }
         public string CustomerOrderId { get; set; }
@@ -49,6 +49,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             group.PriceWithTax = PriceWithTax;
 
             group.ItemIds = Items.Select(x => x.Id).ToList();
+            group.Items = Items.Select(x => (DemoOrderLineItem)x.ToModel(AbstractTypeFactory<DemoOrderLineItem>.TryCreateInstance())).ToList();
 
             return group;
         }
