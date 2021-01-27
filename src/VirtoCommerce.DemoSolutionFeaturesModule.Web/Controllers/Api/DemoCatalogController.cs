@@ -13,12 +13,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
     [Route("api/demo/catalog")]
     public class DemoCatalogController : Controller
     {
-        private readonly IDemoProductPartSerarchService _partsSerarchService;
+        private readonly IDemoProductPartSearchService _partsSerarchService;
         private readonly IDemoProductPartService _partsService;
 
         public DemoCatalogController(
             IDemoProductPartService partsService
-            , IDemoProductPartSerarchService partsSerarchService)
+            , IDemoProductPartSearchService partsSerarchService)
         {
             _partsSerarchService = partsSerarchService;
             _partsService = partsService;

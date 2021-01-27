@@ -24,7 +24,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
             modelBuilder.Entity<DemoProductPartEntity>()
                 .HasOne(x => x.ConfiguredProduct).WithMany(x => x.ConfiguredProductParts).HasForeignKey(x => x.ConfiguredProductId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
-            // PartItems many to many defenition
+            // PartItems many to many definition
             modelBuilder.Entity<DemoProductPartItemEntity>()
                 .ToTable("DemoProductPartItem");
             modelBuilder.Entity<DemoProductPartItemEntity>()
