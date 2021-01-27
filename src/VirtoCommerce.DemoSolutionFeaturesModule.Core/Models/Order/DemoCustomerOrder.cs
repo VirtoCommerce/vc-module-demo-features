@@ -5,10 +5,9 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
 {
-    public class DemoCustomerOrder: CustomerOrder
+    public class DemoCustomerOrder : CustomerOrder
     {
-
-        public ICollection<LineItem> UsualItems => Items?.Where(x => ConfiguredGroups.IsNullOrEmpty() || !ConfiguredGroups.Any(y => y.Items.Contains(x))).ToArray();
+        public ICollection<LineItem> UsualItems => GetUsualItems();
 
         public ICollection<DemoOrderConfiguredGroup> ConfiguredGroups { get; set; }
 
@@ -19,6 +18,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
             result.ConfiguredGroups = ConfiguredGroups?.Select(x => x.Clone()).OfType<DemoOrderConfiguredGroup>().ToList();
 
             return result;
+        }
+
+        private LineItem[] GetUsualItems()
+        {
+            return Items?.Where(x => ConfiguredGroups.IsNullOrEmpty() || !ConfiguredGroups.Any(y => y.Items.Contains(x))).ToArray();
         }
     }
 }
