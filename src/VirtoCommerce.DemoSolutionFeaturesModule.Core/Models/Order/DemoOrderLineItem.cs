@@ -1,9 +1,8 @@
-using VirtoCommerce.CatalogModule.Core.Model;
 using VirtoCommerce.OrdersModule.Core.Model;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
 {
-    public class DemoOrderLineItem: LineItem
+    public class DemoOrderLineItem : LineItem
     {
         public string ConfiguredGroupId { get; set; }
 

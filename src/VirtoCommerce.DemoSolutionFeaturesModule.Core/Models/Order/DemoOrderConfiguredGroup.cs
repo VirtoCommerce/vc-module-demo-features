@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using VirtoCommerce.CatalogModule.Core.Model;
 using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
 {
-    public class DemoOrderConfiguredGroup: AuditableEntity, ICloneable
+    public class DemoOrderConfiguredGroup : AuditableEntity, ICloneable
     {
         public string ProductId { get; set; }
         public ICollection<string> ItemIds { get; set; }

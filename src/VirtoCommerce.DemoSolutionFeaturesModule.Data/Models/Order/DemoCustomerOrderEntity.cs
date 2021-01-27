@@ -7,7 +7,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 {
-    public class DemoCustomerOrderEntity: CustomerOrderEntity
+    public class DemoCustomerOrderEntity : CustomerOrderEntity
     {
         public virtual ObservableCollection<DemoOrderConfiguredGroupEntity> ConfiguredGroups { get; set; } = new NullCollection<DemoOrderConfiguredGroupEntity>();
 
@@ -27,7 +27,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
         {
             base.FromModel(operation, pkMap);
 
-            var orderExtended = (DemoCustomerOrder) operation;
+            var orderExtended = (DemoCustomerOrder)operation;
 
             if (orderExtended.ConfiguredGroups != null)
             {
@@ -42,7 +42,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
         {
             base.Patch(operation);
 
-            var orderdExtended = (DemoCustomerOrderEntity) operation;
+            var orderdExtended = (DemoCustomerOrderEntity)operation;
 
             if (!ConfiguredGroups.IsNullCollection())
             {
