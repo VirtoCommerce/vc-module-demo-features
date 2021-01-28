@@ -28,6 +28,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
                 Name = x.Name,
                 ImageUrl = x.ImageUrl,
                 ItemIds = x.ItemIds,
+                Items = orderExtended.Items?.Where(i => x.ItemIds.Contains(i.Id)).Select(i => (DemoOrderLineItem)i).ToArray(),
                 Quantity = x.Quantity,
                 Currency = x.Currency,
                 Price = x.ListPrice,
