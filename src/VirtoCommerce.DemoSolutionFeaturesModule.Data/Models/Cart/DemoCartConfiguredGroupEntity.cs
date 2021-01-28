@@ -11,6 +11,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
     public class DemoCartConfiguredGroupEntity : AuditableEntity
     {
         public string ProductId { get; set; }
+        [Required]
+        [StringLength(256)]
+        public string Name { get; set; }
+        [StringLength(1028)]
+        public string ImageUrl { get; set; }
         public string ShoppingCartId { get; set; }
         public virtual DemoShoppingCartEntity ShoppingCart { get; set; }
         public virtual ObservableCollection<DemoCartLineItemEntity> Items { get; set; } = new NullCollection<DemoCartLineItemEntity>();
@@ -45,6 +50,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
             group.Id = Id;
             group.ProductId = ProductId;
+            group.Name = Name;
+            group.ImageUrl = ImageUrl;
             group.CreatedDate = CreatedDate;
             group.CreatedBy = CreatedBy;
             group.ModifiedDate = ModifiedDate;
@@ -72,6 +79,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
             Id = group.Id;
             ProductId = group.ProductId;
+            Name = group.Name;
+            ImageUrl = group.ImageUrl;
             CreatedDate = group.CreatedDate;
             CreatedBy = group.CreatedBy;
             ModifiedDate = group.ModifiedDate;
@@ -89,6 +98,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
         public virtual void Patch(DemoCartConfiguredGroupEntity target)
         {
             target.ProductId = ProductId;
+            target.Name = Name;
+            target.ImageUrl = ImageUrl;
             target.Quantity = Quantity;
             target.Currency = Currency;
             target.ListPrice = ListPrice;
