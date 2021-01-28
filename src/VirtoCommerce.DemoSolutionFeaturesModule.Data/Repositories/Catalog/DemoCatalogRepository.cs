@@ -23,10 +23,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
         {
             var result = await base.GetItemByIdsAsync(itemIds, responseGroup);
             var itemResponseGroup = EnumUtility.SafeParseFlags(responseGroup, ItemResponseGroup.ItemLarge);
+
             if (!itemIds.IsNullOrEmpty() && result.Any() && itemResponseGroup.HasFlag(ItemResponseGroup.ItemLarge))
             {
                 await ConfiguredProductParts.Include(x => x.PartItems).Where(x => itemIds.Contains(x.ConfiguredProductId)).LoadAsync();
             }
+
             return result;
         }
 

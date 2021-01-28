@@ -29,7 +29,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog
 
         public virtual object Clone()
         {
-            var result = (DemoProductPart)MemberwiseClone();
+            var result = (DemoProductPart) MemberwiseClone();
             result.PartItems = PartItems?.Select(x => x.Clone()).Cast<ProductPartItemInfo>().ToArray();
             return result;
         }

@@ -3,7 +3,7 @@ using System;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog
 {
-    public class ProductPartItemInfo: ICloneable
+    public class ProductPartItemInfo : ICloneable
     {
         public string ItemId { get; set; }
 
@@ -11,7 +11,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog
 
         public object Clone()
         {
-            return (ProductPartItemInfo)MemberwiseClone();
+            return (ProductPartItemInfo) MemberwiseClone();
         }
     }
 }
