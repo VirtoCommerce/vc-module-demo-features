@@ -13,30 +13,32 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
 
         public override CatalogProduct ToModel(CatalogProduct product, bool convertChildrens = true, bool convertAssociations = true)
         {
-            var demoProduct = (DemoProduct) base.ToModel(product, convertChildrens, convertAssociations);
-            demoProduct.ProductParts = ConfiguredProductParts.Select(x =>
-                x.ToModel(AbstractTypeFactory<DemoProductPart>.TryCreateInstance())).ToArray();
-            return demoProduct;
+            var result = base.ToModel(product, convertChildrens, convertAssociations);
+
+            if (result is DemoProduct demoProduct)
+            {
+                demoProduct.ProductParts = ConfiguredProductParts.Select(x => x.ToModel(AbstractTypeFactory<DemoProductPart>.TryCreateInstance())).ToArray();
+            }
+
+            return result;
         }
 
         public override ItemEntity FromModel(CatalogProduct product, PrimaryKeyResolvingMap pkMap)
         {
-            var demoProduct = (DemoProduct) product;
-            var demoItemEntity = base.FromModel(product, pkMap);
-            if (demoProduct.ProductParts != null)
+            base.FromModel(product, pkMap);
+            if (product is DemoProduct { ProductParts: { } } demoProduct)
             {
                 ConfiguredProductParts = new ObservableCollection<DemoProductPartEntity>(demoProduct.ProductParts.Select(x =>
                     AbstractTypeFactory<DemoProductPartEntity>.TryCreateInstance().FromModel(x, pkMap)));
             }
-            return demoItemEntity;
+            return this;
         }
 
         public override void Patch(ItemEntity target)
         {
             base.Patch(target);
-
-            var demoItemEntity = (DemoItemEntity) target;
-            if (!ConfiguredProductParts.IsNullCollection())
+            
+            if (target is DemoItemEntity demoItemEntity && !ConfiguredProductParts.IsNullCollection())
             {
                 ConfiguredProductParts.Patch(demoItemEntity.ConfiguredProductParts, (sourcePart, targetPart) => sourcePart.Patch(targetPart));
             }

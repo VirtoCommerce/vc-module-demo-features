@@ -9,8 +9,13 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog
 
         public override object GetCopy()
         {
-            var result = (DemoProduct) base.GetCopy();
-            result.ProductParts = ProductParts.Select(x => x.GetCopy()).Cast<DemoProductPart>().ToArray();
+            var result = base.GetCopy();
+
+            if (result is DemoProduct demoProduct)
+            {
+                demoProduct.ProductParts = ProductParts.Select(x => x.GetCopy()).Cast<DemoProductPart>().ToArray();
+            }
+
             return result;
         }
     }
