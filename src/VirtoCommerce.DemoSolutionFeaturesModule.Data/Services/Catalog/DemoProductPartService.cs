@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
+using VirtoCommerce.CatalogModule.Data.Caching;
 using VirtoCommerce.CatalogModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog;
@@ -125,7 +126,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
             await _eventPublisher.Publish(new DemoProductPartChangedEvent(changedEntries));
         }
 
-        protected virtual void ClearCache(IEnumerable<DemoProductPart> productParts)
+        protected virtual void ClearCache(DemoProductPart[] productParts)
         {
             foreach (var part in productParts)
             {
@@ -133,6 +134,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog
             }
 
             DemoProductPartSearchCacheRegion.ExpireRegion();
+
+            ItemCacheRegion.ExpireProducts(productParts.Select(x => x.ConfiguredProductId).ToArray());
         }
     }
 }
