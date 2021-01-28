@@ -25,6 +25,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
             {
                 Id = x.Id,
                 ProductId = x.ProductId,
+                Name = x.Name,
+                ImageUrl = x.ImageUrl,
                 ItemIds = x.ItemIds,
                 Quantity = x.Quantity,
                 Currency = x.Currency,

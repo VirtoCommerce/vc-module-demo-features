@@ -8,6 +8,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
     public class DemoOrderConfiguredGroup : AuditableEntity, ICloneable
     {
         public string ProductId { get; set; }
+        public string Name { get; set; }
+        public string ImageUrl { get; set; }
         public ICollection<string> ItemIds { get; set; }
         public ICollection<DemoOrderLineItem> Items { get; set; }
         public int Quantity { get; set; }

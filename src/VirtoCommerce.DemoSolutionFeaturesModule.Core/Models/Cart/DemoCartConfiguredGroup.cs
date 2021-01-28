@@ -8,6 +8,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
     public class DemoCartConfiguredGroup : AuditableEntity, ICloneable
     {
         public string ProductId { get; set; }
+        public string Name { get; set; }
+        public string ImageUrl { get; set; }
         public ICollection<string> ItemIds { get; set; } = new List<string>();
         public int Quantity { get; set; }
 
