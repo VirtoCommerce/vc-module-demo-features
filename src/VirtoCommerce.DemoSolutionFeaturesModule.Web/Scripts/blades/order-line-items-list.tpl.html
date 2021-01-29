@@ -41,7 +41,7 @@
                             <td class="table-col">
                                 <div class="product-img">
                                     <div class="image" style="background-image: url({{product.imageUrl}})" ng-if="product.imageUrl" ng-click="openItemDetail(product)"></div>
-                                    <i class="table-ico fa fa-image" ng-if="!product.imageUrl" />
+                                    <i class="table-ico fa fa-image" aria-hidden="true" ng-if="!product.imageUrl" />
                                 </div>
                             </td>
                             <td class="table-col"></td>
@@ -58,12 +58,12 @@
                             </td>
                             <td class="table-col">
                                 <span ng-show="!showConfiguration[product.productId]" class="fa-stack fa-lg" ng-click="toggleConfiguration(product.productId)">
-                                    <i class="fa fa-square-o square-icon fa-stack-2x"></i>
-                                    <i class="fa fa-chevron-down chevron-icon fa-stack-1x"></i>
+                                    <i class="fa fa-square-o square-icon fa-stack-2x" aria-hidden="true"></i>
+                                    <i class="fa fa-chevron-down chevron-icon fa-stack-1x" aria-hidden="true"></i>
                                 </span>
                                 <span ng-show="showConfiguration[product.productId]" class="fa-stack fa-lg" ng-click="toggleConfiguration(product.productId)">
-                                    <i class="fa fa-square square-icon-blue fa-stack-2x"></i>
-                                    <i class="fa fa-chevron-up chevron-icon-white fa-stack-1x"></i>
+                                    <i class="fa fa-square square-icon-blue fa-stack-2x" aria-hidden="true"></i>
+                                    <i class="fa fa-chevron-up chevron-icon-white fa-stack-1x" aria-hidden="true"></i>
                                 </span>
                             </td>
                         </tr>
@@ -82,7 +82,7 @@
                             <td class="table-col">
                                 <div class="product-img">
                                     <div class="image" style="background-image: url({{item.imageUrl}})" ng-if="item.imageUrl" ng-click="openItemDetail(item)"></div>
-                                    <i class="table-ico fa fa-image" ng-if="!item.imageUrl" />
+                                    <i class="table-ico fa fa-image" aria-hidden="true" ng-if="!item.imageUrl" />
                                 </div>
                             </td>
                             <td class="table-col">
@@ -139,7 +139,7 @@
                             <td class="table-col">
                                 <div class="product-img">
                                     <div class="image" style="background-image: url({{data.imageUrl}})" ng-if="data.imageUrl" ng-click="openItemDetail(data)"></div>
-                                    <i class="table-ico fa fa-image" ng-if="!data.imageUrl" />
+                                    <i class="table-ico fa fa-image" aria-hidden="true" ng-if="!data.imageUrl" />
                                 </div>
                             </td>
                             <td class="table-col">
