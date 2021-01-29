@@ -34,4 +34,8 @@ angular.module(moduleName, [])
                     template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/widgets/productPartsWidget.tpl.html'
                 }, 'itemDetail');
             });
+
+            const itemDetailWidgets = widgetService.widgetsMap['itemDetail'];
+            const variationWidget = itemDetailWidgets.find(widget => widget.controller == 'virtoCommerce.catalogModule.itemVariationWidgetController');
+            variationWidget.isVisible = blade => blade.id !== 'variationDetail' && blade.productType !== configurableProductType;
     }]);

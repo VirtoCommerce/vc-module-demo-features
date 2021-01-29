@@ -13,14 +13,14 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
     [Route("api/demo/catalog")]
     public class DemoCatalogController : Controller
     {
-        private readonly IDemoProductPartSerarchService _partsSerarchService;
+        private readonly IDemoProductPartSearchService _partsSearchService;
         private readonly IDemoProductPartService _partsService;
 
         public DemoCatalogController(
             IDemoProductPartService partsService
-            , IDemoProductPartSerarchService partsSerarchService)
+            , IDemoProductPartSearchService partsSearchService)
         {
-            _partsSerarchService = partsSerarchService;
+            _partsSearchService = partsSearchService;
             _partsService = partsService;
         }
 
@@ -38,7 +38,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         [Authorize(catalogCore.ModuleConstants.Security.Permissions.Read)]
         public async Task<ActionResult<DemoProductPartSearchResult>> Search([FromBody] DemoProductPartSearchCriteria criteria)
         {
-            var result = await _partsSerarchService.SearchProductPartsAsync(criteria);
+            var result = await _partsSearchService.SearchProductPartsAsync(criteria);
             return Ok(result);
         }
 

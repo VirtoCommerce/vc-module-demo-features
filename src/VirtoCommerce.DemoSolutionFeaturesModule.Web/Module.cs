@@ -10,6 +10,7 @@ using VirtoCommerce.CartModule.Core.Model;
 using VirtoCommerce.CartModule.Core.Services;
 using VirtoCommerce.CartModule.Data.Model;
 using VirtoCommerce.CartModule.Data.Repositories;
+using VirtoCommerce.CatalogModule.Core.Model;
 using VirtoCommerce.CatalogModule.Data.Model;
 using VirtoCommerce.CatalogModule.Data.Repositories;
 using VirtoCommerce.CustomerModule.Core.Model;
@@ -82,7 +83,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             // catalog
             serviceCollection.AddTransient<ICatalogRepository, DemoCatalogRepository>();
             serviceCollection.AddTransient<IDemoProductPartService, DemoProductPartService>();
-            serviceCollection.AddTransient<IDemoProductPartSerarchService, DemoProductPartSearchService>();
+            serviceCollection.AddTransient<IDemoProductPartSearchService, DemoProductPartSearchService>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
@@ -123,6 +124,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             // catalog
             AbstractTypeFactory<ItemEntity>.OverrideType<ItemEntity, DemoItemEntity>();
+            AbstractTypeFactory<CatalogProduct>.OverrideType<CatalogProduct, DemoProduct>();
 
             AbstractTypeFactory<DemoProductPart>.RegisterType<DemoProductPart>().MapToType<DemoProductPartEntity>();
             AbstractTypeFactory<DemoProductPartEntity>.RegisterType<DemoProductPartEntity>();
