@@ -44,13 +44,13 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
     };
 
     $scope.openItemDynamicProperties = (item) => {
-        let blade = {
+        const newBlade = {
             id: "dynamicPropertiesList",
             currentEntity: item,
             controller: 'platformWebApp.propertyValueListController',
             template: '$(Platform)/Scripts/app/dynamicProperties/blades/propertyValue-list.tpl.html'
         };
-        bladeNavigationService.showBlade(blade, $scope.blade);
+        bladeNavigationService.showBlade(newBlade, $scope.blade);
     };
 
     $scope.openItemDetail = (item) => {
@@ -106,12 +106,12 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
 
     function isConfiguredLineItemSelected() {
         const pairs = filterConfigurationLineItemsCheckboxes();
-        let items = [];
+        let selectedLineItems = [];
         angular.forEach(pairs, pair => {
             const configurationLineItems = pair[1];
-            items.push(...configurationLineItems);
+            selectedLineItems.push(...configurationLineItems);
         });
-        return items.length;
+        return selectedLineItems.length;
     }
 
     function removeItems() {
@@ -204,10 +204,10 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             toolbarCommands: [
               {
                   name: "orders.commands.add-selected", icon: 'fa fa-plus',
-                  executeMethod: (blade) => {
+                  executeMethod: (pickingBlade) => {
                       addProductsToOrder(selectedProducts);
                       selectedProducts.length = 0;
-                      bladeNavigationService.closeBlade(blade);
+                      bladeNavigationService.closeBlade(pickingBlade);
                   },
                   canExecuteMethod: () => selectedProducts.length > 0
               }]
