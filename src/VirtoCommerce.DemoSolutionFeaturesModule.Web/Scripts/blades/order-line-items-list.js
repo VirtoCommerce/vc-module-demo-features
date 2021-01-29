@@ -1,6 +1,6 @@
 angular.module('virtoCommerce.DemoSolutionFeaturesModule')
     .controller('virtoCommerce.DemoSolutionFeaturesModule.orderLineItemsListController', ['$scope', 'platformWebApp.bladeNavigationService', 'virtoCommerce.orderModule.catalogItems', 'virtoCommerce.pricingModule.prices', '$translate', 'platformWebApp.authService', function ($scope, bladeNavigationService, items, prices, $translate, authService) {
-    const blade = $scope.blade;
+    let blade = $scope.blade;
     blade.updatePermission = 'order:update';
     blade.isVisiblePrices = authService.checkPermission('order:read_prices');
     $scope.showConfiguration = {};
@@ -44,7 +44,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
     };
 
     $scope.openItemDynamicProperties = (item) => {
-        const blade = {
+        let blade = {
             id: "dynamicPropertiesList",
             currentEntity: item,
             controller: 'platformWebApp.propertyValueListController',
@@ -106,9 +106,9 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
 
     function isConfiguredLineItemSelected() {
         const pairs = filterConfigurationLineItemsCheckboxes();
-        const items = [];
+        let items = [];
         angular.forEach(pairs, pair => {
-            const [configId, configurationLineItems] = pair;
+            const configurationLineItems = pair[1];
             items.push(...configurationLineItems);
         });
         return items.length;
@@ -155,8 +155,8 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
     function addProductsToOrder(products) {
         angular.forEach(products, product => {
             items.get({ id: product.id }, data => {
-                prices.getProductPrices({ id: product.id }, prices => {
-                    const price = _.find(prices, x => { return x.currency === blade.currentEntity.currency });
+                prices.getProductPrices({ id: product.id }, productPrices => {
+                    const price = _.find(productPrices, x => { return x.currency === blade.currentEntity.currency });
 
                     const newLineItem =
 					{
