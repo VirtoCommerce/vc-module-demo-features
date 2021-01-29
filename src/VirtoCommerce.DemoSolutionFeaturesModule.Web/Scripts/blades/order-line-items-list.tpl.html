@@ -6,22 +6,22 @@
                 <table class="table table-header-borders table-text-centered">
                     <thead>
                         <tr>
-                            <th class="table-col __product-control">
+                            <th class="table-col __product-control" scope="col">
                                 <label class="form-control __checkbox">
                                     <input type="checkbox" ng-model="blade.selectedAll" ng-change="checkAll(blade.selectedAll)" />
                                     <span class="check"></span>
                                 </label>
                             </th>
-                            <th class="table-col __proudct-img">{{ 'orders.blades.customerOrder-items.labels.item' | translate }}</th>
-                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.quantity' | translate }}</th>
-                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.available' | translate }}</th>
-                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.price' | translate }}</th>
-                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.priceWithTax' | translate }}</th>
-                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.discount' | translate }}</th>
-                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.discountWithTax' | translate }}</th>
-                            <th class="table-col">{{ 'demoSolutionFeaturesModule.blades.order-line-items-list.labels.tax' | translate }}</th>
-                            <th class="table-col">{{ 'orders.blades.customerOrder-items.labels.total' | translate }}</th>
-                            <th class="table-col"></th>
+                            <th class="table-col __proudct-img" scope="col">{{ 'orders.blades.customerOrder-items.labels.item' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'orders.blades.customerOrder-items.labels.quantity' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'orders.blades.customerOrder-items.labels.available' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'orders.blades.customerOrder-items.labels.price' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'orders.blades.customerOrder-items.labels.priceWithTax' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'orders.blades.customerOrder-items.labels.discount' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'orders.blades.customerOrder-items.labels.discountWithTax' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'demoSolutionFeaturesModule.blades.order-line-items-list.labels.tax' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'orders.blades.customerOrder-items.labels.total' | translate }}</th>
+                            <th class="table-col" scope="col"></th>
                         </tr>
                     </thead>
                     <tbody ng-repeat="product in blade.currentEntity.configuredGroups">
