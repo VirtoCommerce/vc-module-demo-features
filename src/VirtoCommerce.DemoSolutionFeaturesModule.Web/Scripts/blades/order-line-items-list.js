@@ -157,9 +157,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             items.get({ id: product.id }, data => {
                 prices.getProductPrices({ id: product.id }, productPrices => {
                     const price = _.find(productPrices, x => { return x.currency === blade.currentEntity.currency });
-
-                    const newLineItem =
-					{
+                    const newLineItem = {
                         productId: data.id,
                         id: data.id,
                         catalogId: data.catalogId,
