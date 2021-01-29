@@ -158,3 +158,7 @@
     top: 3px;
     z-index: 100;
 }
+
+.bg-none {
+    background: none !important;
+}

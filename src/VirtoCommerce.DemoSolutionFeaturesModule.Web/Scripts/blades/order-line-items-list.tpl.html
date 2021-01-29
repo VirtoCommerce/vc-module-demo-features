@@ -185,19 +185,19 @@
                 <span>{{ 'demoSolutionFeaturesModule.blades.order-line-items-list.count' | translate }}: <span class="count">{{blade.currentEntity.usualItems.length + blade.currentEntity.configuredGroups.length | number:0}}</span></span>
                 <table class="table __collapsed __order-info border-style-none">
                     <tr class="table-item">
-                        <td class="table-col">{{ 'orders.blades.customerOrder-items.labels.sub-total' | translate }}</td>
+                        <th class="table-col bg-none" scope="row">{{ 'orders.blades.customerOrder-items.labels.sub-total' | translate }}</th>
                         <td class="table-col __price">{{blade.currentEntity.subTotal | currency:blade.currentEntity.currency | showPrice:blade.isVisiblePrices}}</td>
                     </tr>
                     <tr class="table-item">
-                        <td class="table-col">{{ 'orders.blades.customerOrder-items.labels.discount-total' | translate }}</td>
+                        <th class="table-col bg-none" scope="row">{{ 'orders.blades.customerOrder-items.labels.discount-total' | translate }}</th>
                         <td class="table-col __price">{{blade.currentEntity.subTotalDiscount | currency:blade.currentEntity.currency | showPrice:blade.isVisiblePrices}}</td>
                     </tr>
                     <tr class="table-item">
-                        <td class="table-col">{{ 'orders.blades.customerOrder-items.labels.tax-total' | translate }}</td>
+                        <th class="table-col bg-none" scope="row">{{ 'orders.blades.customerOrder-items.labels.tax-total' | translate }}</th>
                         <td class="table-col __price">{{ blade.currentEntity.subTotalTaxTotal | currency:blade.currentEntity.currency | showPrice:blade.isVisiblePrices}}</td>
                     </tr>
                     <tr class="table-item __total">
-                        <td class="table-col">{{ 'orders.blades.customerOrder-items.labels.total' | translate }}</td>
+                        <th class="table-col bg-none" scope="row">{{ 'orders.blades.customerOrder-items.labels.total' | translate }}</th>
                         <td class="table-col __price">{{ (blade.currentEntity.subTotalWithTax - blade.currentEntity.subTotalDiscountWithTax) | currency:blade.currentEntity.currency | showPrice:blade.isVisiblePrices}}</td>
                     </tr>
                 </table>
