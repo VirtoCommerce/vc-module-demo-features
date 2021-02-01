@@ -59,7 +59,7 @@
         "title": "Upload",
         "subtitle": "Manage images",
         "labels": {
-          "progress": "Progress" 
+          "progress": "Progress"
         },
         "drag-and-drop": {
           "placeholder": "Drag and drop images here",
@@ -80,9 +80,15 @@
           "image": {
             "title": "Product part",
             "description": "{{ count }} product(s) added"
-          } 
-        } 
-      } 
+          }
+        }
+      },
+      "order-line-items-list": {
+        "count": "Number of items",
+        "labels": {
+          "tax": "Total tax"
+        }
+      }
     },
     "dialogs": {
       "product-part-create": {

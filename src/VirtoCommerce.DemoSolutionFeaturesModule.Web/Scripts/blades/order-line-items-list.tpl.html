@@ -1,0 +1,207 @@
+<div class="blade-content __xlarge-wide">
+    <div class="blade-inner">
+        <div class="inner-block">
+            <form name="orderForm" novalidate></form>
+            <div class="table-wrapper">
+                <table class="table table-header-borders table-text-centered" aria-label="Order line items">
+                    <thead>
+                        <tr>
+                            <th class="table-col __product-control" scope="col">
+                                <label class="form-control __checkbox">
+                                    <input type="checkbox" ng-model="blade.selectedAll" ng-change="checkAll(blade.selectedAll)" />
+                                    <span class="check"></span>
+                                </label>
+                            </th>
+                            <th class="table-col __proudct-img" scope="col">{{ 'orders.blades.customerOrder-items.labels.item' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'orders.blades.customerOrder-items.labels.quantity' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'orders.blades.customerOrder-items.labels.available' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'orders.blades.customerOrder-items.labels.price' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'orders.blades.customerOrder-items.labels.priceWithTax' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'orders.blades.customerOrder-items.labels.discount' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'orders.blades.customerOrder-items.labels.discountWithTax' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'demoSolutionFeaturesModule.blades.order-line-items-list.labels.tax' | translate }}</th>
+                            <th class="table-col" scope="col">{{ 'orders.blades.customerOrder-items.labels.total' | translate }}</th>
+                            <th class="table-col" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="product in blade.currentEntity.configuredGroups">
+                        <tr class="table-item border-style-none" ng-class="{'__selected': product.productId === blade.selectedNodeId}" ng-click='blade.selectedNodeId = product.productId'>
+                            <td class="table-head font-weight-500 position-relative configured-corner" colspan="11" ng-click="openItemDetail(product)">
+                                {{product.name}}
+                                <i class="fa fa-wrench fa-2x position-absolute wrench-icon fa-flip-horizontal" aria-hidden="true"></i>
+                            </td>
+                        </tr>
+                        <tr class="table-item table-item-borders" ng-class="{'__selected': product.productId === blade.selectedNodeId}" ng-click='blade.selectedNodeId = product.productId'>
+                            <td class="table-col">
+                                <label class="form-control __checkbox">
+                                    <input type="checkbox" ng-model="checkboxes[product.id]">
+                                    <span class="check"></span>
+                                </label>
+                            </td>
+                            <td class="table-col">
+                                <div class="product-img">
+                                    <img class="image" ng-src="{{product.imageUrl}}" ng-if="product.imageUrl" ng-click="openItemDetail(product)" alt="product.name"></img>
+                                    <i class="table-ico fa fa-image" aria-hidden="true" ng-if="!product.imageUrl" />
+                                </div>
+                            </td>
+                            <td class="table-col"></td>
+                            <td class="table-col"></td>
+                            <td class="table-col"></td>
+                            <td class="table-col"></td>
+                            <td class="table-col"></td>
+                            <td class="table-col"></td>
+                            <td class="table-col">
+                                <span class="list-price">{{product.taxTotal | currency:'' | showPrice:blade.isVisiblePrices}}</span>
+                            </td>
+                            <td class="table-col __total font-weight-500">
+                                <span class="list-price">{{product.extendedPriceWithTax | currency:'' | showPrice:blade.isVisiblePrices}}</span>
+                            </td>
+                            <td class="table-col">
+                                <span ng-show="!showConfiguration[product.productId]" class="fa-stack fa-lg" ng-click="toggleConfiguration(product.productId)">
+                                    <i class="fa fa-square square-icon fa-stack-2x" aria-hidden="true"></i>
+                                    <i class="fa fa-chevron-down chevron-icon-white fa-stack-1x" aria-hidden="true"></i>
+                                </span>
+                                <span ng-show="showConfiguration[product.productId]" class="fa-stack fa-lg" ng-click="toggleConfiguration(product.productId)">
+                                    <i class="fa fa-square square-icon-blue fa-stack-2x" aria-hidden="true"></i>
+                                    <i class="fa fa-chevron-up chevron-icon-white fa-stack-1x" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr class="table-item configuration-row" ng-repeat-start="item in product.items" ng-class="{'configuration-row-first': $first, '__selected': item.productId === blade.selectedNodeId}" ng-click='blade.selectedNodeId = item.productId' ng-show="showConfiguration[product.productId]">
+                            <td class="table-head font-weight-500" colspan="11" ng-click="openItemDetail(item)">
+                                {{item.name}}
+                            </td>
+                        </tr>
+                        <tr class="table-item configuration-row" ng-repeat-end ng-class="{'configuration-row-last': $last, '__selected': item.productId === blade.selectedNodeId}" ng-click='blade.selectedNodeId = item.productId' ng-show="showConfiguration[product.productId]">
+                            <td class="table-col">
+                                <label class="form-control __checkbox">
+                                    <input type="checkbox" ng-model="checkboxesCongurationItems[item.configuredGroupId][item.id]">
+                                    <span class="check"></span>
+                                </label>
+                            </td>
+                            <td class="table-col">
+                                <div class="product-img">
+                                    <img class="image" ng-src="{{item.imageUrl}}" ng-if="item.imageUrl" ng-click="openItemDetail(item)" alt="item.name"></img>
+                                    <i class="table-ico fa fa-image" aria-hidden="true" ng-if="!item.imageUrl" />
+                                </div>
+                            </td>
+                            <td class="table-col">
+                                <div class="form-input __inline">
+                                    <div class="form-input __number">
+                                        <input smart-float num-type="integer" required ng-model="item.quantity" ng-model-options="{ updateOn: 'blur' }" ng-change="updateItemsInfo(item)" id="quantity{{item.id}}" focus-on="quantity{{$item.id}}">
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="table-col">
+                                <span ng-class="{'error': item.avail <= 0}">{{(item.avail || 0) | number:0}}</span>
+                            </td>
+                            <td class="table-col">
+                                <div class="form-input">
+                                    <input money mask-money="!blade.isVisiblePrices" required ng-model="item.price" ng-model-options="{ updateOn: 'blur' }" ng-change="updateItemsInfo(item)" id="price{{item.id}}" focus-on="price{{item.id}}">
+                                </div>
+                            </td>
+                            <td class="table-col">
+                                <span class="list-price">{{item.priceWithTax | currency:'' | showPrice:blade.isVisiblePrices}}</span>
+                            </td>
+                            <td class="table-col">
+                                <div class="form-input __inline">
+                                    <input money mask-money="!blade.isVisiblePrices" required ng-model="item.discountAmount" ng-model-options="{ updateOn: 'blur' }" ng-change="updateItemsInfo(item)" id="discountAmount{{item.id}}" focus-on="discountAmount{{item.id}}">
+                                </div>
+                            </td>
+                            <td class="table-col">
+                                <span class="list-price">{{item.discountAmountWithTax | currency:'' | showPrice:blade.isVisiblePrices}}</span>
+                            </td>
+                            <td class="table-col">
+                                <span class="list-price">{{item.taxTotal | currency:'' | showPrice:blade.isVisiblePrices}}</span>
+                            </td>
+                            <td class="table-col font-weight-500">
+                                <span class="list-price">{{item.extendedPriceWithTax | currency:'' | showPrice:blade.isVisiblePrices}}</span>
+                            </td>
+                            <td class="table-col">
+                                <a class="clear text-mini __link" ng-click="openItemDynamicProperties(item)">{{ 'orders.blades.customerOrder-items.labels.dynamic-properties' | translate }}</a>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                    <tbody>
+                        <tr class="table-item border-style-none" ng-repeat-start="data in blade.currentEntity.usualItems" ng-class="{'__selected': $index === blade.selectedNodeId}" ng-click='blade.selectedNodeId = $index'>
+                            <td class="table-head font-weight-500" colspan="11" ng-click="openItemDetail(data)">
+                                {{data.name}}
+                            </td>
+                        </tr>
+                        <tr ng-repeat-end class="table-item table-item-borders" ng-class="{'__selected': $index === blade.selectedNodeId}" ng-click='blade.selectedNodeId = $index'>
+                            <td class="table-col">
+                                <label class="form-control __checkbox">
+                                    <input type="checkbox" ng-model="checkboxes[data.id]">
+                                    <span class="check"></span>
+                                </label>
+                            </td>
+                            <td class="table-col">
+                                <div class="product-img">
+                                    <img class="image" ng-src="{{data.imageUrl}}" ng-if="data.imageUrl" ng-click="openItemDetail(data)" alt="data.name"></img>
+                                    <i class="table-ico fa fa-image" aria-hidden="true" ng-if="!data.imageUrl" />
+                                </div>
+                            </td>
+                            <td class="table-col">
+                                <div class="form-input __inline">
+                                    <div class="form-input __number">
+                                        <input smart-float num-type="integer" required ng-model="data.quantity" ng-model-options="{ updateOn: 'blur' }" ng-change="updateItemsInfo(data)" id="quantity{{$index}}" focus-on="quantity{{$index}}">
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="table-col">
+                                <span ng-class="{'error': data.avail <= 0}">{{(data.avail || 0) | number:0}}</span>
+                            </td>
+                            <td class="table-col">
+                                <div class="form-input">
+                                    <input money mask-money="!blade.isVisiblePrices" required ng-model="data.price" ng-model-options="{ updateOn: 'blur' }" ng-change="updateItemsInfo(data)" id="price{{$index}}" focus-on="price{{$index}}">
+                                </div>
+                            </td>
+                            <td class="table-col">
+                                <span class="list-price">{{data.priceWithTax | currency:'' | showPrice:blade.isVisiblePrices}}</span>
+                            </td>
+                            <td class="table-col">
+                                <div class="form-input __inline">
+                                    <input money mask-money="!blade.isVisiblePrices" required ng-model="data.discountAmount" ng-model-options="{ updateOn: 'blur' }" ng-change="updateItemsInfo(data)" id="discountAmount{{$index}}" focus-on="discountAmount{{$index}}">
+                                </div>
+                            </td>
+                            <td class="table-col">
+                                <span class="list-price">{{data.discountAmountWithTax | currency:'' | showPrice:blade.isVisiblePrices}}</span>
+                            </td>
+                            <td class="table-col">
+                                <span class="list-price">{{data.taxTotal | currency:'' | showPrice:blade.isVisiblePrices}}</span>
+                            </td>
+                            <td class="table-col __total font-weight-500">
+                                <span class="list-price">{{data.extendedPriceWithTax | currency:'' | showPrice:blade.isVisiblePrices}}</span>
+                            </td>
+                            <td class="table-col">
+                                <a class="clear text-mini __link" ng-click="openItemDynamicProperties(data)">{{ 'orders.blades.customerOrder-items.labels.dynamic-properties' | translate }}</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <span>{{ 'demoSolutionFeaturesModule.blades.order-line-items-list.count' | translate }}: <span class="count">{{blade.currentEntity.usualItems.length + blade.currentEntity.configuredGroups.length | number:0}}</span></span>
+                <table class="table __collapsed __order-info border-style-none" aria-label="Order totals">
+                    <tr class="table-item">
+                        <th class="table-col bg-none" scope="row">{{ 'orders.blades.customerOrder-items.labels.sub-total' | translate }}</th>
+                        <td class="table-col __price">{{blade.currentEntity.subTotal | currency:blade.currentEntity.currency | showPrice:blade.isVisiblePrices}}</td>
+                    </tr>
+                    <tr class="table-item">
+                        <th class="table-col bg-none" scope="row">{{ 'orders.blades.customerOrder-items.labels.discount-total' | translate }}</th>
+                        <td class="table-col __price">{{blade.currentEntity.subTotalDiscount | currency:blade.currentEntity.currency | showPrice:blade.isVisiblePrices}}</td>
+                    </tr>
+                    <tr class="table-item">
+                        <th class="table-col bg-none" scope="row">{{ 'orders.blades.customerOrder-items.labels.tax-total' | translate }}</th>
+                        <td class="table-col __price">{{ blade.currentEntity.subTotalTaxTotal | currency:blade.currentEntity.currency | showPrice:blade.isVisiblePrices}}</td>
+                    </tr>
+                    <tr class="table-item __total">
+                        <th class="table-col bg-none" scope="row">{{ 'orders.blades.customerOrder-items.labels.total' | translate }}</th>
+                        <td class="table-col __price">{{ (blade.currentEntity.subTotalWithTax - blade.currentEntity.subTotalDiscountWithTax) | currency:blade.currentEntity.currency | showPrice:blade.isVisiblePrices}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
