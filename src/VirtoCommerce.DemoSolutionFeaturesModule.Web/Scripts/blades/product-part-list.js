@@ -61,7 +61,14 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             {
                 name: "platform.commands.delete", icon: 'fa fa-trash-o',
                 canExecuteMethod: isAnySelected,
-                permission: 'catalog:delete'
+                permission: 'catalog:delete',
+                executeMethod: () => {
+                    const selectedIds = _.pluck($scope.gridApi.selection.getSelectedRows(), 'id');
+                    productPartsApi.delete({ ids: selectedIds}, () => {
+                        $scope.gridApi.selection.clearSelectedRows();
+                        blade.refresh();
+                    });
+                }
             }
         ];
 
