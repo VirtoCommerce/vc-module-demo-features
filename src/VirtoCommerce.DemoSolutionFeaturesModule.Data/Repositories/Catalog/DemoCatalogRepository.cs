@@ -32,6 +32,32 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
             return result;
         }
 
+        public override async Task RemoveItemsAsync(string[] itemIds)
+        {
+            if (!itemIds.IsNullOrEmpty())
+            {
+                var skip = 0;
+                var batchSize = 500;
+                do
+                {
+                    const string commandTemplate = @"
+                        DELETE DPI FROM DemoProductPartItem DPI INNER JOIN Item I ON I.Id = DPI.ItemId
+                        WHERE I.Id IN ({0})
+
+                        DELETE DP FROM DemoProductPart DP INNER JOIN Item I ON I.Id = DP.ConfiguredProductId
+                        WHERE I.Id IN ({0})
+                    ";
+
+                    await ExecuteStoreQueryAsync(commandTemplate, itemIds.Skip(skip).Take(batchSize));
+
+                    skip += batchSize;
+
+                } while (skip < itemIds.Length);
+            }
+
+            await base.RemoveItemsAsync(itemIds);
+        }
+
         public virtual async Task<DemoProductPartEntity[]> GetProductPartsByIdsAsync(string[] ids)
         {
             var result = Array.Empty<DemoProductPartEntity>();

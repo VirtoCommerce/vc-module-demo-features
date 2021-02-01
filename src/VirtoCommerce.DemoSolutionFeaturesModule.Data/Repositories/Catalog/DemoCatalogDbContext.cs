@@ -45,7 +45,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
                 .HasMany(x => x.PartItems)
                 .WithOne(x => x.ConfiguredProductPart)
                 .HasForeignKey(x => x.ConfiguredProductPartId)
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }
