@@ -86,7 +86,7 @@
       "order-line-items-list": {
         "count": "Number of items",
         "labels": {
-          "tax": "Tax total"
+          "tax": "Total tax"
         }
       }
     },
