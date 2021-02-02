@@ -17,7 +17,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
 
             if (result is DemoProduct demoProduct)
             {
-                demoProduct.ProductParts = ConfiguredProductParts.Select(x => x.ToModel(AbstractTypeFactory<DemoProductPart>.TryCreateInstance())).ToArray();
+                demoProduct.ProductParts = ConfiguredProductParts.Select(x => x.ToModel(AbstractTypeFactory<DemoProductPart>.TryCreateInstance())).ToList();
             }
 
             return result;
