@@ -12,11 +12,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Handlers
     {
         public Task Handle(ProductChangedEvent message)
         {
-            if (message.ChangedEntries.Any(x => x.EntryState == EntryState.Deleted))
+            if (message.ChangedEntries.Any(x => x.EntryState == EntryState.Modified ||  x.EntryState == EntryState.Deleted))
             {
                 var changedEntries = message
                     .ChangedEntries
-                    .Select(x => x.NewEntry)
+                    .SelectMany(x => new [] { x.OldEntry, x.NewEntry })
                     .OfType<DemoProduct>()
                     .ToArray();
 
