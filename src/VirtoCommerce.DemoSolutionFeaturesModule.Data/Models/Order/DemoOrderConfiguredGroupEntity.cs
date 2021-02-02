@@ -8,9 +8,14 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 {
-    public class DemoOrderConfiguredGroupEntity: AuditableEntity
+    public class DemoOrderConfiguredGroupEntity : AuditableEntity
     {
         public string ProductId { get; set; }
+        [Required]
+        [StringLength(256)]
+        public string Name { get; set; }
+        [StringLength(1028)]
+        public string ImageUrl { get; set; }
         public string CustomerOrderId { get; set; }
         public virtual DemoCustomerOrderEntity CustomerOrder { get; set; }
         public virtual ObservableCollection<DemoOrderLineItemEntity> Items { get; set; } = new NullCollection<DemoOrderLineItemEntity>();
@@ -39,6 +44,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
             group.Id = Id;
             group.ProductId = ProductId;
+            group.Name = Name;
+            group.ImageUrl = ImageUrl;
             group.CreatedDate = CreatedDate;
             group.CreatedBy = CreatedBy;
             group.ModifiedDate = ModifiedDate;
@@ -49,6 +56,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             group.PriceWithTax = PriceWithTax;
 
             group.ItemIds = Items.Select(x => x.Id).ToList();
+            group.Items = Items.Select(x => (DemoOrderLineItem)x.ToModel(AbstractTypeFactory<DemoOrderLineItem>.TryCreateInstance())).ToList();
 
             return group;
         }
@@ -64,6 +72,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
 
             Id = group.Id;
             ProductId = group.ProductId;
+            Name = group.Name;
+            ImageUrl = group.ImageUrl;
             CreatedDate = group.CreatedDate;
             CreatedBy = group.CreatedBy;
             ModifiedDate = group.ModifiedDate;
@@ -79,6 +89,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
         public virtual void Patch(DemoOrderConfiguredGroupEntity target)
         {
             target.ProductId = ProductId;
+            target.Name = Name;
+            target.ImageUrl = ImageUrl;
             target.Quantity = Quantity;
             target.Currency = Currency;
             target.Price = Price;

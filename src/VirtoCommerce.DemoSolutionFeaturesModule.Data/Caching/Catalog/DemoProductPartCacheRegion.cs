@@ -20,7 +20,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Caching.Catalog
 
             changeTokens.AddRange(
                 customerSegmentIds
-                    .Select(associationId => CreateChangeTokenForKey(associationId))
+                    .Select(CreateChangeTokenForKey)
             );
 
             return new CompositeChangeToken(changeTokens);

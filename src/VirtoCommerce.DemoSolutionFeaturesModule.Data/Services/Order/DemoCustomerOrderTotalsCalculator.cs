@@ -10,6 +10,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
         public override void CalculateTotals(CustomerOrder order)
         {
             base.CalculateTotals(order);
+
+            var demoOrder = (DemoCustomerOrder) order;
+
+            // Calculate totals for configured product items also
+            foreach (var configuredGroupItem in demoOrder.ConfiguredGroups.SelectMany(x => x.Items))
+            {
+                CalculateLineItemTotals(configuredGroupItem);
+            }
+
             CalculateConfiguredGroups(order);
         }
 

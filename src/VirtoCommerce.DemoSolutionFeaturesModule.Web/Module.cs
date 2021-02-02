@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +9,8 @@ using VirtoCommerce.CartModule.Core.Model;
 using VirtoCommerce.CartModule.Core.Services;
 using VirtoCommerce.CartModule.Data.Model;
 using VirtoCommerce.CartModule.Data.Repositories;
+using VirtoCommerce.CatalogModule.Core.Events;
+using VirtoCommerce.CatalogModule.Core.Model;
 using VirtoCommerce.CatalogModule.Data.Model;
 using VirtoCommerce.CatalogModule.Data.Repositories;
 using VirtoCommerce.CustomerModule.Core.Model;
@@ -21,6 +22,7 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Notifications;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Handlers;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
@@ -36,6 +38,7 @@ using VirtoCommerce.OrdersModule.Data.Model;
 using VirtoCommerce.OrdersModule.Data.Repositories;
 using VirtoCommerce.OrdersModule.Data.Services;
 using VirtoCommerce.PaymentModule.Core.Services;
+using VirtoCommerce.Platform.Core.Bus;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
@@ -82,7 +85,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             // catalog
             serviceCollection.AddTransient<ICatalogRepository, DemoCatalogRepository>();
             serviceCollection.AddTransient<IDemoProductPartService, DemoProductPartService>();
-            serviceCollection.AddTransient<IDemoProductPartSerarchService, DemoProductPartSearchService>();
+            serviceCollection.AddTransient<IDemoProductPartSearchService, DemoProductPartSearchService>();
+
+            serviceCollection.AddTransient<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
@@ -123,6 +128,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             // catalog
             AbstractTypeFactory<ItemEntity>.OverrideType<ItemEntity, DemoItemEntity>();
+            AbstractTypeFactory<CatalogProduct>.OverrideType<CatalogProduct, DemoProduct>();
 
             AbstractTypeFactory<DemoProductPart>.RegisterType<DemoProductPart>().MapToType<DemoProductPartEntity>();
             AbstractTypeFactory<DemoProductPartEntity>.RegisterType<DemoProductPartEntity>();
@@ -157,6 +163,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             featureStorage.AddHighPriorityFeatureDefinition(demoFeaturesSection);
 
             featureStorage.TryAddFeature("ConfigurableProduct", true);
+
+            var inProcessBus = appBuilder.ApplicationServices.GetService<IHandlerRegistrar>();
+            inProcessBus.RegisterHandler<ProductChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>().Handle(message));
 
             // Ensure that any pending migrations are applied
             using var serviceScope = appBuilder.ApplicationServices.CreateScope();

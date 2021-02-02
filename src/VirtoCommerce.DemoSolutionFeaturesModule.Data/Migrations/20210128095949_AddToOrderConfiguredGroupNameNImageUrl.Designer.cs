@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Migrations
 {
     [DbContext(typeof(DemoOrderDbContext))]
-    partial class DemoOrderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210128095949_AddToOrderConfiguredGroupNameNImageUrl")]
+    partial class AddToOrderConfiguredGroupNameNImageUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

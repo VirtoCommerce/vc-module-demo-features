@@ -33,5 +33,15 @@ angular.module(moduleName, [])
                     controller: 'virtoCommerce.DemoSolutionFeaturesModule.productPartsWidgetController',
                     template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/widgets/productPartsWidget.tpl.html'
                 }, 'itemDetail');
+
+                widgetService.registerWidget({
+                    isVisible: function (blade) { return blade.controller === 'virtoCommerce.orderModule.operationDetailController'; },
+                    controller: 'virtoCommerce.DemoSolutionFeaturesModule.orderLineItemsWidgetController',
+                    template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/widgets/orderLineItemsWidget.tpl.html'
+                }, 'customerOrderDetailWidgets');
             });
+
+            const itemDetailWidgets = widgetService.widgetsMap['itemDetail'];
+            const variationWidget = itemDetailWidgets.find(widget => widget.controller == 'virtoCommerce.catalogModule.itemVariationWidgetController');
+            variationWidget.isVisible = blade => blade.id !== 'variationDetail' && blade.productType !== configurableProductType;
     }]);
