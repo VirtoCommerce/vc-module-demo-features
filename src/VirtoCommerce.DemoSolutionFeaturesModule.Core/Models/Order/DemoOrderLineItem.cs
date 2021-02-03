@@ -8,11 +8,14 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models
 
         public override object Clone()
         {
-            var result = base.Clone() as DemoCartLineItem;
+            var orderLineItem = base.Clone();
 
-            result.ConfiguredGroupId = ConfiguredGroupId;
+            if (orderLineItem is DemoOrderLineItem demoOrderLineItem)
+            {
+                demoOrderLineItem.ConfiguredGroupId = ConfiguredGroupId;
+            }
 
-            return result;
+            return orderLineItem;
         }
     }
 }
