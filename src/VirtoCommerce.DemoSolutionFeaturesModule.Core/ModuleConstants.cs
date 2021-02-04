@@ -5,6 +5,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
 {
     public static class ModuleConstants
     {
+        public const string ConfigurableProductType = "Configurable";
+
         public static class Security
         {
             public static class Permissions
