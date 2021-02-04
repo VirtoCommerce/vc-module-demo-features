@@ -42,8 +42,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
 
             // For configurable product, track inventory has to always be false
             TrackInventory =
-                !product.ProductType.EqualsInvariant(demoFeaturesModule.ModuleConstants.ConfigurableProductType) &&
-                TrackInventory;
+                product.ProductType.EqualsInvariant(demoFeaturesModule.ModuleConstants.ConfigurableProductType) ?
+                    false :
+                    TrackInventory;
 
             return this;
         }
@@ -59,8 +60,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog
 
             // For configurable product, track inventory has to always be false
             target.TrackInventory =
-                !target.ProductType.EqualsInvariant(demoFeaturesModule.ModuleConstants.ConfigurableProductType) &&
-                target.TrackInventory;
+                target.ProductType.EqualsInvariant(demoFeaturesModule.ModuleConstants.ConfigurableProductType) ?
+                    false :
+                    target.TrackInventory;
         }
     }
 }
