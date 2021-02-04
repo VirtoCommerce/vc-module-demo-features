@@ -17,6 +17,7 @@ using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Notifications;
@@ -88,6 +89,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddTransient<IDemoProductPartSearchService, DemoProductPartSearchService>();
 
             serviceCollection.AddTransient<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>();
+            serviceCollection.AddTransient<LogChangesProductPartsHandler>();
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
@@ -166,6 +168,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             var inProcessBus = appBuilder.ApplicationServices.GetService<IHandlerRegistrar>();
             inProcessBus.RegisterHandler<ProductChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>().Handle(message));
+            inProcessBus.RegisterHandler<DemoProductPartChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesProductPartsHandler>().Handle(message));
 
             // Ensure that any pending migrations are applied
             using var serviceScope = appBuilder.ApplicationServices.CreateScope();
