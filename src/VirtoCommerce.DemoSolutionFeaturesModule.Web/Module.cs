@@ -162,7 +162,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             var demoFeaturesSection = configuration.GetSection("DemoFeatures");
             featureStorage.AddHighPriorityFeatureDefinition(demoFeaturesSection);
 
-            featureStorage.TryAddFeature("ConfigurableProduct", "Developers");
+            featureStorage.TryAddFeature("ConfigurableProduct", true);
 
             var inProcessBus = appBuilder.ApplicationServices.GetService<IHandlerRegistrar>();
             inProcessBus.RegisterHandler<ProductChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>().Handle(message));
