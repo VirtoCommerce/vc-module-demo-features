@@ -14,13 +14,13 @@ using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 {
-    public class TaggedMemberService : ITaggedMemberService
+    public class DemoTaggedMemberService : IDemoTaggedMemberService
     {
 
-        private readonly Func<ITaggedMemberRepository> _repositoryFactory;
+        private readonly Func<IDemoTaggedMemberRepository> _repositoryFactory;
         private readonly IPlatformMemoryCache _platformMemoryCache;
 
-        public TaggedMemberService(Func<ITaggedMemberRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache)
+        public DemoTaggedMemberService(Func<IDemoTaggedMemberRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache)
         {
             _repositoryFactory = repositoryFactory;
             _platformMemoryCache = platformMemoryCache;
@@ -44,23 +44,23 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
             ClearCache(taggedMembers);
         }
 
-        public async Task<TaggedMember[]> GetByIdsAsync(string[] ids)
+        public async Task<DemoTaggedMember[]> GetByIdsAsync(string[] ids)
         {
             var cacheKey = CacheKey.With(GetType(), nameof(GetByIdsAsync), string.Join("-", ids));
 
             var result = await _platformMemoryCache.GetOrCreateExclusiveAsync(cacheKey,
                 async (cacheEntry) =>
                 {
-                    cacheEntry.AddExpirationToken(TaggedMemberCacheRegion.CreateChangeToken());
+                    cacheEntry.AddExpirationToken(DemoTaggedMemberCacheRegion.CreateChangeToken());
                     using var repository = _repositoryFactory();
                     repository.DisableChangesTracking();
                     var memberEntities = await repository.GetTaggedMembersByIdsAsync(ids);
-                    return memberEntities.Select(x => x.ToModel(AbstractTypeFactory<TaggedMember>.TryCreateInstance())).ToArray();
+                    return memberEntities.Select(x => x.ToModel(AbstractTypeFactory<DemoTaggedMember>.TryCreateInstance())).ToArray();
                 });
             return result;
         }
 
-        public async Task SaveChangesAsync(TaggedMember[] taggedMembers)
+        public async Task SaveChangesAsync(DemoTaggedMember[] taggedMembers)
         {
             var pkMap = new PrimaryKeyResolvingMap();
             using (var repository = _repositoryFactory())
@@ -69,7 +69,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
                 var alreadyExistEntities = await repository.GetTaggedMembersByIdsAsync(ids);
                 foreach (var taggedMember in taggedMembers)
                 {
-                    var sourceEntity = AbstractTypeFactory<TaggedMemberEntity>.TryCreateInstance().FromModel(taggedMember, pkMap);
+                    var sourceEntity = AbstractTypeFactory<DemoTaggedMemberEntity>.TryCreateInstance().FromModel(taggedMember, pkMap);
                     var targetEntity = alreadyExistEntities.FirstOrDefault(x => x.Id == taggedMember.Id);
                     if (targetEntity != null)
                     {
@@ -89,15 +89,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
         }
 
 
-        protected virtual void ClearCache(TaggedMember[] taggedMembers)
+        protected virtual void ClearCache(DemoTaggedMember[] taggedMembers)
         {
             foreach (var member in taggedMembers)
             {
-                TaggedMemberCacheRegion.ExpireEntity(member);
+                DemoTaggedMemberCacheRegion.ExpireEntity(member);
                 CustomerCacheRegion.ExpireMemberById(member.MemberId);
             }
 
-            TaggedMemberSearchCacheRegion.ExpireRegion();
+            DemoTaggedMemberSearchCacheRegion.ExpireRegion();
         }
     }
 }

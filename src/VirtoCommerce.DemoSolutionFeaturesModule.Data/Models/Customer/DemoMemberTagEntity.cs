@@ -6,7 +6,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
 {
-    public class MemberTagEntity: Entity
+    public class DemoMemberTagEntity: Entity
     {
         [Required]
         [StringLength(128)]
@@ -17,7 +17,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
         [StringLength(128)]
         public string TaggedMemberId { get; set; }
 
-        public virtual TaggedMemberEntity TaggedMember { get; set; }
+        public virtual DemoTaggedMemberEntity TaggedMember { get; set; }
 
         #endregion
     }

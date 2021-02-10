@@ -12,26 +12,26 @@ using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 {
-    public class TaggedMemberSearchService : ITaggedMemberSearchService
+    public class DemoTaggedMemberSearchService : IDemoTaggedMemberSearchService
     {
-        private readonly Func<ITaggedMemberRepository> _repositoryFactory;
+        private readonly Func<IDemoTaggedMemberRepository> _repositoryFactory;
         private readonly IPlatformMemoryCache _platformMemoryCache;
-        private readonly TaggedMemberService _taggedMemberService;
+        private readonly DemoTaggedMemberService _taggedMemberService;
 
-        public TaggedMemberSearchService(Func<ITaggedMemberRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, TaggedMemberService taggedMemberService)
+        public DemoTaggedMemberSearchService(Func<IDemoTaggedMemberRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, DemoTaggedMemberService taggedMemberService)
         {
             _repositoryFactory = repositoryFactory;
             _platformMemoryCache = platformMemoryCache;
             _taggedMemberService = taggedMemberService;
         }
-        public async Task<TaggedMemberSearchResult> SearchTaggedMembersAsync(TaggedMemberSearchCriteria criteria)
+        public async Task<DemoTaggedMemberSearchResult> SearchTaggedMembersAsync(DemoTaggedMemberSearchCriteria criteria)
         {
             var cacheKey = CacheKey.With(GetType(), nameof(SearchTaggedMembersAsync), criteria.GetCacheKey());
             return await _platformMemoryCache.GetOrCreateExclusiveAsync(cacheKey,
                 async (cacheEntry) =>
                 {
-                    cacheEntry.AddExpirationToken(TaggedMemberSearchCacheRegion.CreateChangeToken());
-                    var result = new TaggedMemberSearchResult();
+                    cacheEntry.AddExpirationToken(DemoTaggedMemberSearchCacheRegion.CreateChangeToken());
+                    var result = new DemoTaggedMemberSearchResult();
 
                     using (var repository = _repositoryFactory())
                     {
@@ -42,11 +42,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
                         if (!criteria.MemberIds.IsNullOrEmpty())
                         {
                             query = query.Where(x => criteria.MemberIds.Contains(x.MemberId));
-                        }
-
-                        if (!string.IsNullOrWhiteSpace(criteria.MemberType))
-                        {
-                            query = query.Where(x => x.MemberType == criteria.MemberType);
                         }
 
                         if (!criteria.Ids.IsNullOrEmpty())
@@ -62,7 +57,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
                         var sortInfos = criteria.SortInfos;
                         if (sortInfos.IsNullOrEmpty())
                         {
-                            sortInfos = new[] { new SortInfo { SortColumn = ReflectionUtility.GetPropertyName<TaggedMember>(x => x.MemberId) } };
+                            sortInfos = new[] { new SortInfo { SortColumn = ReflectionUtility.GetPropertyName<DemoTaggedMember>(x => x.MemberId) } };
                         }
 
                         query = query.OrderBySortInfos(sortInfos).ThenBy(x => x.Id);

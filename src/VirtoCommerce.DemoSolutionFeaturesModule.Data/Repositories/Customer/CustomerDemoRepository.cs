@@ -10,7 +10,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 {
-    public class CustomerDemoRepository : CustomerRepository, ITaggedMemberRepository
+    public class CustomerDemoRepository : CustomerRepository, IDemoTaggedMemberRepository
     {
         public CustomerDemoRepository(CustomerDemoDbContext dbContext)
             : base(dbContext)
@@ -19,13 +19,13 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 
         public IQueryable<ContactDemoEntity> ContactsDemo => DbContext.Set<ContactDemoEntity>();
 
-        public IQueryable<TaggedMemberEntity> TaggedMembers => DbContext.Set<TaggedMemberEntity>().Include(x => x.Tags);
+        public IQueryable<DemoTaggedMemberEntity> TaggedMembers => DbContext.Set<DemoTaggedMemberEntity>().Include(x => x.Tags);
 
-        public IQueryable<MemberTagEntity> MemberTags => DbContext.Set<MemberTagEntity>();
+        public IQueryable<DemoMemberTagEntity> MemberTags => DbContext.Set<DemoMemberTagEntity>();
 
-        public async Task<TaggedMemberEntity[]> GetTaggedMembersByIdsAsync(string[] ids)
+        public async Task<DemoTaggedMemberEntity[]> GetTaggedMembersByIdsAsync(string[] ids)
         {
-            var result = Array.Empty<TaggedMemberEntity>();
+            var result = Array.Empty<DemoTaggedMemberEntity>();
             if (!ids.IsNullOrEmpty())
             {
                 result = await TaggedMembers.Where(x => ids.Contains(x.Id)).ToArrayAsync();

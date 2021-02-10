@@ -3,10 +3,10 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer
 {
-    public interface ITaggedMemberService
+    public interface IDemoTaggedMemberService
     {
-        Task<TaggedMember[]> GetByIdsAsync(string[] ids);
-        Task SaveChangesAsync(TaggedMember[] taggedMembers);
+        Task<DemoTaggedMember[]> GetByIdsAsync(string[] ids);
+        Task SaveChangesAsync(DemoTaggedMember[] taggedMembers);
         Task DeleteAsync(string[] ids);
     }
 }

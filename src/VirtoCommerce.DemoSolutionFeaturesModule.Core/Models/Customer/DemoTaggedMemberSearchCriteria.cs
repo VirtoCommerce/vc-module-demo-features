@@ -5,7 +5,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer
 {
-    public class TaggedMemberSearchCriteria : SearchCriteriaBase
+    public class DemoTaggedMemberSearchCriteria : SearchCriteriaBase
     {
         public string MemberId { get; set; }
 
@@ -27,7 +27,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer
         }
 
         public DateTime? ChangedFrom { get; set; }
-        public string MemberType { get; set; }
         public string[] Ids { get; set; }
     }
 }
