@@ -6,8 +6,8 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer
 {
-    public interface ITaggedMemberSearchService
+    public interface IDemoTaggedMemberSearchService
     {
-        Task<TaggedMemberSearchResult> SearchTaggedMembersAsync(TaggedMemberSearchCriteria criteria);
+        Task<DemoTaggedMemberSearchResult> SearchTaggedMembersAsync(DemoTaggedMemberSearchCriteria criteria);
     }
 }

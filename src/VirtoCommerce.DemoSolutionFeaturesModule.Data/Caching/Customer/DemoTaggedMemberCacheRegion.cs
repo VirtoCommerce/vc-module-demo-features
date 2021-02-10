@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Primitives;
-using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
 using VirtoCommerce.Platform.Core.Caching;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Caching.Customer
 {
-    public class TaggedMemberCacheRegion : CancellableCacheRegion<TaggedMemberCacheRegion>
+    public class DemoTaggedMemberCacheRegion : CancellableCacheRegion<DemoTaggedMemberCacheRegion>
     {
         public static IChangeToken CreateChangeToken(string[] ids)
         {
@@ -27,7 +26,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Caching.Customer
             return new CompositeChangeToken(changeTokens);
         }
 
-        public static IChangeToken CreateChangeToken(TaggedMember[] taggedMember)
+        public static IChangeToken CreateChangeToken(DemoTaggedMember[] taggedMember)
         {
             if (taggedMember == null)
             {
@@ -37,7 +36,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Caching.Customer
             return CreateChangeToken(taggedMember.Select(x => x.Id).ToArray());
         }
 
-        public static void ExpireEntity(TaggedMember taggedMember)
+        public static void ExpireEntity(DemoTaggedMember taggedMember)
         {
             if (taggedMember == null)
             {

@@ -1,40 +1,32 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using Microsoft.VisualBasic.CompilerServices;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
 using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
 {
-    public class TaggedMemberEntity : AuditableEntity
+    public class DemoTaggedMemberEntity : AuditableEntity
     {
-        public TaggedMemberEntity()
+        public DemoTaggedMemberEntity()
         {
-            Tags = new NullCollection<MemberTagEntity>();
+            Tags = new NullCollection<DemoMemberTagEntity>();
         }
         [Required]
         [StringLength(128)]
         public string MemberId { get; set; }
 
-        [Required]
-        [StringLength(128)]
-        public string MemberType { get; set; }
-
         #region Navigation Properties
 
         public MemberEntity Member { get; set; }
 
-        public ObservableCollection<MemberTagEntity> Tags { get; set; }
+        public ObservableCollection<DemoMemberTagEntity> Tags { get; set; }
 
         #endregion
 
-        public virtual TaggedMember ToModel(TaggedMember taggedMember)
+        public virtual DemoTaggedMember ToModel(DemoTaggedMember taggedMember)
         {
             if (taggedMember == null)
                 throw new ArgumentNullException(nameof(taggedMember));
@@ -46,7 +38,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
             taggedMember.ModifiedBy = ModifiedBy;
             taggedMember.ModifiedDate = ModifiedDate;
 
-            taggedMember.MemberType = MemberType;
             taggedMember.MemberId = MemberId;
             if (!taggedMember.Tags.IsNullCollection())
             {
@@ -56,7 +47,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
             return taggedMember;
         }
 
-        public virtual TaggedMemberEntity FromModel(TaggedMember taggedMember, PrimaryKeyResolvingMap pkMap)
+        public virtual DemoTaggedMemberEntity FromModel(DemoTaggedMember taggedMember, PrimaryKeyResolvingMap pkMap)
         {
             if (taggedMember == null)
                 throw new ArgumentNullException(nameof(taggedMember));
@@ -72,12 +63,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
             ModifiedBy = taggedMember.ModifiedBy;
             ModifiedDate = taggedMember.ModifiedDate;
 
-            MemberType = taggedMember.MemberType;
             MemberId = taggedMember.MemberId;
 
             if (taggedMember.Tags != null)
             {
-                Tags = new ObservableCollection<MemberTagEntity>(taggedMember.Tags.Select(x => new MemberTagEntity()
+                Tags = new ObservableCollection<DemoMemberTagEntity>(taggedMember.Tags.Select(x => new DemoMemberTagEntity()
                 {
                     Tag = x
                 }));
@@ -87,17 +77,16 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
             return this;
         }
 
-        public virtual void Patch(TaggedMemberEntity taggedMemberEntity)
+        public virtual void Patch(DemoTaggedMemberEntity taggedMemberEntity)
         {
             if (taggedMemberEntity == null)
                 throw new ArgumentNullException(nameof(taggedMemberEntity));
 
             taggedMemberEntity.MemberId = MemberId;
-            taggedMemberEntity.MemberType = MemberType;
 
             if (!Tags.IsNullCollection())
             {
-                var tagComparer = AnonymousComparer.Create((MemberTagEntity x) => x.Tag);
+                var tagComparer = AnonymousComparer.Create((DemoMemberTagEntity x) => x.Tag);
                 Tags.Patch(taggedMemberEntity.Tags, tagComparer, (sourceTag, targetTag) => targetTag.Tag = sourceTag.Tag);
             }
         }

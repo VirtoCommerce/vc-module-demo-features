@@ -5,7 +5,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer
 {
-    public class TaggedMemberSearchResult: GenericSearchResult<TaggedMember>
+    public class DemoTaggedMemberSearchResult: GenericSearchResult<DemoTaggedMember>
     {
     }
 }
