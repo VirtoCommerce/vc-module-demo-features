@@ -46,10 +46,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
 
 
         /// <summary>
-        /// PUT: api/demo/members/search/tagged
+        /// PUT: api/demo/members/tagged
         /// </summary>
         [HttpPut]
-        [Route("search/tagged")]
+        [Route("tagged")]
         [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
         public async Task<ActionResult> SaveTaggedMember([FromBody] DemoTaggedMember taggedMember)
         {
@@ -72,7 +72,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         /// POST: api/demo/members/search
         /// </summary>
         [HttpPost]
-        [Route("tagged/search")]
+        [Route("search/tagged")]
         [ProducesResponseType(typeof(DemoTaggedMemberSearchResult), StatusCodes.Status200OK)]
         public async Task<ActionResult<DemoTaggedMemberSearchResult>> Search([FromBody] DemoTaggedMemberSearchCriteria criteria)
         {
