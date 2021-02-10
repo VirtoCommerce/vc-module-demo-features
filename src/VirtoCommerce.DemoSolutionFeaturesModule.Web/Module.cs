@@ -82,6 +82,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddTransient<Func<IDemoTaggedMemberRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IDemoTaggedMemberRepository>());
             serviceCollection.AddTransient<IDemoTaggedMemberService, DemoTaggedMemberService>();
             serviceCollection.AddTransient<IDemoTaggedMemberSearchService, DemoTaggedMemberSearchService>();
+            serviceCollection.AddTransient<LogChangesTaggedMembersHandler>();
 
             // cart
             serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
