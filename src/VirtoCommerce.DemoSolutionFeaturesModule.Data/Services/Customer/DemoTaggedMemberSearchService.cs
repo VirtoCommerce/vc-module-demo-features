@@ -16,9 +16,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
     {
         private readonly Func<IDemoTaggedMemberRepository> _repositoryFactory;
         private readonly IPlatformMemoryCache _platformMemoryCache;
-        private readonly DemoTaggedMemberService _taggedMemberService;
+        private readonly IDemoTaggedMemberService _taggedMemberService;
 
-        public DemoTaggedMemberSearchService(Func<IDemoTaggedMemberRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, DemoTaggedMemberService taggedMemberService)
+        public DemoTaggedMemberSearchService(Func<IDemoTaggedMemberRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, IDemoTaggedMemberService taggedMemberService)
         {
             _repositoryFactory = repositoryFactory;
             _platformMemoryCache = platformMemoryCache;
