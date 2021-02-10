@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using VirtoCommerce.CustomerModule.Data.Caching;
-using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
