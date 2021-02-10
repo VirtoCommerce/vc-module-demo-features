@@ -21,15 +21,20 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Notifications;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Handlers;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Web.Infrastructure;
 using VirtoCommerce.NotificationsModule.Core.Services;
 using VirtoCommerce.NotificationsModule.Core.Types;
@@ -72,6 +77,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             // customer
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
+            serviceCollection.AddTransient<IDemoTaggedMemberRepository, CustomerDemoRepository>();
+            serviceCollection.AddTransient<Func<IDemoTaggedMemberRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IDemoTaggedMemberRepository>());
+            serviceCollection.AddTransient<IDemoTaggedMemberService, DemoTaggedMemberService>();
+            serviceCollection.AddTransient<IDemoTaggedMemberSearchService, DemoTaggedMemberSearchService>();
 
             // cart
             serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
@@ -108,6 +117,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             AbstractTypeFactory<Contact>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<Member>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<MemberEntity>.OverrideType<ContactEntity, ContactDemoEntity>();
+
+            AbstractTypeFactory<DemoTaggedMember>.RegisterType<DemoTaggedMember>().MapToType<DemoTaggedMemberEntity>();
+            AbstractTypeFactory<DemoTaggedMemberEntity>.RegisterType<DemoTaggedMemberEntity>();
 
             // cart
             AbstractTypeFactory<CartLineItem>.OverrideType<CartLineItem, DemoCartLineItem>().MapToType<DemoCartLineItemEntity>();
