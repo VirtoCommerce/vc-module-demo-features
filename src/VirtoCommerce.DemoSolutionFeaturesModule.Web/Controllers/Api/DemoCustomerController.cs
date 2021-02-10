@@ -46,9 +46,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
 
 
         /// <summary>
-        /// PUT: api/demo/members/tagged
+        /// POST: api/demo/members/tagged
         /// </summary>
-        [HttpPut]
+        [HttpPost]
         [Route("tagged")]
         [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
         public async Task<ActionResult> SaveTaggedMember([FromBody] DemoTaggedMember taggedMember)

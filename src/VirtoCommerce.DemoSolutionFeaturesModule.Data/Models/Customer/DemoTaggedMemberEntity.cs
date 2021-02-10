@@ -29,7 +29,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
         public virtual DemoTaggedMember ToModel(DemoTaggedMember taggedMember)
         {
             if (taggedMember == null)
+            {
                 throw new ArgumentNullException(nameof(taggedMember));
+            }
 
             taggedMember.Id = Id;
 
@@ -50,9 +52,14 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
         public virtual DemoTaggedMemberEntity FromModel(DemoTaggedMember taggedMember, PrimaryKeyResolvingMap pkMap)
         {
             if (taggedMember == null)
+            {
                 throw new ArgumentNullException(nameof(taggedMember));
+            }
+
             if (pkMap == null)
+            {
                 throw new ArgumentNullException(nameof(pkMap));
+            }
 
             pkMap.AddPair(taggedMember, this);
 
@@ -73,14 +80,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
                 }));
             }
 
-
             return this;
         }
 
         public virtual void Patch(DemoTaggedMemberEntity taggedMemberEntity)
         {
             if (taggedMemberEntity == null)
+            {
                 throw new ArgumentNullException(nameof(taggedMemberEntity));
+            }
 
             taggedMemberEntity.MemberId = MemberId;
 

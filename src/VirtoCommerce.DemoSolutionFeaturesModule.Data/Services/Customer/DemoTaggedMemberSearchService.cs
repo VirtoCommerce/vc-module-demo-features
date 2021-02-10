@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
@@ -62,7 +63,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
                         query = query.OrderBySortInfos(sortInfos).ThenBy(x => x.Id);
 
-                        result.TotalCount = query.Count();
+                        result.TotalCount = await query.CountAsync();
                         query = query.Skip(criteria.Skip).Take(criteria.Take);
 
                         if (criteria.Take > 0)
