@@ -48,15 +48,21 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
         {
             var cacheKey = CacheKey.With(GetType(), nameof(GetByIdsAsync), string.Join("-", ids));
 
-            var result = await _platformMemoryCache.GetOrCreateExclusiveAsync(cacheKey,
-                async (cacheEntry) =>
+            var result = await _platformMemoryCache.GetOrCreateExclusiveAsync(cacheKey,async (cacheEntry) =>
+            {
+                var taggedMembers = Array.Empty<DemoTaggedMember>();
+
+                if (!ids.IsNullOrEmpty())
                 {
-                    cacheEntry.AddExpirationToken(DemoTaggedMemberCacheRegion.CreateChangeToken());
                     using var repository = _repositoryFactory();
                     repository.DisableChangesTracking();
                     var memberEntities = await repository.GetTaggedMembersByIdsAsync(ids);
-                    return memberEntities.Select(x => x.ToModel(AbstractTypeFactory<DemoTaggedMember>.TryCreateInstance())).ToArray();
-                });
+                    taggedMembers = memberEntities.Select(x => x.ToModel(AbstractTypeFactory<DemoTaggedMember>.TryCreateInstance())).ToArray();
+                    cacheEntry.AddExpirationToken(DemoTaggedMemberCacheRegion.CreateChangeToken(taggedMembers));
+                }
+                
+                return taggedMembers;
+            });
             return result;
         }
 
