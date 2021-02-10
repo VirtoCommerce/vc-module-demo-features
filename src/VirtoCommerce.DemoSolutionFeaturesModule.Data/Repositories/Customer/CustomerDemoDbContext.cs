@@ -23,9 +23,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories
 
             modelBuilder.Entity<MemberEntity>().HasOne<DemoTaggedMemberEntity>().WithOne(x => x.Member)
                 .HasForeignKey<DemoTaggedMemberEntity>(x => x.MemberId);
-            //modelBuilder.Entity<TaggedMemberEntity>().HasIndex(x => x.MemberId)
-            //    .IsUnique(true)
-            //    .HasName("IX_MemberId");
+            modelBuilder.Entity<DemoTaggedMemberEntity>().HasIndex(x => x.MemberId)
+                .IsUnique()
+                .HasName("IX_MemberId");
 
             modelBuilder.Entity<DemoMemberTagEntity>().ToTable("DemoMemberTag").HasKey(x => x.Id);
             modelBuilder.Entity<DemoMemberTagEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
