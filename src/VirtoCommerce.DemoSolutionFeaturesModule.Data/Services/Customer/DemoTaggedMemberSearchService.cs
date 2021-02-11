@@ -45,7 +45,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
                     if (!criteria.MemberIds.IsNullOrEmpty())
                     {
-                        query = query.Where(x => criteria.MemberIds.Contains(x.MemberId));
+                        query = query.Where(x => criteria.MemberIds.Contains(x.Id));
                     }
 
                     if (!criteria.Ids.IsNullOrEmpty())
@@ -61,7 +61,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
                     var sortInfos = criteria.SortInfos;
                     if (sortInfos.IsNullOrEmpty())
                     {
-                        sortInfos = new[] { new SortInfo { SortColumn = ReflectionUtility.GetPropertyName<DemoTaggedMember>(x => x.MemberId) } };
+                        sortInfos = new[] { new SortInfo { SortColumn = ReflectionUtility.GetPropertyName<DemoTaggedMember>(x => x.Id) } };
                     }
 
                     query = query.OrderBySortInfos(sortInfos).ThenBy(x => x.Id);

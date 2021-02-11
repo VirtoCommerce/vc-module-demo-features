@@ -15,9 +15,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
             Tags = new NullCollection<DemoMemberTagEntity>();
         }
 
-        [Required]
-        [StringLength(128)]
-        public string MemberId { get; set; }
+        //[Required]
+        //[StringLength(128)]
+        //public string MemberId { get; set; }
 
         #region Navigation Properties
 
@@ -41,7 +41,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
             taggedMember.ModifiedBy = ModifiedBy;
             taggedMember.ModifiedDate = ModifiedDate;
 
-            taggedMember.MemberId = MemberId;
+            //taggedMember.MemberId = MemberId;
 
             if (!taggedMember.Tags.IsNullCollection())
             {
@@ -72,7 +72,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
             ModifiedBy = taggedMember.ModifiedBy;
             ModifiedDate = taggedMember.ModifiedDate;
 
-            MemberId = taggedMember.MemberId;
+            //MemberId = taggedMember.MemberId;
 
             if (taggedMember.Tags != null)
             {
@@ -92,7 +92,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
                 throw new ArgumentNullException(nameof(taggedMemberEntity));
             }
 
-            taggedMemberEntity.MemberId = MemberId;
+            //taggedMemberEntity.MemberId = MemberId;
 
             if (!Tags.IsNullCollection())
             {
