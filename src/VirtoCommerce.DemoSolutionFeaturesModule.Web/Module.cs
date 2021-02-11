@@ -58,14 +58,26 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
         public void Initialize(IServiceCollection serviceCollection)
         {
             // database initialization
-            var configuration = serviceCollection.BuildServiceProvider().GetRequiredService<IConfiguration>();
-            var connectionString =
-                configuration.GetConnectionString("VirtoCommerce.VirtoCommerceDemoSolutionFeaturesModule") ??
-                configuration.GetConnectionString("VirtoCommerce");
-            serviceCollection.AddDbContext<CustomerDemoDbContext>(options => options.UseSqlServer(connectionString));
-            serviceCollection.AddDbContext<DemoCartDbContext>(options => options.UseSqlServer(connectionString));
-            serviceCollection.AddDbContext<DemoOrderDbContext>(options => options.UseSqlServer(connectionString));
-            serviceCollection.AddDbContext<DemoCatalogDbContext>(options => options.UseSqlServer(connectionString));
+            serviceCollection.AddDbContext<CustomerDemoDbContext>((provider, options) =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                options.UseSqlServer(configuration.GetConnectionString(ModuleInfo.Id) ?? configuration.GetConnectionString("VirtoCommerce"));
+            });
+            serviceCollection.AddDbContext<DemoCartDbContext>((provider, options) =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                options.UseSqlServer(configuration.GetConnectionString(ModuleInfo.Id) ?? configuration.GetConnectionString("VirtoCommerce"));
+            });
+            serviceCollection.AddDbContext<DemoOrderDbContext>((provider, options) =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                options.UseSqlServer(configuration.GetConnectionString(ModuleInfo.Id) ?? configuration.GetConnectionString("VirtoCommerce"));
+            });
+            serviceCollection.AddDbContext<DemoCatalogDbContext>((provider, options) =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                options.UseSqlServer(configuration.GetConnectionString(ModuleInfo.Id) ?? configuration.GetConnectionString("VirtoCommerce"));
+            });
 
             // customer
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
