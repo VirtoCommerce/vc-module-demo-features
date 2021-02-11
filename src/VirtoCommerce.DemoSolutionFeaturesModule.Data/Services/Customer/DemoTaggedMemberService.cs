@@ -130,10 +130,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
         protected virtual void ClearCache(DemoTaggedMember[] taggedMembers)
         {
-            foreach (var member in taggedMembers)
+            foreach (var taggedMember in taggedMembers)
             {
-                DemoTaggedMemberCacheRegion.ExpireEntity(member);
-                CustomerCacheRegion.ExpireMemberById(member.Id);
+                DemoTaggedMemberCacheRegion.ExpireEntity(taggedMember);
+                CustomerCacheRegion.ExpireMemberById(taggedMember.Id);
             }
 
             DemoTaggedMemberSearchCacheRegion.ExpireRegion();

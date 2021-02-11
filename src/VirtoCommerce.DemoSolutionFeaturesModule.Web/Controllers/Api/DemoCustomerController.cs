@@ -1,9 +1,7 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
 
@@ -33,14 +31,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         [ProducesResponseType(typeof(DemoTaggedMember), StatusCodes.Status200OK)]
         public async Task<ActionResult<DemoTaggedMember>> GetDemoTaggedMember(string id)
         {
-            var criteria = new DemoTaggedMemberSearchCriteria
-            {
-                MemberIds = new [] { id },
-                Take = 1
-            };
-
-            var taggedMember = (await _searchService.SearchTaggedMembersAsync(criteria)).Results.FirstOrDefault();
-
+            var taggedMember = (await _taggedItemService.GetByIdsAsync( new [] { id })).FirstOrDefault();
             return Ok(taggedMember);
         }
 

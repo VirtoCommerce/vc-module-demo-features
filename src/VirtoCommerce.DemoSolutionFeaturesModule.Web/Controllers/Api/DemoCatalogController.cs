@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -39,11 +38,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         [Authorize(catalogCore.ModuleConstants.Security.Permissions.Read)]
         public async Task<ActionResult<DemoProductPartSearchResult>> Search([FromBody] DemoProductPartSearchCriteria criteria)
         {
-            if (criteria == null)
-            {
-                throw new ArgumentNullException(nameof(criteria));
-            }
-
             var result = await _partsSearchService.SearchProductPartsAsync(criteria);
             return Ok(result);
         }
