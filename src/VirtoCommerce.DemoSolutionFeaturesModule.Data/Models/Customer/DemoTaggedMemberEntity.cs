@@ -14,6 +14,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
         {
             Tags = new NullCollection<DemoMemberTagEntity>();
         }
+
         [Required]
         [StringLength(128)]
         public string MemberId { get; set; }
@@ -41,6 +42,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
             taggedMember.ModifiedDate = ModifiedDate;
 
             taggedMember.MemberId = MemberId;
+
             if (!taggedMember.Tags.IsNullCollection())
             {
                 taggedMember.Tags = Tags.Select(x => x.Tag).ToList();

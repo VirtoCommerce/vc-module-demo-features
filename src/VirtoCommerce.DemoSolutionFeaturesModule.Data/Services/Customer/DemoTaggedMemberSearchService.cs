@@ -25,59 +25,68 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
             _platformMemoryCache = platformMemoryCache;
             _taggedMemberService = taggedMemberService;
         }
+
         public async Task<DemoTaggedMemberSearchResult> SearchTaggedMembersAsync(DemoTaggedMemberSearchCriteria criteria)
         {
+            ValidateParameters(criteria);
+
             var cacheKey = CacheKey.With(GetType(), nameof(SearchTaggedMembersAsync), criteria.GetCacheKey());
+
             return await _platformMemoryCache.GetOrCreateExclusiveAsync(cacheKey,
                 async (cacheEntry) =>
                 {
                     cacheEntry.AddExpirationToken(DemoTaggedMemberSearchCacheRegion.CreateChangeToken());
                     var result = new DemoTaggedMemberSearchResult();
 
-                    using (var repository = _repositoryFactory())
+                    using var taggedMemberRepository = _repositoryFactory();
+                    taggedMemberRepository.DisableChangesTracking();
+
+                    var query = taggedMemberRepository.TaggedMembers;
+
+                    if (!criteria.MemberIds.IsNullOrEmpty())
                     {
-                        repository.DisableChangesTracking();
+                        query = query.Where(x => criteria.MemberIds.Contains(x.MemberId));
+                    }
 
-                        var query = repository.TaggedMembers;
+                    if (!criteria.Ids.IsNullOrEmpty())
+                    {
+                        query = query.Where(x => criteria.Ids.Contains(x.Id));
+                    }
 
-                        if (!criteria.MemberIds.IsNullOrEmpty())
-                        {
-                            query = query.Where(x => criteria.MemberIds.Contains(x.MemberId));
-                        }
+                    if (criteria.ChangedFrom.HasValue)
+                    {
+                        query = query.Where(x => x.ModifiedDate.HasValue && x.ModifiedDate.Value.Date >= criteria.ChangedFrom.Value.Date);
+                    }
 
-                        if (!criteria.Ids.IsNullOrEmpty())
-                        {
-                            query = query.Where(x => criteria.Ids.Contains(x.Id));
-                        }
+                    var sortInfos = criteria.SortInfos;
+                    if (sortInfos.IsNullOrEmpty())
+                    {
+                        sortInfos = new[] { new SortInfo { SortColumn = ReflectionUtility.GetPropertyName<DemoTaggedMember>(x => x.MemberId) } };
+                    }
 
-                        if (criteria.ChangedFrom.HasValue)
-                        {
-                            query = query.Where(x => x.ModifiedDate.HasValue && x.ModifiedDate.Value.Date >= criteria.ChangedFrom.Value.Date);
-                        }
+                    query = query.OrderBySortInfos(sortInfos).ThenBy(x => x.Id);
 
-                        var sortInfos = criteria.SortInfos;
-                        if (sortInfos.IsNullOrEmpty())
-                        {
-                            sortInfos = new[] { new SortInfo { SortColumn = ReflectionUtility.GetPropertyName<DemoTaggedMember>(x => x.MemberId) } };
-                        }
+                    result.TotalCount = await query.CountAsync();
+                    query = query.Skip(criteria.Skip).Take(criteria.Take);
 
-                        query = query.OrderBySortInfos(sortInfos).ThenBy(x => x.Id);
+                    if (criteria.Take > 0)
+                    {
+                        var ids = query.Select(x => x.Id).ToArray();
+                        var selectedMembers = await _taggedMemberService.GetByIdsAsync(ids);
+                        result.Results = selectedMembers.OrderBy(x => Array.IndexOf(ids, x.Id)).ToList();
 
-                        result.TotalCount = await query.CountAsync();
-                        query = query.Skip(criteria.Skip).Take(criteria.Take);
-
-                        if (criteria.Take > 0)
-                        {
-                            var ids = query.Select(x => x.Id).ToArray();
-                            var selectedMembers = await _taggedMemberService.GetByIdsAsync(ids);
-                            result.Results = selectedMembers.OrderBy(x => Array.IndexOf(ids, x.Id)).ToList();
-
-                        }
-                        
                     }
 
                     return result;
                 });
+        }
+
+        private static void ValidateParameters(DemoTaggedMemberSearchCriteria criteria)
+        {
+            if (criteria == null)
+            {
+                throw new ArgumentNullException(nameof(criteria));
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer
 {
     public class DemoTaggedMember : AuditableEntity
     {
+
         public string MemberId { get; set; }
 
         public ICollection<string> Tags { get; set; }

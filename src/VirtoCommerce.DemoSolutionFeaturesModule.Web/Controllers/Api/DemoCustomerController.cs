@@ -35,7 +35,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         {
             var criteria = new DemoTaggedMemberSearchCriteria
             {
-                MemberId = id,
+                MemberIds = new [] { id },
                 Take = 1
             };
 
@@ -53,17 +53,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
         public async Task<ActionResult> SaveTaggedMember([FromBody] DemoTaggedMember taggedMember)
         {
-            try
-            {
-                await _taggedItemService.SaveChangesAsync(new[] { taggedMember });
-            }
-            // VP-4690: Handling concurrent update exception - e.g. adding 2 tagged for 1 entity
-            catch (DbUpdateException e) when (e.InnerException is Microsoft.Data.SqlClient.SqlException sqlException && (sqlException.Number == 2601 || sqlException.Number == 2627))
-            {
-                throw new InvalidOperationException($"Tagged item for the member entity with id:\"{taggedMember.MemberId}\"  already exists." +
-                                                    $" Please refresh the entity and execute the operation again.");
-            }
-
+            await _taggedItemService.SaveChangesAsync(new[] { taggedMember });
             return NoContent();
         }
 

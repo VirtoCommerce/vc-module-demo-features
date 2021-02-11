@@ -62,7 +62,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
         {
             var cacheKey = CacheKey.With(GetType(), nameof(GetByIdsAsync), string.Join("-", ids));
 
-            var result = await _platformMemoryCache.GetOrCreateExclusiveAsync(cacheKey,async (cacheEntry) =>
+            var result = await _platformMemoryCache.GetOrCreateExclusiveAsync(cacheKey, async (cacheEntry) =>
             {
                 var taggedMembers = Array.Empty<DemoTaggedMember>();
 

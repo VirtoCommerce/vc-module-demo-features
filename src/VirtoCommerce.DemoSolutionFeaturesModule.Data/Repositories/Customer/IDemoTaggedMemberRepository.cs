@@ -7,10 +7,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories.Customer
 {
     public interface IDemoTaggedMemberRepository : IRepository
     {
-        public IQueryable<DemoTaggedMemberEntity> TaggedMembers { get; }
+        IQueryable<DemoTaggedMemberEntity> TaggedMembers { get; }
 
-        public IQueryable<DemoMemberTagEntity> MemberTags { get; }
+        IQueryable<DemoMemberTagEntity> MemberTags { get; }
 
-        public Task<DemoTaggedMemberEntity[]> GetTaggedMembersByIdsAsync(string[] ids);
+        Task<DemoTaggedMemberEntity[]> GetTaggedMembersByIdsAsync(string[] ids);
     }
 }
