@@ -33,9 +33,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
             _eventPublisher = eventPublisher;
         }
 
-        public async Task DeleteAsync(string[] ids)
+        public async Task DeleteAsync(string[] memberIds)
         {
-            var taggedMembers = await GetByIdsAsync(ids);
+            var taggedMembers = await GetByIdsAsync(memberIds);
             var changedEntries = taggedMembers
                 .Select(x => new GenericChangedEntry<DemoTaggedMember>(x, EntryState.Deleted))
                 .ToArray();
@@ -44,7 +44,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
             await _eventPublisher.Publish(new DemoTaggedMemberChangingEvent(changedEntries));
 
-            var taggedMemberEntities = await repository.GetTaggedMembersByIdsAsync(ids);
+            var taggedMemberEntities = await repository.GetTaggedMembersByIdsAsync(memberIds);
 
             foreach (var memberEntity in taggedMemberEntities)
             {
@@ -58,19 +58,19 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
             await _eventPublisher.Publish(new DemoTaggedMemberChangedEvent(changedEntries));
         }
 
-        public async Task<DemoTaggedMember[]> GetByIdsAsync(string[] ids)
+        public async Task<DemoTaggedMember[]> GetByIdsAsync(string[] memberIds)
         {
-            var cacheKey = CacheKey.With(GetType(), nameof(GetByIdsAsync), string.Join("-", ids));
+            var cacheKey = CacheKey.With(GetType(), nameof(GetByIdsAsync), string.Join("-", memberIds));
 
             var result = await _platformMemoryCache.GetOrCreateExclusiveAsync(cacheKey, async (cacheEntry) =>
             {
                 var taggedMembers = Array.Empty<DemoTaggedMember>();
 
-                if (!ids.IsNullOrEmpty())
+                if (!memberIds.IsNullOrEmpty())
                 {
                     using var repository = _repositoryFactory();
                     repository.DisableChangesTracking();
-                    var memberEntities = await repository.GetTaggedMembersByIdsAsync(ids);
+                    var memberEntities = await repository.GetTaggedMembersByIdsAsync(memberIds);
                     taggedMembers = memberEntities.Select(x => x.ToModel(AbstractTypeFactory<DemoTaggedMember>.TryCreateInstance())).ToArray();
                     cacheEntry.AddExpirationToken(DemoTaggedMemberCacheRegion.CreateChangeToken(taggedMembers));
                 }

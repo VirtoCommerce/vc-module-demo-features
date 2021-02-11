@@ -43,9 +43,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
                     var query = taggedMemberRepository.TaggedMembers;
 
-                    if (!criteria.Ids.IsNullOrEmpty())
+                    if (!criteria.MemberIds.IsNullOrEmpty())
                     {
-                        query = query.Where(x => criteria.Ids.Contains(x.Id));
+                        query = query.Where(x => criteria.MemberIds.Contains(x.Id));
                     }
 
                     if (criteria.ChangedFrom.HasValue)
