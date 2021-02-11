@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
@@ -58,26 +59,16 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
         public void Initialize(IServiceCollection serviceCollection)
         {
             // database initialization
-            serviceCollection.AddDbContext<CustomerDemoDbContext>((provider, options) =>
+            void ActionCallback(IServiceProvider provider, DbContextOptionsBuilder options)
             {
                 var configuration = provider.GetRequiredService<IConfiguration>();
                 options.UseSqlServer(configuration.GetConnectionString(ModuleInfo.Id) ?? configuration.GetConnectionString("VirtoCommerce"));
-            });
-            serviceCollection.AddDbContext<DemoCartDbContext>((provider, options) =>
-            {
-                var configuration = provider.GetRequiredService<IConfiguration>();
-                options.UseSqlServer(configuration.GetConnectionString(ModuleInfo.Id) ?? configuration.GetConnectionString("VirtoCommerce"));
-            });
-            serviceCollection.AddDbContext<DemoOrderDbContext>((provider, options) =>
-            {
-                var configuration = provider.GetRequiredService<IConfiguration>();
-                options.UseSqlServer(configuration.GetConnectionString(ModuleInfo.Id) ?? configuration.GetConnectionString("VirtoCommerce"));
-            });
-            serviceCollection.AddDbContext<DemoCatalogDbContext>((provider, options) =>
-            {
-                var configuration = provider.GetRequiredService<IConfiguration>();
-                options.UseSqlServer(configuration.GetConnectionString(ModuleInfo.Id) ?? configuration.GetConnectionString("VirtoCommerce"));
-            });
+            }
+
+            serviceCollection.AddDbContext<CustomerDemoDbContext>(ActionCallback);
+            serviceCollection.AddDbContext<DemoCartDbContext>(ActionCallback);
+            serviceCollection.AddDbContext<DemoOrderDbContext>(ActionCallback);
+            serviceCollection.AddDbContext<DemoCatalogDbContext>(ActionCallback);
 
             // customer
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
