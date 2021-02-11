@@ -82,6 +82,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
         public async Task SaveChangesAsync(DemoTaggedMember[] taggedMembers)
         {
+            ValidateTaggedMembersArgument(taggedMembers);
+
             var pkMap = new PrimaryKeyResolvingMap();
             var changedEntries = new List<GenericChangedEntry<DemoTaggedMember>>();
 
@@ -116,13 +118,22 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
             await _eventPublisher.Publish(new DemoTaggedMemberChangedEvent(changedEntries));
         }
 
+        private static void ValidateTaggedMembersArgument(DemoTaggedMember[] taggedMembers)
+        {
+            if (taggedMembers.Any(x => x.Id.IsNullOrEmpty()))
+            {
+                throw new ArgumentNullException(nameof(taggedMembers),
+                    "The argument should have no item with the 'Id' field is null.");
+            }
+        }
+
 
         protected virtual void ClearCache(DemoTaggedMember[] taggedMembers)
         {
             foreach (var member in taggedMembers)
             {
                 DemoTaggedMemberCacheRegion.ExpireEntity(member);
-                CustomerCacheRegion.ExpireMemberById(member.MemberId);
+                CustomerCacheRegion.ExpireMemberById(member.Id);
             }
 
             DemoTaggedMemberSearchCacheRegion.ExpireRegion();
