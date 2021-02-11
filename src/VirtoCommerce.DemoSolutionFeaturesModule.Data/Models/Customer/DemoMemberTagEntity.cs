@@ -10,6 +10,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
         public string Tag { get; set; }
 
         #region Navigation Properties
+
         [Required]
         [StringLength(128)]
         public string TaggedMemberId { get; set; }
