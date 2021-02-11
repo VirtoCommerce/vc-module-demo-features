@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
-using VirtoCommerce.CustomerModule.Core;
+using customerModuleCore = VirtoCommerce.CustomerModule.Core;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
 {
@@ -31,7 +31,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         [HttpGet]
         [Route("tagged/{memberId}")]
         [ProducesResponseType(typeof(DemoTaggedMember), StatusCodes.Status200OK)]
-        [Authorize(ModuleConstants.Security.Permissions.Read)]
+        [Authorize(customerModuleCore.ModuleConstants.Security.Permissions.Read)]
         public async Task<ActionResult<DemoTaggedMember>> GetDemoTaggedMember(string memberId)
         {
             var taggedMember = (await _taggedItemService.GetByIdsAsync( new [] { memberId })).FirstOrDefault();
@@ -45,7 +45,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         [HttpPost]
         [Route("tagged")]
         [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
-        [Authorize(ModuleConstants.Security.Permissions.Update)]
+        [Authorize(customerModuleCore.ModuleConstants.Security.Permissions.Update)]
         public async Task<ActionResult> SaveTaggedMember([FromBody] DemoTaggedMember taggedMember)
         {
             await _taggedItemService.SaveChangesAsync(new[] { taggedMember });
@@ -59,7 +59,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         [HttpPost]
         [Route("search/tagged")]
         [ProducesResponseType(typeof(DemoTaggedMemberSearchResult), StatusCodes.Status200OK)]
-        [Authorize(ModuleConstants.Security.Permissions.Read)]
+        [Authorize(customerModuleCore.ModuleConstants.Security.Permissions.Read)]
         public async Task<ActionResult<DemoTaggedMemberSearchResult>> Search([FromBody] DemoTaggedMemberSearchCriteria criteria)
         {
             var searchResult = await _searchService.SearchTaggedMembersAsync(criteria);
