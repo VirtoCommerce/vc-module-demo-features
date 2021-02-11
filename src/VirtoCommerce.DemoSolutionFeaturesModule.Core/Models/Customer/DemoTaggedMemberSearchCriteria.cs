@@ -7,6 +7,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer
     {
         public DateTime? ChangedFrom { get; set; }
 
-        public string[] Ids { get; set; }
+        public string[] MemberIds { get; set; }
     }
 }

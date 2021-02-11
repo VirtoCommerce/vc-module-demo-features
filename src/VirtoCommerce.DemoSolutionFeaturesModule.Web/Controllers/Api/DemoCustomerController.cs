@@ -24,14 +24,14 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Controllers.Api
         }
 
         /// <summary>
-        /// GET: api/demo/members/tagged/{id}
+        /// GET: api/demo/members/tagged/{memberId}
         /// </summary>
         [HttpGet]
-        [Route("tagged/{id}")]
+        [Route("tagged/{memberId}")]
         [ProducesResponseType(typeof(DemoTaggedMember), StatusCodes.Status200OK)]
-        public async Task<ActionResult<DemoTaggedMember>> GetDemoTaggedMember(string id)
+        public async Task<ActionResult<DemoTaggedMember>> GetDemoTaggedMember(string memberId)
         {
-            var taggedMember = (await _taggedItemService.GetByIdsAsync( new [] { id })).FirstOrDefault();
+            var taggedMember = (await _taggedItemService.GetByIdsAsync( new [] { memberId })).FirstOrDefault();
             return Ok(taggedMember);
         }
 
