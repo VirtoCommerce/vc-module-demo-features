@@ -1,6 +1,5 @@
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
@@ -14,10 +13,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
         {
             Tags = new NullCollection<DemoMemberTagEntity>();
         }
-
-        //[Required]
-        //[StringLength(128)]
-        //public string MemberId { get; set; }
 
         #region Navigation Properties
 
@@ -40,8 +35,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
             taggedMember.CreatedDate = CreatedDate;
             taggedMember.ModifiedBy = ModifiedBy;
             taggedMember.ModifiedDate = ModifiedDate;
-
-            //taggedMember.MemberId = MemberId;
 
             if (!taggedMember.Tags.IsNullCollection())
             {
@@ -72,8 +65,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
             ModifiedBy = taggedMember.ModifiedBy;
             ModifiedDate = taggedMember.ModifiedDate;
 
-            //MemberId = taggedMember.MemberId;
-
             if (taggedMember.Tags != null)
             {
                 Tags = new ObservableCollection<DemoMemberTagEntity>(taggedMember.Tags.Select(x => new DemoMemberTagEntity()
@@ -92,18 +83,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
                 throw new ArgumentNullException(nameof(taggedMemberEntity));
             }
 
-            //taggedMemberEntity.MemberId = MemberId;
-
             if (!Tags.IsNullCollection())
             {
                 var tagComparer = AnonymousComparer.Create((DemoMemberTagEntity x) => x.Tag);
                 Tags.Patch(taggedMemberEntity.Tags, tagComparer, (sourceTag, targetTag) => targetTag.Tag = sourceTag.Tag);
             }
         }
-
-
-
-
-
     }
 }

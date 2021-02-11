@@ -5,8 +5,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer
 {
     public class DemoTaggedMemberSearchCriteria : SearchCriteriaBase
     {
-        public string[] MemberIds { get; set; }
         public DateTime? ChangedFrom { get; set; }
+
         public string[] Ids { get; set; }
     }
 }
