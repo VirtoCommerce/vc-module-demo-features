@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
@@ -58,14 +59,16 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
         public void Initialize(IServiceCollection serviceCollection)
         {
             // database initialization
-            var configuration = serviceCollection.BuildServiceProvider().GetRequiredService<IConfiguration>();
-            var connectionString =
-                configuration.GetConnectionString("VirtoCommerce.VirtoCommerceDemoSolutionFeaturesModule") ??
-                configuration.GetConnectionString("VirtoCommerce");
-            serviceCollection.AddDbContext<CustomerDemoDbContext>(options => options.UseSqlServer(connectionString));
-            serviceCollection.AddDbContext<DemoCartDbContext>(options => options.UseSqlServer(connectionString));
-            serviceCollection.AddDbContext<DemoOrderDbContext>(options => options.UseSqlServer(connectionString));
-            serviceCollection.AddDbContext<DemoCatalogDbContext>(options => options.UseSqlServer(connectionString));
+            void ActionCallback(IServiceProvider provider, DbContextOptionsBuilder options)
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                options.UseSqlServer(configuration.GetConnectionString(ModuleInfo.Id) ?? configuration.GetConnectionString("VirtoCommerce"));
+            }
+
+            serviceCollection.AddDbContext<CustomerDemoDbContext>(ActionCallback);
+            serviceCollection.AddDbContext<DemoCartDbContext>(ActionCallback);
+            serviceCollection.AddDbContext<DemoOrderDbContext>(ActionCallback);
+            serviceCollection.AddDbContext<DemoCatalogDbContext>(ActionCallback);
 
             // customer
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
