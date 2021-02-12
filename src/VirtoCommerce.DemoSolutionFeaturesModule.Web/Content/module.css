@@ -216,7 +216,16 @@ table.stripped-table tr:nth-child(even) {
     background: #f9f9f9;
 }
 
+.font-weight-normal {
+    font-weight: normal !important;
+}
+
 .table-group-item {
     padding-top: 15px !important;
     padding-bottom: 15px !important;
+    background: none !important;
+}
+
+.table-group-item .bold {
+    font-weight: bold !important;
 }
