@@ -4,7 +4,7 @@
             <fieldset class="fieldset">
                 <legend>{{ 'demoSolutionFeaturesModule.blades.assign-user-group.labels.select-groups' | translate }}</legend>
                 <div class="form-group">
-                    <label class="form-label">{{ 'demoSolutionFeaturesModule.blades.assign-user-group.labels.available-groups' | translate }} <a href="" ng-click="editTagsDictionary()" class="form-edit" va-permission="pricing:read"><i class="form-ico fa fa-pencil"></i></a></label>
+                    <label class="form-label">{{ 'demoSolutionFeaturesModule.blades.assign-user-group.labels.available-groups' | translate }} <a href="" ng-click="editTagsDictionary()" class="form-edit" va-permission="pricing:read"><i class="form-ico fa fa-pencil" aria-hidden="true"></i></a></label>
                     <div class="form-input">
                         <ui-select ng-model="blade.selectedTag" class="head-select">
                             <ui-select-match placeholder="{{ 'demoSolutionFeaturesModule.blades.assign-user-group.labels.select-groups' | translate }}">{{$select.selected}}</ui-select-match>
