@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
@@ -14,10 +15,12 @@ using VirtoCommerce.CatalogModule.Core.Events;
 using VirtoCommerce.CatalogModule.Core.Model;
 using VirtoCommerce.CatalogModule.Data.Model;
 using VirtoCommerce.CatalogModule.Data.Repositories;
+using VirtoCommerce.CatalogPersonalizationModule.Data.Search.Indexing;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
+using VirtoCommerce.CustomerModule.Data.Search.Indexing;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Customer;
@@ -52,6 +55,7 @@ using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
+using VirtoCommerce.SearchModule.Core.Model;
 using CartLineItem = VirtoCommerce.CartModule.Core.Model.LineItem;
 using CartLineItemEntity = VirtoCommerce.CartModule.Data.Model.LineItemEntity;
 using OrderLineItem = VirtoCommerce.OrdersModule.Core.Model.LineItem;
@@ -85,6 +89,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddTransient<IDemoTaggedMemberSearchService, DemoTaggedMemberSearchService>();
             serviceCollection.AddTransient<IMemberService, DemoMemberService>();
             serviceCollection.AddTransient<LogChangesTaggedMembersHandler>();
+            serviceCollection.AddSingleton<DemoTaggedMemberIndexChangesProvider>();
 
             // cart
             serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
@@ -190,6 +195,26 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             inProcessBus.RegisterHandler<ProductChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>().Handle(message));
             inProcessBus.RegisterHandler<DemoProductPartChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesProductPartsHandler>().Handle(message));
             inProcessBus.RegisterHandler<DemoTaggedMemberChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesTaggedMembersHandler>().Handle(message));
+
+            #region Search
+
+            var documentIndexingConfigurations = appBuilder.ApplicationServices.GetRequiredService<IEnumerable<IndexDocumentConfiguration>>();
+            if (documentIndexingConfigurations != null)
+            {
+                //Member indexing
+                var taggedItemProductDocumentSource = new IndexDocumentSource
+                {
+                    ChangesProvider = appBuilder.ApplicationServices.GetRequiredService<DemoTaggedMemberIndexChangesProvider>(),
+                    DocumentBuilder = appBuilder.ApplicationServices.GetRequiredService<MemberDocumentBuilder>()
+                };
+                foreach (var documentConfiguration in documentIndexingConfigurations.Where(c => c.DocumentType == KnownDocumentTypes.Member))
+                {
+                    documentConfiguration.RelatedSources ??= new List<IndexDocumentSource>();
+                    documentConfiguration.RelatedSources.Add(taggedItemProductDocumentSource);
+                }
+            }
+
+            #endregion
 
             // Ensure that any pending migrations are applied
             using var serviceScope = appBuilder.ApplicationServices.CreateScope();
