@@ -43,14 +43,12 @@ angular.module(moduleName, [])
 
             featureManager.isFeatureEnabled('UserGroupsInheritance').then(() => {
                 widgetService.registerWidget({
-                    isVisible: function (blade) { return blade.controller === 'virtoCommerce.customerModule.memberDetailController'; },
                     controller: 'virtoCommerce.DemoSolutionFeaturesModule.userGroupsWidgetController',
                     template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/widgets/userGroupsWidget.tpl.html',
                     size: [2,1]
                 }, 'customerDetail2');
 
                 widgetService.registerWidget({
-                    isVisible: function (blade) { return blade.controller === 'virtoCommerce.customerModule.memberDetailController'; },
                     controller: 'virtoCommerce.DemoSolutionFeaturesModule.userGroupsWidgetController',
                     template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/widgets/userGroupsWidget.tpl.html',
                     size: [2,1]
