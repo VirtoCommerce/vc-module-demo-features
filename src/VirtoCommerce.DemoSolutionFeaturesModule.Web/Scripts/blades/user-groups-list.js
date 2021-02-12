@@ -33,13 +33,15 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                             bladeNavigationService.showBlade(newBlade, blade);
                         });
                     },
-                    canExecuteMethod: () => true
+                    canExecuteMethod: () => true,
+                    permission: 'customer:update'
                 },
                 {
                     name: "platform.commands.delete",
                     icon: 'fas fa-trash-alt',
                     executeMethod: deleteChecked,
-                    canExecuteMethod: isItemsChecked
+                    canExecuteMethod: isItemsChecked,
+                    permission: 'customer:delete'
                 }
             ];
 
