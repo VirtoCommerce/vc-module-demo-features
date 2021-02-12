@@ -4,7 +4,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             var blade = $scope.blade;
             blade.currentEntity = undefined;
 
-            userGroupsApi.taggedMember({ id: blade.memberId },
+            userGroupsApi.get({ id: blade.memberId },
                 function(result) {
                     blade.currentEntity = result || {};
                     blade.currentEntity.tags = blade.currentEntity.tags || [];

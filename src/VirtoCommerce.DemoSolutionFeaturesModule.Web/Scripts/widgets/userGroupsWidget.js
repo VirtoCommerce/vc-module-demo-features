@@ -6,7 +6,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         $scope.inheritedGroupsCount = 0;
 
         function recalculateGroupsCount() {
-            userGroupsApi.taggedMember({ id: blade.currentEntityId },
+            userGroupsApi.get({ id: blade.currentEntityId },
                 function (result) {
                     $scope.loading = false;
                     $scope.assignedGroupsCount = result.tags ? result.tags.length : 0;
