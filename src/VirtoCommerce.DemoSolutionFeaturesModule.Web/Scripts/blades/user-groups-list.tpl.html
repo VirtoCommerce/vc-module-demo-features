@@ -3,7 +3,7 @@
         <div class="inner-block">
             <div class="sub-t margin-bottom-20">{{ 'demoSolutionFeaturesModule.blades.user-groups-list.labels.assigned-groups' | translate }}</div>
             <div class="table-wrapper margin-bottom-20">
-                <table class="table stripped-table">
+                <table class="table stripped-table" aria-label="Assigned user groups">
                     <tbody>
                         <tr class="table-item" ng-repeat="data in blade.assignedTags | limitTo:6:0">
                             <td class="table-col checkbox">
