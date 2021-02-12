@@ -1,0 +1,38 @@
+<div class="blade-content">
+    <div class="blade-inner">
+        <div class="inner-block">
+            <fieldset class="fieldset">
+                <legend>{{ 'demoSolutionFeaturesModule.blades.assign-user-group.labels.select-groups' | translate }}</legend>
+                <div class="form-group">
+                    <label class="form-label">{{ 'demoSolutionFeaturesModule.blades.assign-user-group.labels.available-groups' | translate }} <a href="" ng-click="editTagsDictionary()" class="form-edit" va-permission="pricing:read"><i class="form-ico fa fa-pencil"></i></a></label>
+                    <div class="form-input">
+                        <ui-select ng-model="blade.selectedTag" class="head-select">
+                            <ui-select-match placeholder="{{ 'demoSolutionFeaturesModule.blades.assign-user-group.labels.select-groups' | translate }}">{{$select.selected}}</ui-select-match>
+                            <ui-select-choices repeat="x in blade.availableTags | filter: $select.search">
+                                <span ng-bind-html="x | highlight: $select.search"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                        <button class="btn head-button assign-tag-btn" type="button" ng-disabled="!blade.selectedTag" ng-click="assignTag(blade.selectedTag)">{{ 'demoSolutionFeaturesModule.blades.assign-user-group.labels.add-btn' | translate }}</button>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="table-wrapper">
+                <table class="table">
+                    <tbody>
+                        <tr class="table-item" ng-repeat="data in blade.assignedTags">
+                            <td class="table-col checkbox">
+                                <label class="form-control __checkbox">
+                                    <input type="checkbox" ng-model="data.$selected">
+                                    <span class="check"></span>
+                                </label>
+                            </td>
+                            <td class="table-col table-group-item" ng-click='blade.selectNode(data)'>
+                                <span class="table-descr">{{data.value}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

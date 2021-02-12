@@ -1,0 +1,26 @@
+<div class="blade-content">
+    <div class="blade-inner">
+        <div class="inner-block">
+            <div class="sub-t margin-bottom-20">{{ 'demoSolutionFeaturesModule.blades.user-groups-list.labels.assigned-groups' | translate }}</div>
+            <div class="table-wrapper margin-bottom-20">
+                <table class="table stripped-table">
+                    <tbody>
+                        <tr class="table-item" ng-repeat="data in blade.assignedTags | limitTo:6:0">
+                            <td class="table-col checkbox">
+                                <label class="form-control __checkbox">
+                                    <input type="checkbox" ng-model="data.$selected">
+                                    <span class="check"></span>
+                                </label>
+                            </td>
+                            <td class="table-col table-group-item" ng-click='blade.selectNode(data)'>
+                                <span ng-class="{'font-weight-500': data.$selected}">{{data.value}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn show-all-groups-btn" ng-click="showAllGroups('assigned')" ng-if="blade.assignedTags.length > 6">All assigned groups</button>
+            <p class="note" ng-if="!blade.assignedTags.length">{{ 'demoSolutionFeaturesModule.blades.user-groups-list.labels.no-assigned' | translate }}</p>
+        </div>
+    </div>
+</div>

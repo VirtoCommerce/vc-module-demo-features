@@ -30,6 +30,22 @@ angular.module(moduleName, [])
                 }, 'customerOrderDetailWidgets');
             });
 
+            featureManager.isFeatureEnabled('UserGroupsInheritance').then(() => {
+                widgetService.registerWidget({
+                    isVisible: function (blade) { return blade.controller === 'virtoCommerce.customerModule.memberDetailController'; },
+                    controller: 'virtoCommerce.DemoSolutionFeaturesModule.userGroupsWidgetController',
+                    template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/widgets/userGroupsWidget.tpl.html',
+                    size: [2,1]
+                }, 'customerDetail2');
+
+                widgetService.registerWidget({
+                    isVisible: function (blade) { return blade.controller === 'virtoCommerce.customerModule.memberDetailController'; },
+                    controller: 'virtoCommerce.DemoSolutionFeaturesModule.userGroupsWidgetController',
+                    template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/widgets/userGroupsWidget.tpl.html',
+                    size: [2,1]
+                }, 'organizationDetail2');
+            });
+
             const itemDetailWidgets = widgetService.widgetsMap['itemDetail'];
             const variationWidget = itemDetailWidgets.find(widget => widget.controller == 'virtoCommerce.catalogModule.itemVariationWidgetController');
             variationWidget.isVisible = blade => blade.id !== 'variationDetail' && blade.productType !== configurableProductType;
