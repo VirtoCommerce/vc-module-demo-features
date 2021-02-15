@@ -58,7 +58,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
                 }
             }
 
-
             await base.SaveChangesAsync(members);
         }
     }
