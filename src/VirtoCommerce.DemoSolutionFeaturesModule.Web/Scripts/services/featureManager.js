@@ -10,8 +10,8 @@ angular.module(moduleName)
             $http({ method: 'GET', url: `api/demo/features/${featureName}` })
                 .then(
                     (response) => {
-                        var result = response.data;
-                        if (result) {
+                        var res = response.data;
+                        if (res) {
                             deferred.resolve();
                         } else {
                             deferred.reject();
