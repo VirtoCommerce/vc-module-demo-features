@@ -24,12 +24,27 @@ angular.module(moduleName)
 
         //TODO: Add callback to the collection and iterate it when login action event fired
         //TODO: Move subscription to separate service wrapper
+        var callbackCollection = [];
         result.subscribeToLoginAction = (featureName, callback) => {
+            callbackCollection[featureName].push(callback);
+        };
+
+        function initialize() {
             $rootScope.$on('loginStatusChanged',
                 (_, authContext) => {
-                    result.isFeatureEnabled(featureName).then(callback);
+                    _.each(callbackCollection, (featureName, callbacks) => {
+                        result.isFeatureEnabled(featureName).then(() => {
+                            _.each(callbacks,
+                                (callback) => {
+                                    //TODO: Check callable
+                                    callback();
+                                });
+                        });
+                    });
                 });
-        };
+        }
+
+        initialize();
 
         return result;
     }]);
