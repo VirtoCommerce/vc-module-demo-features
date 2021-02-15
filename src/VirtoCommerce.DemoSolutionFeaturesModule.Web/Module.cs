@@ -21,7 +21,7 @@ using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.CustomerModule.Data.Search.Indexing;
-using VirtoCommerce.DemoSolutionFeaturesModule.Core;
+using demoFeaturesCore = VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
@@ -161,18 +161,18 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
-            settingsRegistrar.RegisterSettings(ModuleConstants.Settings.General.AllSettings, ModuleInfo.Id);
+            settingsRegistrar.RegisterSettings(demoFeaturesCore.ModuleConstants.Settings.General.AllSettings, ModuleInfo.Id);
 
             // register invoicePaymentMethod
             var paymentMethodsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IPaymentMethodsRegistrar>();
             paymentMethodsRegistrar.RegisterPaymentMethod<DemoInvoicePaymentMethod>();
-            settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.General.InvoicePaymentMethodSettings, nameof(DemoInvoicePaymentMethod));
+            settingsRegistrar.RegisterSettingsForType(demoFeaturesCore.ModuleConstants.Settings.General.InvoicePaymentMethodSettings, nameof(DemoInvoicePaymentMethod));
             paymentMethodsRegistrar.RegisterPaymentMethod<DemoCreditCardPaymentMethod>();
-            settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.General.CreditCardPaymentMethodSettings, nameof(DemoCreditCardPaymentMethod));
+            settingsRegistrar.RegisterSettingsForType(demoFeaturesCore.ModuleConstants.Settings.General.CreditCardPaymentMethodSettings, nameof(DemoCreditCardPaymentMethod));
 
             // register permissions
             var permissionsProvider = appBuilder.ApplicationServices.GetRequiredService<IPermissionsRegistrar>();
-            permissionsProvider.RegisterPermissions(ModuleConstants.Security.Permissions.AllPermissions.Select(x =>
+            permissionsProvider.RegisterPermissions(demoFeaturesCore.ModuleConstants.Security.Permissions.AllPermissions.Select(x =>
                 new Permission
                 {
                     GroupName = "VirtoCommerceDemoSolutionFeaturesModule",
@@ -188,8 +188,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             var demoFeaturesSection = configuration.GetSection("DemoFeatures");
             featureStorage.AddHighPriorityFeatureDefinition(demoFeaturesSection);
 
-            featureStorage.TryAddFeature(ModuleConstants.Features.ConfigurableProduct, true);
-            featureStorage.TryAddFeature(ModuleConstants.Features.UserGroupsInheritance, "Developers");
+            featureStorage.TryAddFeature(demoFeaturesCore.ModuleConstants.Features.ConfigurableProduct, true);
+            featureStorage.TryAddFeature(demoFeaturesCore.ModuleConstants.Features.UserGroupsInheritance, "Developers");
 
             var inProcessBus = appBuilder.ApplicationServices.GetService<IHandlerRegistrar>();
             inProcessBus.RegisterHandler<ProductChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>().Handle(message));
@@ -198,7 +198,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             var featureManager = appBuilder.ApplicationServices.GetRequiredService<IFeatureManager>();
 
-            var userGroupsInheritanceFeatureIsEnabled = featureManager.IsEnabledAsync(ModuleConstants.Features.UserGroupsInheritance).GetAwaiter().GetResult();
+            var userGroupsInheritanceFeatureIsEnabled = featureManager.IsEnabledAsync(demoFeaturesCore.ModuleConstants.Features.UserGroupsInheritance).GetAwaiter().GetResult();
 
             #region Search
 
