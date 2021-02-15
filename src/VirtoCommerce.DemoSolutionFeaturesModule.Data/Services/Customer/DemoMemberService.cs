@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VirtoCommerce.CustomerModule.Core.Model;
@@ -39,6 +40,16 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
             }
 
             return members;
+        }
+
+        public override Task SaveChangesAsync(Member[] members)
+        {
+            foreach (var member in members)
+            {
+                member.Groups = new List<string>();
+            }
+
+            return base.SaveChangesAsync(members);
         }
     }
 }
