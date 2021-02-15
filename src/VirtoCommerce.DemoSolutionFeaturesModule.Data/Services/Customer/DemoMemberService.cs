@@ -6,12 +6,12 @@ using Microsoft.FeatureManagement;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.CustomerModule.Data.Services;
-using VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
 using VirtoCommerce.Platform.Core.Caching;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Events;
 using VirtoCommerce.Platform.Core.Security.Search;
+using demoFeaturesCore = VirtoCommerce.DemoSolutionFeaturesModule.Core;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 {
@@ -30,7 +30,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
         {
             var members = await base.GetByIdsAsync(memberIds, responseGroup, memberTypes);
 
-            var userGroupsInheritanceFeatureIsEnabled = await _featureManager.IsEnabledAsync(ModuleConstants.Features.UserGroupsInheritance);
+            var userGroupsInheritanceFeatureIsEnabled = await _featureManager.IsEnabledAsync(demoFeaturesCore.ModuleConstants.Features.UserGroupsInheritance);
 
             if (!members.IsNullOrEmpty() && userGroupsInheritanceFeatureIsEnabled)
             {
@@ -49,7 +49,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
         public override async Task SaveChangesAsync(Member[] members)
         {
-            var userGroupsInheritanceFeatureIsEnabled = await _featureManager.IsEnabledAsync(ModuleConstants.Features.UserGroupsInheritance);
+            var userGroupsInheritanceFeatureIsEnabled = await _featureManager.IsEnabledAsync(demoFeaturesCore.ModuleConstants.Features.UserGroupsInheritance);
 
             if (userGroupsInheritanceFeatureIsEnabled)
             {
