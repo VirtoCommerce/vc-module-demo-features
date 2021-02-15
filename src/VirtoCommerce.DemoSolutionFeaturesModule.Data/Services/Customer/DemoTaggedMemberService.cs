@@ -72,9 +72,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
                     repository.DisableChangesTracking();
                     var memberEntities = await repository.GetTaggedMembersByIdsAsync(memberIds);
                     taggedMembers = memberEntities.Select(x => x.ToModel(AbstractTypeFactory<DemoTaggedMember>.TryCreateInstance())).ToArray();
-                    cacheEntry.AddExpirationToken(DemoTaggedMemberCacheRegion.CreateChangeToken(taggedMembers));
+                    cacheEntry.AddExpirationToken(DemoTaggedMemberCacheRegion.CreateChangeToken(memberIds));
                 }
-                
+
                 return taggedMembers;
             });
             return result;
