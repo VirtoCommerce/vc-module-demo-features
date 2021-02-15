@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.FeatureManagement;
 using VirtoCommerce.CustomerModule.Core.Model;
-using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.CustomerModule.Data.Services;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
 using VirtoCommerce.Platform.Core.Caching;
 using VirtoCommerce.Platform.Core.Common;
@@ -15,7 +15,7 @@ using VirtoCommerce.Platform.Core.Security.Search;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 {
-    public class DemoMemberService : MemberService, IMemberService
+    public class DemoMemberService : MemberService
     {
         private readonly IDemoTaggedMemberService _taggedMemberService;
         private readonly IFeatureManager _featureManager;
@@ -30,7 +30,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
         {
             var members = await base.GetByIdsAsync(memberIds, responseGroup, memberTypes);
 
-            if (!members.IsNullOrEmpty())
+            var userGroupsInheritanceFeatureIsEnabled = await _featureManager.IsEnabledAsync(ModuleConstants.Features.UserGroupsInheritance);
+
+            if (!members.IsNullOrEmpty() && userGroupsInheritanceFeatureIsEnabled)
             {
                 var taggedMembers = await _taggedMemberService.GetByIdsAsync(memberIds);
 
@@ -45,15 +47,19 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
             return members;
         }
 
-        public override Task SaveChangesAsync(Member[] members)
+        public override async Task SaveChangesAsync(Member[] members)
         {
-            //_featureManager.IsEnabledAsync()
-            foreach (var member in members)
+            var userGroupsInheritanceFeatureIsEnabled = await _featureManager.IsEnabledAsync(ModuleConstants.Features.UserGroupsInheritance);
+            if (userGroupsInheritanceFeatureIsEnabled)
             {
-                member.Groups = new List<string>();
+                foreach (var member in members)
+                {
+                    member.Groups = new List<string>();
+                }
             }
 
-            return base.SaveChangesAsync(members);
+
+            await base.SaveChangesAsync(members);
         }
     }
 }

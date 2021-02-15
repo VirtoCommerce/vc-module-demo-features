@@ -196,10 +196,14 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             inProcessBus.RegisterHandler<DemoProductPartChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesProductPartsHandler>().Handle(message));
             inProcessBus.RegisterHandler<DemoTaggedMemberChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesTaggedMembersHandler>().Handle(message));
 
+            var featureManager = appBuilder.ApplicationServices.GetRequiredService<IFeatureManager>();
+
+            var userGroupsInheritanceFeatureIsEnabled = featureManager.IsEnabledAsync(ModuleConstants.Features.UserGroupsInheritance).GetAwaiter().GetResult();
+
             #region Search
 
             var documentIndexingConfigurations = appBuilder.ApplicationServices.GetRequiredService<IEnumerable<IndexDocumentConfiguration>>();
-            if (documentIndexingConfigurations != null)
+            if (userGroupsInheritanceFeatureIsEnabled && documentIndexingConfigurations != null)
             {
                 //Member indexing
                 var taggedItemProductDocumentSource = new IndexDocumentSource
