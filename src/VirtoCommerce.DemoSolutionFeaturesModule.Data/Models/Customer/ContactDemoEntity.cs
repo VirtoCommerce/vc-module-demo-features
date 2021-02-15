@@ -38,9 +38,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models
             if (target is ContactDemoEntity contact)
             {
                 contact.Title = Title;
-
-                // Need to clean user groups for demo purposes 
-                contact.Groups = new NullCollection<MemberGroupEntity>();
             }
 
             base.Patch(target);

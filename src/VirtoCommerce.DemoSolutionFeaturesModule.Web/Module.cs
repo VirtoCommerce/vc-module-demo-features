@@ -127,9 +127,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             AbstractTypeFactory<Member>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<MemberEntity>.OverrideType<ContactEntity, ContactDemoEntity>();
 
-            AbstractTypeFactory<Member>.OverrideType<Organization, Organization>().MapToType<DemoOrganizationEntity>();
-            AbstractTypeFactory<MemberEntity>.OverrideType<OrganizationEntity, DemoOrganizationEntity>();
-
             AbstractTypeFactory<DemoTaggedMember>.RegisterType<DemoTaggedMember>().MapToType<DemoTaggedMemberEntity>();
             AbstractTypeFactory<DemoTaggedMemberEntity>.RegisterType<DemoTaggedMemberEntity>();
 
