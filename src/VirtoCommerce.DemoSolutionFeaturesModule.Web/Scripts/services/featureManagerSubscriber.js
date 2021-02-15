@@ -1,7 +1,7 @@
 var moduleName = "virtoCommerce.DemoSolutionFeaturesModule";
 
 angular.module(moduleName)
-    .factory('virtoCommerce.demoFeatures.featureManagerSubscriber', ['$rootScope', 'virtoCommerce.demoFeatures.featureManager', function ($rootScope, featureManager) {
+    .factory('virtoCommerce.demoFeatures.featureManagerSubscriber', ['$rootScope', 'virtoCommerce.demoFeatures.featureManager', '$window', function ($rootScope, featureManager, $window) {
         var result = {};
 
         result.callbacksGroupedByFeatureName = [];
@@ -16,7 +16,11 @@ angular.module(moduleName)
 
         function initialize() {
             $rootScope.$on('loginStatusChanged',
-                () => {
+                (_, authContext) => {
+                    if (!authContext.isAuthenticated) {
+                        $window.location.reload();
+                    }
+
                     for (const [featureName, callbacks] of Object.entries(result.callbacksGroupedByFeatureName)) {
                         featureManager.isFeatureEnabled(featureName).then(() => {
                             angular.forEach(callbacks, callback => {
