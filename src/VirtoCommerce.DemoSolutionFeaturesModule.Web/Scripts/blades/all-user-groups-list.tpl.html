@@ -20,7 +20,7 @@
             <div class="table-wrapper">
                 <table class="table stripped-table" aria-label="Assigned user groups">
                     <tbody>
-                        <tr class="table-item" ng-repeat="data in blade.assignedTags | filter: blade.searchKeyword as filtered">
+                        <tr class="table-item" ng-repeat="data in blade.assignedTags | orderBy:'value' | filter: blade.searchKeyword as filtered">
                             <td class="table-col checkbox">
                                 <label class="form-control __checkbox">
                                     <input type="checkbox" ng-model="data.$selected">

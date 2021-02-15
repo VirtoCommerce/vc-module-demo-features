@@ -5,7 +5,7 @@
             <div class="table-wrapper margin-bottom-20">
                 <table class="table stripped-table" aria-label="Assigned user groups">
                     <tbody>
-                        <tr class="table-item" ng-repeat="data in blade.assignedTags | limitTo:6:0">
+                        <tr class="table-item" ng-repeat="data in blade.assignedTags | orderBy:'value' | limitTo:6:0">
                             <td class="table-col checkbox">
                                 <label class="form-control __checkbox">
                                     <input type="checkbox" ng-model="data.$selected">
