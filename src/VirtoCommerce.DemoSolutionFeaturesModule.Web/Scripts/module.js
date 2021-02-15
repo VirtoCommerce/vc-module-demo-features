@@ -6,15 +6,15 @@ if (AppDependencies !== undefined) {
 }
 
 angular.module(moduleName, [])
-    .run(['$rootScope', '$window', 'virtoCommerce.catalogModule.itemTypesResolverService', 'platformWebApp.widgetService', 'virtoCommerce.demoFeatures.featureManager',
-        function ($rootScope, $window, itemTypesResolverService, widgetService, featureManager) {
+    .run(['$rootScope', '$window', 'virtoCommerce.catalogModule.itemTypesResolverService', 'platformWebApp.widgetService', 'virtoCommerce.demoFeatures.featureManagerSubscriber',
+        function ($rootScope, $window, itemTypesResolverService, widgetService, featureManagerSubscriber) {
             $rootScope.$on('loginStatusChanged', (_, authContext) => {
                 if (!authContext.isAuthenticated) {
                     $window.location.reload();
                 }
             });
 
-            featureManager.subscribeToLoginAction('ConfigurableProduct', () => {
+            featureManagerSubscriber.subscribeToLoginAction('ConfigurableProduct', () => {
                 const configurableProductType = 'Configurable';
                 itemTypesResolverService.registerType({
                     itemType: 'demoSolutionFeaturesModule.blades.categories-items-add.menu.configurable-product.title',
