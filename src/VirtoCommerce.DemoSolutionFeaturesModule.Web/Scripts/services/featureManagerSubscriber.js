@@ -5,7 +5,7 @@ angular.module(moduleName)
         var result = {};
 
         result.callbacksGroupedByFeatureName = [];
-        result.subscribeToLoginAction = (featureName, callback) => {
+        result.onLoginStatusChanged = (featureName, callback) => {
             if (!result.callbacksGroupedByFeatureName[featureName]) {
                 result.callbacksGroupedByFeatureName[featureName] = [];
             }
