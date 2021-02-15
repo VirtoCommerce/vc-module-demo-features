@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.FeatureManagement;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.CustomerModule.Data.Repositories;
@@ -17,10 +18,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
     public class DemoMemberService : MemberService, IMemberService
     {
         private readonly IDemoTaggedMemberService _taggedMemberService;
-        public DemoMemberService(Func<IMemberRepository> repositoryFactory, IUserSearchService userSearchService, IEventPublisher eventPublisher, IPlatformMemoryCache platformMemoryCache, IDemoTaggedMemberService taggedMemberService)
+        private readonly IFeatureManager _featureManager;
+        public DemoMemberService(Func<IMemberRepository> repositoryFactory, IUserSearchService userSearchService, IEventPublisher eventPublisher, IPlatformMemoryCache platformMemoryCache, IDemoTaggedMemberService taggedMemberService, IFeatureManager featureManager)
             : base(repositoryFactory, userSearchService, eventPublisher, platformMemoryCache)
         {
             _taggedMemberService = taggedMemberService;
+            _featureManager = featureManager;
         }
 
         public override async Task<Member[]> GetByIdsAsync(string[] memberIds, string responseGroup = null, string[] memberTypes = null)
@@ -44,6 +47,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
         public override Task SaveChangesAsync(Member[] members)
         {
+            //_featureManager.IsEnabledAsync()
             foreach (var member in members)
             {
                 member.Groups = new List<string>();
