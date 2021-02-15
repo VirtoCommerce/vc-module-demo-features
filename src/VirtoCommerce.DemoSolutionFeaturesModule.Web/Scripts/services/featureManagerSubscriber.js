@@ -4,20 +4,20 @@ angular.module(moduleName)
     .factory('virtoCommerce.demoFeatures.featureManagerSubscriber', ['$rootScope', 'virtoCommerce.demoFeatures.featureManager', function ($rootScope, featureManager) {
         var result = {};
 
-        result.callbackCollection = [];
+        result.callbacksGroupedByFeatureName = [];
         result.subscribeToLoginAction = (featureName, callback) => {
-            if (!result.callbackCollection[featureName]) {
-                result.callbackCollection[featureName] = [];
+            if (!result.callbacksGroupedByFeatureName[featureName]) {
+                result.callbacksGroupedByFeatureName[featureName] = [];
             }
             if (typeof callback === 'function') {
-                result.callbackCollection[featureName].push(callback);
+                result.callbacksGroupedByFeatureName[featureName].push(callback);
             }
         };
 
         function initialize() {
             $rootScope.$on('loginStatusChanged',
                 () => {
-                    for (const [featureName, callbacks] of Object.entries(result.callbackCollection)) {
+                    for (const [featureName, callbacks] of Object.entries(result.callbacksGroupedByFeatureName)) {
                         featureManager.isFeatureEnabled(featureName).then(() => {
                             angular.forEach(callbacks, callback => {
                                 callback();
