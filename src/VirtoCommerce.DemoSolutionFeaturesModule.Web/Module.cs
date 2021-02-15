@@ -203,6 +203,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             #region Search
 
             var documentIndexingConfigurations = appBuilder.ApplicationServices.GetRequiredService<IEnumerable<IndexDocumentConfiguration>>();
+
             if (userGroupsInheritanceFeatureIsEnabled && documentIndexingConfigurations != null)
             {
                 //Member indexing

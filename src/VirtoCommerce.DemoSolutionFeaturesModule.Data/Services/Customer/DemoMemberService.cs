@@ -50,6 +50,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
         public override async Task SaveChangesAsync(Member[] members)
         {
             var userGroupsInheritanceFeatureIsEnabled = await _featureManager.IsEnabledAsync(ModuleConstants.Features.UserGroupsInheritance);
+
             if (userGroupsInheritanceFeatureIsEnabled)
             {
                 foreach (var member in members)
