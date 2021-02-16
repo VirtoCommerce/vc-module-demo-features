@@ -15,7 +15,8 @@ angular.module(moduleName)
         };
 
         function initialize() {
-            //This function runs only on 'login'/'sign out' event, but the features are registering only at the time of login,
+            //This function runs only on 'login'/'sign out' event, but the featureManager calls 'isFeatureEnabled' only at the time of login
+            //and then features are registered only if they are available to the user,
             //when we sign out - we are just reloading
             $rootScope.$on('loginStatusChanged',
                 (_, authContext) => {
