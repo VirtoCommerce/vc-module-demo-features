@@ -51,14 +51,22 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Infrastructure
 
                 var currentUserName = userNameResolver.GetCurrentUserName();
 
-                var currentUser = await userManager.FindByNameAsync(currentUserName);
+                if (!currentUserName.EqualsInvariant("unknown"))
+                {
+                    var currentUser = await userManager.FindByNameAsync(currentUserName);
 
-                result = currentUser
-                    .Roles
-                    .SelectMany(x => x.Permissions.Select(p => p.ToClaim(_jsonOptions.SerializerSettings)))
-                    .Any(x =>
-                        x.Type.EqualsInvariant(PlatformConstants.Security.Claims.PermissionClaimType) &&
-                        x.Value.EqualsInvariant(Demo.ModuleConstants.Security.Permissions.Developer));
+                    result = currentUser
+                        .Roles
+                        .SelectMany(x => x.Permissions.Select(p => p.ToClaim(_jsonOptions.SerializerSettings)))
+                        .Any(x =>
+                            x.Type.EqualsInvariant(PlatformConstants.Security.Claims.PermissionClaimType) &&
+                            x.Value.EqualsInvariant(Demo.ModuleConstants.Security.Permissions.Developer));
+                }
+                else
+                {
+                    // Always true for cron scheduled jobs
+                    result = true;
+                }
             }
 
             return result;
