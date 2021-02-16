@@ -15,6 +15,8 @@ angular.module(moduleName)
         };
 
         function initialize() {
+            //This function runs only on 'login'/'sign out' event, but the features are registering only at the time of login,
+            //when we sign out - we are just reloading
             $rootScope.$on('loginStatusChanged',
                 (_, authContext) => {
                     if (!authContext.isAuthenticated) {
