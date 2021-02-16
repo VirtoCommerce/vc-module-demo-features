@@ -1,9 +1,13 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
 using VirtoCommerce.Platform.Core;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Security;
 using Demo = VirtoCommerce.DemoSolutionFeaturesModule.Core;
 
@@ -15,19 +19,19 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Infrastructure
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly Func<IUserNameResolver> _userNameResolverFactory;
         private readonly Func<UserManager<ApplicationUser>> _userManagerFactory;
-        private readonly Func<IUserClaimsPrincipalFactory<ApplicationUser>> _userClaimsPrincipalFactoryFactory;
+        private readonly MvcNewtonsoftJsonOptions _jsonOptions;
 
         public DevelopersFilter(
             IHttpContextAccessor httpContextAccessor,
             Func<IUserNameResolver> userNameResolverFactory,
             Func<UserManager<ApplicationUser>> userManagerFactory,
-            Func<IUserClaimsPrincipalFactory<ApplicationUser>> userClaimsPrincipalFactoryFactory
+            IOptions<MvcNewtonsoftJsonOptions> jsonOptions
             )
         {
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
             _userNameResolverFactory = userNameResolverFactory;
             _userManagerFactory = userManagerFactory;
-            _userClaimsPrincipalFactoryFactory = userClaimsPrincipalFactoryFactory;
+            _jsonOptions = jsonOptions.Value;
         }
 
         public async Task<bool> EvaluateAsync(FeatureFilterEvaluationContext context)
@@ -38,24 +42,23 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Infrastructure
             {
                 result = _httpContextAccessor.HttpContext.User.HasClaim(
                     PlatformConstants.Security.Claims.PermissionClaimType,
-                    Demo.ModuleConstants.Security.Permissions.Developer
-                    );
+                    Demo.ModuleConstants.Security.Permissions.Developer);
             }
             else
             {
                 var userNameResolver = _userNameResolverFactory();
                 using var userManager = _userManagerFactory();
-                var userClaimsPrincipalFactory = _userClaimsPrincipalFactoryFactory();
 
                 var currentUserName = userNameResolver.GetCurrentUserName();
 
                 var currentUser = await userManager.FindByNameAsync(currentUserName);
-                var claimsPrincipal = await userClaimsPrincipalFactory.CreateAsync(currentUser);
 
-                result = claimsPrincipal.HasClaim(
-                    PlatformConstants.Security.Claims.PermissionClaimType,
-                    Demo.ModuleConstants.Security.Permissions.Developer
-                    );
+                result = currentUser
+                    .Roles
+                    .SelectMany(x => x.Permissions.Select(p => p.ToClaim(_jsonOptions.SerializerSettings)))
+                    .Any(x =>
+                        x.Type.EqualsInvariant(PlatformConstants.Security.Claims.PermissionClaimType) &&
+                        x.Value.EqualsInvariant(Demo.ModuleConstants.Security.Permissions.Developer));
             }
 
             return result;
