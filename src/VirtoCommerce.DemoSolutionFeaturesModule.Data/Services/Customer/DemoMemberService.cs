@@ -28,7 +28,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
         public override async Task<Member[]> GetByIdsAsync(string[] memberIds, string responseGroup = null, string[] memberTypes = null)
         {
-            var members = await base.GetByIdsAsync(memberIds, responseGroup, memberTypes);
+            var members = (await base.GetByIdsAsync(memberIds, responseGroup, memberTypes)).Select(x => (Member)x.Clone()).ToArray();
 
             var userGroupsInheritanceFeatureIsEnabled = await _featureManager.IsEnabledAsync(demoFeaturesCore.ModuleConstants.Features.UserGroupsInheritance);
 
