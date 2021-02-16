@@ -47,12 +47,13 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web.Infrastructure
             else
             {
                 var userNameResolver = _userNameResolverFactory();
-                using var userManager = _userManagerFactory();
 
                 var currentUserName = userNameResolver.GetCurrentUserName();
 
                 if (!currentUserName.EqualsInvariant("unknown"))
                 {
+                    using var userManager = _userManagerFactory();
+
                     var currentUser = await userManager.FindByNameAsync(currentUserName);
 
                     result = currentUser
