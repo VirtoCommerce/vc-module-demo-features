@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -39,6 +40,7 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer;
+using VirtoCommerce.DemoSolutionFeaturesModule.Web.HangfireFilters;
 using VirtoCommerce.DemoSolutionFeaturesModule.Web.Infrastructure;
 using VirtoCommerce.NotificationsModule.Core.Services;
 using VirtoCommerce.NotificationsModule.Core.Types;
@@ -108,6 +110,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddTransient<ICatalogRepository, DemoCatalogRepository>();
             serviceCollection.AddTransient<IDemoProductPartService, DemoProductPartService>();
             serviceCollection.AddTransient<IDemoProductPartSearchService, DemoProductPartSearchService>();
+
+            serviceCollection.AddScoped<IDemoUserNameResolver, DemoUserNameResolver>();
+            serviceCollection.AddScoped<IUserNameResolver, DemoUserNameResolver>();
 
             serviceCollection.AddTransient<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>();
             serviceCollection.AddTransient<LogChangesProductPartsHandler>();
@@ -244,6 +249,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
                 dbContext.Database.EnsureCreated();
                 dbContext.Database.Migrate();
             }
+
+            // Add Hangfire filters/middlewares
+            var demoUserNameResolver = serviceScope.ServiceProvider.GetRequiredService<IDemoUserNameResolver>();
+            GlobalJobFilters.Filters.Add(new DemoHangfireUserContextFilter(demoUserNameResolver));
         }
 
         public void Uninstall()
