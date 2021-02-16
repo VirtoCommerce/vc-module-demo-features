@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -115,10 +114,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddScoped<IDemoUserNameResolver, DemoUserNameResolver>();
             serviceCollection.AddScoped<IUserNameResolver, DemoUserNameResolver>();
             serviceCollection.AddSingleton<Func<IUserNameResolver>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IUserNameResolver>());
-
-            serviceCollection.AddSingleton<Func<IUserClaimsPrincipalFactory<ApplicationUser>>>(provider =>
-                () => provider.CreateScope().ServiceProvider
-                    .GetRequiredService<IUserClaimsPrincipalFactory<ApplicationUser>>());
 
             serviceCollection.AddTransient<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>();
             serviceCollection.AddTransient<LogChangesProductPartsHandler>();
