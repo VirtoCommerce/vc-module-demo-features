@@ -21,7 +21,6 @@ using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.CustomerModule.Data.Search.Indexing;
-using demoFeaturesCore = VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
@@ -58,6 +57,7 @@ using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.SearchModule.Core.Model;
 using CartLineItem = VirtoCommerce.CartModule.Core.Model.LineItem;
 using CartLineItemEntity = VirtoCommerce.CartModule.Data.Model.LineItemEntity;
+using demoFeaturesCore = VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using OrderLineItem = VirtoCommerce.OrdersModule.Core.Model.LineItem;
 using OrderLineItemEntity = VirtoCommerce.OrdersModule.Data.Model.LineItemEntity;
 
@@ -196,15 +196,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             inProcessBus.RegisterHandler<DemoProductPartChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesProductPartsHandler>().Handle(message));
             inProcessBus.RegisterHandler<DemoTaggedMemberChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesTaggedMembersHandler>().Handle(message));
 
-            var featureManager = appBuilder.ApplicationServices.GetRequiredService<IFeatureManager>();
-
-            var userGroupsInheritanceFeatureIsEnabled = featureManager.IsEnabledAsync(demoFeaturesCore.ModuleConstants.Features.UserGroupsInheritance).GetAwaiter().GetResult();
-
             #region Search
 
             var documentIndexingConfigurations = appBuilder.ApplicationServices.GetRequiredService<IEnumerable<IndexDocumentConfiguration>>();
 
-            if (userGroupsInheritanceFeatureIsEnabled && documentIndexingConfigurations != null)
+            if (documentIndexingConfigurations != null)
             {
                 //Member indexing
                 var taggedItemProductDocumentSource = new IndexDocumentSource
