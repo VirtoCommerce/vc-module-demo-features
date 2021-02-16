@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
-using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer;
 using VirtoCommerce.Platform.Core.ChangeLog;
 using VirtoCommerce.SearchModule.Core.Model;
 using VirtoCommerce.SearchModule.Core.Services;
@@ -12,7 +12,7 @@ namespace VirtoCommerce.CatalogPersonalizationModule.Data.Search.Indexing
 {
     public class DemoTaggedMemberIndexChangesProvider : IIndexDocumentChangesProvider
     {
-        public const string ChangeLogObjectType = nameof(DemoTaggedMemberEntity);
+        public const string ChangeLogObjectType = nameof(DemoTaggedMember);
 
         private readonly IDemoTaggedMemberSearchService _taggedItemSearchService;
         private readonly IChangeLogSearchService _changeLogSearchService;
