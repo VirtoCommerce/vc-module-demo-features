@@ -30,7 +30,7 @@ angular.module(moduleName, [])
                 }, 'customerOrderDetailWidgets');
             });
 
-            featureManager.isFeatureEnabled('UserGroupsInheritance').then(() => {
+            featureManagerSubscriber.onLoginStatusChanged('UserGroupsInheritance', () => {
                 widgetService.registerWidget({
                     controller: 'virtoCommerce.DemoSolutionFeaturesModule.userGroupsWidgetController',
                     template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/widgets/userGroupsWidget.tpl.html',
