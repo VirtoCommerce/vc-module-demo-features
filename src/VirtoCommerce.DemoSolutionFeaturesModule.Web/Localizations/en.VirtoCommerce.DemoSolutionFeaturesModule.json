@@ -88,6 +88,31 @@
         "labels": {
           "tax": "Total tax"
         }
+      },
+      "user-groups-list": {
+        "labels": {
+          "assigned-groups": "Assigned user groups",
+          "no-assigned": "No user groups assigned"
+        },
+        "title": "User Groups",
+        "subtitle": "Define groups"
+      },
+      "assign-user-group": {
+        "labels": {
+          "select-groups": "Select groups to assign",
+          "available-groups": "Available groups",
+          "add-btn": "Add"
+        },
+        "title": "User Groups",
+        "subtitle": "Add group"
+      },
+      "all-user-groups-list": {
+        "title": {
+          "assigned": "Assigned user groups",
+          "inherited": "Inherited user groups"
+        },
+        "back": "Back",
+        "count": "Count:"
       }
     },
     "dialogs": {
@@ -106,6 +131,13 @@
       "add-products-to-part": {
         "title": "Save changes",
         "message": "Part products have been modified. Do you want to save changes?"
+      }
+    },
+    "widgets": {
+      "customer-user-groups": {
+        "title": "User Groups",
+        "assigned": "Assigned",
+        "inherited": "Inherited"
       }
     }
   },

@@ -161,3 +161,71 @@
 .bg-none {
     background: none !important;
 }
+
+/* UserGroups feature */
+
+.user-group-widget-item {
+    margin-bottom: 10px;
+}
+
+.user-group-widget-item span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+
+.font-size-14 {
+    font-size: 14px;
+}
+
+.search-input {
+    width: calc(100% - 80px) !important;
+}
+
+.clear-keyword-button {
+    position: relative !important;
+    right: 45px !important;
+}
+
+.show-all-groups-btn {
+    padding: 17px !important;
+    font-size: 13px;
+}
+
+.assign-tag-btn {
+    height: 34px !important;
+    display: block;
+}
+
+.fieldset {
+    margin-top: 12px;
+}
+
+.fieldset legend {
+    border-bottom: 0;
+}
+
+table.stripped-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.font-weight-normal {
+    font-weight: normal !important;
+}
+
+.table-group-item {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    background: none !important;
+}
+
+.table-group-item .bold {
+    font-weight: bold !important;
+}

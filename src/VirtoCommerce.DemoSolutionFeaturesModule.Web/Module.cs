@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,22 +16,31 @@ using VirtoCommerce.CatalogModule.Core.Events;
 using VirtoCommerce.CatalogModule.Core.Model;
 using VirtoCommerce.CatalogModule.Data.Model;
 using VirtoCommerce.CatalogModule.Data.Repositories;
+using VirtoCommerce.CatalogPersonalizationModule.Data.Search.Indexing;
 using VirtoCommerce.CustomerModule.Core.Model;
+using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
-using VirtoCommerce.DemoSolutionFeaturesModule.Core;
+using VirtoCommerce.CustomerModule.Data.Search.Indexing;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Catalog;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Notifications;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Handlers;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer;
+using VirtoCommerce.DemoSolutionFeaturesModule.Web.HangfireFilters;
 using VirtoCommerce.DemoSolutionFeaturesModule.Web.Infrastructure;
 using VirtoCommerce.NotificationsModule.Core.Services;
 using VirtoCommerce.NotificationsModule.Core.Types;
@@ -45,8 +56,10 @@ using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
+using VirtoCommerce.SearchModule.Core.Model;
 using CartLineItem = VirtoCommerce.CartModule.Core.Model.LineItem;
 using CartLineItemEntity = VirtoCommerce.CartModule.Data.Model.LineItemEntity;
+using demoFeaturesCore = VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using OrderLineItem = VirtoCommerce.OrdersModule.Core.Model.LineItem;
 using OrderLineItemEntity = VirtoCommerce.OrdersModule.Data.Model.LineItemEntity;
 
@@ -72,6 +85,13 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             // customer
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
+            serviceCollection.AddTransient<IDemoTaggedMemberRepository, CustomerDemoRepository>();
+            serviceCollection.AddTransient<Func<IDemoTaggedMemberRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IDemoTaggedMemberRepository>());
+            serviceCollection.AddTransient<IDemoTaggedMemberService, DemoTaggedMemberService>();
+            serviceCollection.AddTransient<IDemoTaggedMemberSearchService, DemoTaggedMemberSearchService>();
+            serviceCollection.AddTransient<IMemberService, DemoMemberService>();
+            serviceCollection.AddTransient<LogChangesTaggedMembersHandler>();
+            serviceCollection.AddSingleton<DemoTaggedMemberIndexChangesProvider>();
 
             // cart
             serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
@@ -91,6 +111,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddTransient<IDemoProductPartService, DemoProductPartService>();
             serviceCollection.AddTransient<IDemoProductPartSearchService, DemoProductPartSearchService>();
 
+            serviceCollection.AddScoped<IDemoUserNameResolver, DemoUserNameResolver>();
+            serviceCollection.AddScoped<IUserNameResolver, DemoUserNameResolver>();
+            serviceCollection.AddSingleton<Func<IUserNameResolver>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IUserNameResolver>());
+
             serviceCollection.AddTransient<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>();
             serviceCollection.AddTransient<LogChangesProductPartsHandler>();
         }
@@ -108,6 +132,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             AbstractTypeFactory<Contact>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<Member>.OverrideType<Contact, ContactDemo>().MapToType<ContactDemoEntity>();
             AbstractTypeFactory<MemberEntity>.OverrideType<ContactEntity, ContactDemoEntity>();
+
+            AbstractTypeFactory<DemoTaggedMember>.RegisterType<DemoTaggedMember>().MapToType<DemoTaggedMemberEntity>();
+            AbstractTypeFactory<DemoTaggedMemberEntity>.RegisterType<DemoTaggedMemberEntity>();
 
             // cart
             AbstractTypeFactory<CartLineItem>.OverrideType<CartLineItem, DemoCartLineItem>().MapToType<DemoCartLineItemEntity>();
@@ -140,18 +167,18 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             // register settings
             var settingsRegistrar = appBuilder.ApplicationServices.GetRequiredService<ISettingsRegistrar>();
-            settingsRegistrar.RegisterSettings(ModuleConstants.Settings.General.AllSettings, ModuleInfo.Id);
+            settingsRegistrar.RegisterSettings(demoFeaturesCore.ModuleConstants.Settings.General.AllSettings, ModuleInfo.Id);
 
             // register invoicePaymentMethod
             var paymentMethodsRegistrar = appBuilder.ApplicationServices.GetRequiredService<IPaymentMethodsRegistrar>();
             paymentMethodsRegistrar.RegisterPaymentMethod<DemoInvoicePaymentMethod>();
-            settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.General.InvoicePaymentMethodSettings, nameof(DemoInvoicePaymentMethod));
+            settingsRegistrar.RegisterSettingsForType(demoFeaturesCore.ModuleConstants.Settings.General.InvoicePaymentMethodSettings, nameof(DemoInvoicePaymentMethod));
             paymentMethodsRegistrar.RegisterPaymentMethod<DemoCreditCardPaymentMethod>();
-            settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.General.CreditCardPaymentMethodSettings, nameof(DemoCreditCardPaymentMethod));
+            settingsRegistrar.RegisterSettingsForType(demoFeaturesCore.ModuleConstants.Settings.General.CreditCardPaymentMethodSettings, nameof(DemoCreditCardPaymentMethod));
 
             // register permissions
             var permissionsProvider = appBuilder.ApplicationServices.GetRequiredService<IPermissionsRegistrar>();
-            permissionsProvider.RegisterPermissions(ModuleConstants.Security.Permissions.AllPermissions.Select(x =>
+            permissionsProvider.RegisterPermissions(demoFeaturesCore.ModuleConstants.Security.Permissions.AllPermissions.Select(x =>
                 new Permission
                 {
                     GroupName = "VirtoCommerceDemoSolutionFeaturesModule",
@@ -167,11 +194,34 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             var demoFeaturesSection = configuration.GetSection("DemoFeatures");
             featureStorage.AddHighPriorityFeatureDefinition(demoFeaturesSection);
 
-            featureStorage.TryAddFeature("ConfigurableProduct", true);
+            featureStorage.TryAddFeature(demoFeaturesCore.ModuleConstants.Features.ConfigurableProduct, true);
+            featureStorage.TryAddFeature(demoFeaturesCore.ModuleConstants.Features.UserGroupsInheritance, "Developers");
 
             var inProcessBus = appBuilder.ApplicationServices.GetService<IHandlerRegistrar>();
             inProcessBus.RegisterHandler<ProductChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>().Handle(message));
             inProcessBus.RegisterHandler<DemoProductPartChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesProductPartsHandler>().Handle(message));
+            inProcessBus.RegisterHandler<DemoTaggedMemberChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesTaggedMembersHandler>().Handle(message));
+
+            #region Search
+
+            var documentIndexingConfigurations = appBuilder.ApplicationServices.GetRequiredService<IEnumerable<IndexDocumentConfiguration>>();
+
+            if (documentIndexingConfigurations != null)
+            {
+                //Member indexing
+                var taggedItemProductDocumentSource = new IndexDocumentSource
+                {
+                    ChangesProvider = appBuilder.ApplicationServices.GetRequiredService<DemoTaggedMemberIndexChangesProvider>(),
+                    DocumentBuilder = appBuilder.ApplicationServices.GetRequiredService<MemberDocumentBuilder>()
+                };
+                foreach (var documentConfiguration in documentIndexingConfigurations.Where(c => c.DocumentType == KnownDocumentTypes.Member))
+                {
+                    documentConfiguration.RelatedSources ??= new List<IndexDocumentSource>();
+                    documentConfiguration.RelatedSources.Add(taggedItemProductDocumentSource);
+                }
+            }
+
+            #endregion
 
             // Ensure that any pending migrations are applied
             using var serviceScope = appBuilder.ApplicationServices.CreateScope();
@@ -200,6 +250,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
                 dbContext.Database.EnsureCreated();
                 dbContext.Database.Migrate();
             }
+
+            // Add Hangfire filters/middlewares
+            var demoUserNameResolver = serviceScope.ServiceProvider.GetRequiredService<IDemoUserNameResolver>();
+            GlobalJobFilters.Filters.Add(new DemoHangfireUserContextFilter(demoUserNameResolver));
         }
 
         public void Uninstall()

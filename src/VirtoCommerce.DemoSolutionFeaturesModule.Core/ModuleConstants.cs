@@ -7,6 +7,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
     {
         public const string ConfigurableProductType = "Configurable";
 
+        public static class Features
+        {
+            public const string ConfigurableProduct = "ConfigurableProduct";
+            public const string UserGroupsInheritance = "UserGroupsInheritance";
+        }
+
         public static class Security
         {
             public static class Permissions
