@@ -22,6 +22,7 @@ angular.module(moduleName)
                 (_, authContext) => {
                     if (!authContext.isAuthenticated) {
                         $window.location.reload();
+                        return;
                     }
 
                     for (const [featureName, callbacks] of Object.entries(result.callbacksGroupedByFeatureName)) {

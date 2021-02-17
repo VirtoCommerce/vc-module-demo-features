@@ -8,8 +8,8 @@ if (AppDependencies !== undefined) {
 angular.module(moduleName, [])
     .run(['virtoCommerce.catalogModule.itemTypesResolverService', 'platformWebApp.widgetService', 'virtoCommerce.demoFeatures.featureManagerSubscriber',
         function (itemTypesResolverService, widgetService, featureManagerSubscriber) {
+            const configurableProductType = 'Configurable';
             featureManagerSubscriber.onLoginStatusChanged('ConfigurableProduct', () => {
-                const configurableProductType = 'Configurable';
                 itemTypesResolverService.registerType({
                     itemType: 'demoSolutionFeaturesModule.blades.categories-items-add.menu.configurable-product.title',
                     description: 'demoSolutionFeaturesModule.blades.categories-items-add.menu.configurable-product.description',
