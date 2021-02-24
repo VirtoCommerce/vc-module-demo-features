@@ -9,7 +9,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             const settingKey = 'Customer.MemberGroups';
 
             settings.getValues({ id: settingKey }, tagsDictionary => {
-                blade.tagsDictionary = tagsDictionary;
+                blade.tagsDictionary = _.difference(tagsDictionary, blade.currentTags);
                 blade.currentEntity = {};
                 blade.currentEntity.tags = blade.currentEntity.tags || [];
                 blade.origEntity = angular.copy(blade.currentEntity);
@@ -42,8 +42,8 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                         doCloseBlade();
                         blade.isLoading = true;
                         settings.getValues({ id: settingKey }, tagsDictionary => {
-                            blade.tagsDictionary = tagsDictionary;
-                            blade.availableTags = _.filter(tagsDictionary, tag => {
+                            blade.tagsDictionary = _.difference(tagsDictionary, blade.currentTags);
+                            blade.availableTags = _.filter(blade.tagsDictionary, tag => {
                                 return _.all(blade.currentEntity.tags, curr => curr !== tag);
                             });
                             blade.isLoading = false;
