@@ -21,6 +21,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                                 id: 'assignUserGroup',
                                 title: 'demoSolutionFeaturesModule.blades.assign-user-group.title',
                                 subtitle: 'demoSolutionFeaturesModule.blades.assign-user-group.subtitle',
+                                currentTags: blade.currentEntity.tags,
                                 controller: 'virtoCommerce.DemoSolutionFeaturesModule.assignUserGroupController',
                                 template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/assign-user-group.tpl.html',
                                 onGroupsAdded: (entity) => {
