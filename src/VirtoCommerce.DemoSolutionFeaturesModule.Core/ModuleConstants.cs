@@ -6,6 +6,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
     public static class ModuleConstants
     {
         public const string ConfigurableProductType = "Configurable";
+        public const int MaxRecursionDeep = 10;
 
         public static class Features
         {

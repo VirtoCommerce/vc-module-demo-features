@@ -19,6 +19,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
     {
         private readonly IDemoTaggedMemberService _taggedMemberService;
         private readonly IFeatureManager _featureManager;
+
         public DemoMemberService(Func<IMemberRepository> repositoryFactory, IUserSearchService userSearchService, IEventPublisher eventPublisher, IPlatformMemoryCache platformMemoryCache, IDemoTaggedMemberService taggedMemberService, IFeatureManager featureManager)
             : base(repositoryFactory, userSearchService, eventPublisher, platformMemoryCache)
         {
@@ -61,5 +62,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
             await base.SaveChangesAsync(members);
         }
+
     }
 }

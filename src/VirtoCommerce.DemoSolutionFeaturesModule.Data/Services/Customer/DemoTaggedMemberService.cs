@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
-using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Data.Caching;
-using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
@@ -21,21 +19,20 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 {
     public class DemoTaggedMemberService : IDemoTaggedMemberService
     {
-
         private readonly Func<IDemoTaggedMemberRepository> _taggedMemberRepositoryFactory;
         private readonly IPlatformMemoryCache _platformMemoryCache;
         private readonly IEventPublisher _eventPublisher;
-        private readonly Func<ICustomerRepository> _customerRepositoryFactory;
+        private readonly IDemoMemberInheritanceEvaluator _memberInheritanceEvaluator;
 
         public DemoTaggedMemberService(Func<IDemoTaggedMemberRepository> taggedMemberRepositoryFactory,
-            Func<ICustomerRepository> customerRepositoryFactory,
             IPlatformMemoryCache platformMemoryCache,
-            IEventPublisher eventPublisher)
+            IEventPublisher eventPublisher,
+            IDemoMemberInheritanceEvaluator memberInheritanceEvaluator)
         {
             _taggedMemberRepositoryFactory = taggedMemberRepositoryFactory;
             _platformMemoryCache = platformMemoryCache;
             _eventPublisher = eventPublisher;
-            _customerRepositoryFactory = customerRepositoryFactory;
+            _memberInheritanceEvaluator = memberInheritanceEvaluator;
         }
 
         public async Task DeleteAsync(string[] memberIds)
@@ -69,22 +66,36 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
             var result = await _platformMemoryCache.GetOrCreateExclusiveAsync(cacheKey, async (cacheEntry) =>
             {
-                var taggedMembers = Array.Empty<DemoTaggedMember>();
+                var taggedMembers = new List<DemoTaggedMember>();
 
                 if (!memberIds.IsNullOrEmpty())
                 {
                     var idsForCacheToken = new List<string>();
                     idsForCacheToken.AddRange(memberIds);
 
-                    taggedMembers = await GetTaggedMembersByIdsWithoutInheritedAsync(memberIds);
+                    taggedMembers.AddRange(await GetTaggedMembersByIdsWithoutInheritedAsync(memberIds));
 
-                    foreach (var taggedMember in taggedMembers)
+                    foreach (var memberId in memberIds)
                     {
-                        var allAncestorsIds = (await GetAllAncestorIdsForMemberAsync(taggedMember.MemberId)).ToArray();
+                        var allAncestorsIds = (await _memberInheritanceEvaluator.GetAllAncestorIdsForMemberAsync(memberId)).ToArray();
                         var ancestorsTaggedMembers = await GetTaggedMembersByIdsWithoutInheritedAsync(allAncestorsIds);
                         var allAncestorsTags = ancestorsTaggedMembers.SelectMany(x => x.Tags).Distinct().ToArray();
                         Array.Sort(allAncestorsTags);
-                        taggedMember.InheritedTags = allAncestorsTags;
+
+                        var taggedMember = taggedMembers.FirstOrDefault(x => x.Id == memberId);
+
+                        if (taggedMember != null)
+                        {
+                            taggedMember.InheritedTags = allAncestorsTags;
+                        }
+                        else if (!allAncestorsTags.IsNullOrEmpty())
+                        {
+                            taggedMember = AbstractTypeFactory<DemoTaggedMember>.TryCreateInstance();
+                            taggedMember.Id = memberId;
+                            taggedMember.Tags = Array.Empty<string>();
+                            taggedMember.InheritedTags = allAncestorsTags;
+                            taggedMembers.Add(taggedMember);
+                        }
 
                         idsForCacheToken.AddRange(allAncestorsIds);
                     }
@@ -92,7 +103,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
                     cacheEntry.AddExpirationToken(DemoTaggedMemberCacheRegion.CreateChangeToken(idsForCacheToken.Distinct().ToArray()));
                 }
 
-                return taggedMembers;
+                return taggedMembers.ToArray();
             });
             return result;
         }
@@ -107,34 +118,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
             return taggedMembers;
         }
 
-
-        protected virtual async Task<IEnumerable<string>> GetAllAncestorIdsForMemberAsync(string memberId)
-        {
-            var result = new List<string>();
-            using var customerRepository = _customerRepositoryFactory();
-            var member = (await customerRepository.GetMembersByIdsAsync(new[] { memberId })).FirstOrDefault();
-
-            if (member != null)
-            {
-                var ancestorIds = member.MemberRelations
-                    .Where(x => x.RelationType.EqualsInvariant(RelationType.Membership.ToString()))
-                    .Select(x => x.AncestorId).ToArray();
-
-                if (!ancestorIds.IsNullOrEmpty())
-                {
-                    result.AddRange(ancestorIds);
-
-                    foreach (var ancestorId in ancestorIds)
-                    {
-                        var ancestorsOfAncestorIds = await GetAllAncestorIdsForMemberAsync(ancestorId);
-                        result.AddRange(ancestorsOfAncestorIds);
-                    }
-                }
-            }
-
-            return result.Distinct();
-        }
-
         public async Task SaveChangesAsync(DemoTaggedMember[] taggedMembers)
         {
             ValidateTaggedMembersArgument(taggedMembers);
@@ -146,6 +129,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
             var ids = taggedMembers.Select(x => x.Id).Where(x => x != null).Distinct().ToArray();
             var alreadyExistEntities = await taggedMemberRepository.GetTaggedMembersByIdsAsync(ids);
+
             foreach (var taggedMember in taggedMembers)
             {
                 var sourceEntity = AbstractTypeFactory<DemoTaggedMemberEntity>.TryCreateInstance().FromModel(taggedMember, pkMap);
@@ -181,7 +165,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
                     "The argument should have no item with the 'Id' field is null.");
             }
         }
-
 
         protected virtual void ClearCache(DemoTaggedMember[] taggedMembers)
         {

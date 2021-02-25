@@ -92,6 +92,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddTransient<IMemberService, DemoMemberService>();
             serviceCollection.AddTransient<LogChangesTaggedMembersHandler>();
             serviceCollection.AddSingleton<DemoTaggedMemberIndexChangesProvider>();
+            serviceCollection.AddTransient<IDemoMemberInheritanceEvaluator, DemoMemberInheritanceEvaluator>();
 
             // cart
             serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
