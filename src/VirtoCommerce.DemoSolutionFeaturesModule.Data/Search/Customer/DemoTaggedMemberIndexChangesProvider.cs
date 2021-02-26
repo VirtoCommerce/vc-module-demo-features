@@ -12,7 +12,6 @@ namespace VirtoCommerce.CatalogPersonalizationModule.Data.Search.Indexing
     public class DemoTaggedMemberIndexChangesProvider : IIndexDocumentChangesProvider
     {
         public const string ChangeLogObjectType = nameof(DemoTaggedMember);
-
         private readonly IChangeLogSearchService _changeLogSearchService;
 
         public DemoTaggedMemberIndexChangesProvider(IChangeLogSearchService changeLogSearchService)

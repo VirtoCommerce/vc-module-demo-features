@@ -21,7 +21,6 @@ using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
-using VirtoCommerce.CustomerModule.Data.Search.Indexing;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
@@ -37,6 +36,7 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories.Customer;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Search.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer;
@@ -92,6 +92,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddTransient<IMemberService, DemoMemberService>();
             serviceCollection.AddTransient<LogChangesTaggedMembersHandler>();
             serviceCollection.AddSingleton<DemoTaggedMemberIndexChangesProvider>();
+            serviceCollection.AddSingleton<DemoTaggedMemberDocumentBuilder>();
             serviceCollection.AddTransient<IDemoMemberInheritanceEvaluator, DemoMemberInheritanceEvaluator>();
 
             // cart
@@ -213,7 +214,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
                 var taggedItemProductDocumentSource = new IndexDocumentSource
                 {
                     ChangesProvider = appBuilder.ApplicationServices.GetRequiredService<DemoTaggedMemberIndexChangesProvider>(),
-                    DocumentBuilder = appBuilder.ApplicationServices.GetRequiredService<MemberDocumentBuilder>()
+                    DocumentBuilder = appBuilder.ApplicationServices.GetRequiredService<DemoTaggedMemberDocumentBuilder>()
                 };
                 foreach (var documentConfiguration in documentIndexingConfigurations.Where(c => c.DocumentType == KnownDocumentTypes.Member))
                 {
