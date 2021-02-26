@@ -8,6 +8,11 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 function(result) {
                     blade.currentEntity = result || {};
                     blade.currentEntity.tags = blade.currentEntity.tags || [];
+
+                    if (blade.currentEntity.inheritedTags && blade.currentEntity.inheritedTags.length) {
+                        blade.currentEntity.inheritedTags = _.map(blade.currentEntity.inheritedTags, tag => { return { value: tag }; });
+                    }
+
                     blade.isLoading = false;
             });
 

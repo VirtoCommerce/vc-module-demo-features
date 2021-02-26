@@ -18,7 +18,7 @@
     <div class="blade-inner">
         <div class="inner-block">
             <div class="table-wrapper">
-                <table class="table stripped-table" aria-label="Assigned user groups">
+                <table ng-show="blade.type === 'assigned'" class="table stripped-table" aria-label="Assigned user groups">
                     <tbody>
                         <tr class="table-item" ng-repeat="data in blade.assignedTags | orderBy:'value' | filter: blade.searchKeyword as filtered">
                             <td class="table-col checkbox">
@@ -27,14 +27,26 @@
                                     <span class="check"></span>
                                 </label>
                             </td>
-                            <th scope="row" class="table-col table-group-item" ng-click='blade.selectNode(data)'>
+                            <th scope="row" class="table-col table-group-item">
                                 <span class="font-weight-normal" ng-class="{'bold': data.$selected}">{{data.value}}</span>
                             </th>
                         </tr>
                     </tbody>
                 </table>
+                <table ng-show="blade.type === 'inherited'" class="table stripped-table" aria-label="Inherited user groups">
+                    <tbody>
+                        <tr class="table-item" ng-repeat="data in blade.currentEntity.inheritedTags | orderBy:'value' | filter: blade.searchKeyword as filtered">
+                            <td class="table-col checkbox">
+                                <i class="fa fa-building icon-blue" aria-hidden="true"></i>
+                            </td>
+                            <th scope="row" class="table-col table-group-item">
+                                <span class="font-weight-normal">{{data.value}}</span>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <p class="note" ng-if="!blade.assignedTags.length">{{ 'demoSolutionFeaturesModule.blades.user-groups-list.labels.no-assigned' | translate }}</p>
+            <p class="note" ng-if="blade.type === 'assigned' && !blade.assignedTags.length">{{ 'demoSolutionFeaturesModule.blades.user-groups-list.labels.no-assigned' | translate }}</p>
         </div>
     </div>
 </div>

@@ -12,15 +12,34 @@
                                     <span class="check"></span>
                                 </label>
                             </td>
-                            <th scope="row" class="table-col table-group-item" ng-click='blade.selectNode(data)'>
+                            <th scope="row" class="table-col table-group-item">
                                 <span class="font-weight-normal" ng-class="{'bold': data.$selected}">{{data.value}}</span>
                             </th>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <button class="btn show-all-groups-btn" ng-click="showAllGroups('assigned')" ng-if="blade.assignedTags.length > 6">All assigned groups</button>
+            <button class="btn show-all-groups-btn margin-bottom-20" ng-click="showAllGroups('assigned')" ng-if="blade.assignedTags.length > 6">{{ 'demoSolutionFeaturesModule.blades.user-groups-list.labels.all-assigned-btn' | translate }}</button>
             <p class="note" ng-if="!blade.assignedTags.length">{{ 'demoSolutionFeaturesModule.blades.user-groups-list.labels.no-assigned' | translate }}</p>
+
+            <div class="sub-t margin-bottom-20">{{ 'demoSolutionFeaturesModule.blades.user-groups-list.labels.inherited-groups' | translate }}</div>
+            <div ng-if="blade.currentEntity.inheritedTags.length" class="table-wrapper margin-bottom-20">
+                <table class="table stripped-table" aria-label="Inherited user groups">
+                    <tbody>
+                        <tr class="table-item" ng-repeat="data in blade.currentEntity.inheritedTags | orderBy:'value' | limitTo:6:0">
+                            <td class="table-col checkbox">
+                                <i class="fa fa-building icon-blue" aria-hidden="true"></i>
+                            </td>
+                            <th scope="row" class="table-col table-group-item">
+                                <span class="font-weight-normal">{{data.value}}</span>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn show-all-groups-btn" ng-click="showAllGroups('inherited')" ng-if="blade.currentEntity.inheritedTags.length > 6">{{ 'demoSolutionFeaturesModule.blades.user-groups-list.labels.all-inherited-btn' | translate }}</button>
+            <p class="note" ng-if="!blade.currentEntity.inheritedTags.length">{{ 'demoSolutionFeaturesModule.blades.user-groups-list.labels.no-inherited' | translate }}</p>
+
         </div>
     </div>
 </div>

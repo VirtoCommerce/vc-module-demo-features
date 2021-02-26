@@ -5,40 +5,42 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
             blade.title = blade.type === 'assigned' ? 'demoSolutionFeaturesModule.blades.all-user-groups-list.title.assigned' : 'demoSolutionFeaturesModule.blades.all-user-groups-list.title.inherited';
             blade.isLoading = false;
 
-            blade.toolbarCommands = [
-                {
-                    name: "platform.commands.add",
-                    icon: 'fa fa-plus',
-                    executeMethod: () => {
-                        bladeNavigationService.closeChildrenBlades(blade, () => {
-                            var newBlade = {
-                                id: 'assignUserGroup',
-                                title: 'demoSolutionFeaturesModule.blades.assign-user-group.title',
-                                subtitle: 'demoSolutionFeaturesModule.blades.assign-user-group.subtitle',
-                                currentTags: blade.currentEntity.tags,
-                                controller: 'virtoCommerce.DemoSolutionFeaturesModule.assignUserGroupController',
-                                template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/assign-user-group.tpl.html',
-                                onGroupsAdded: (entity) => {
-                                    const newTags = _.difference(entity.tags, blade.currentEntity.tags);
-                                    blade.currentEntity.tags = [...blade.currentEntity.tags, ...newTags];
-                                    bladeNavigationService.closeChildrenBlades(blade);
-                                    saveChanges();
-                                }
-                            };
-                            bladeNavigationService.showBlade(newBlade, blade);
-                        });
+            if (blade.type === 'assigned') {
+                blade.toolbarCommands = [
+                    {
+                        name: "platform.commands.add",
+                        icon: 'fa fa-plus',
+                        executeMethod: () => {
+                            bladeNavigationService.closeChildrenBlades(blade, () => {
+                                var newBlade = {
+                                    id: 'assignUserGroup',
+                                    title: 'demoSolutionFeaturesModule.blades.assign-user-group.title',
+                                    subtitle: 'demoSolutionFeaturesModule.blades.assign-user-group.subtitle',
+                                    controller: 'virtoCommerce.DemoSolutionFeaturesModule.assignUserGroupController',
+                                    template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/assign-user-group.tpl.html',
+                                    onGroupsAdded: (entity) => {
+                                        const newTags = _.difference(entity.tags, blade.currentEntity.tags);
+                                        blade.currentEntity.tags = [...blade.currentEntity.tags, ...newTags];
+                                        bladeNavigationService.closeChildrenBlades(blade);
+                                        saveChanges();
+                                    }
+                                };
+                                bladeNavigationService.showBlade(newBlade, blade);
+                            });
+                        },
+                        canExecuteMethod: () => true,
+                        permission: 'customer:update'
                     },
-                    canExecuteMethod: () => true,
-                    permission: 'customer:update'
-                },
-                {
-                    name: "platform.commands.delete",
-                    icon: 'fas fa-trash-alt',
-                    executeMethod: deleteChecked,
-                    canExecuteMethod: isItemsChecked,
-                    permission: 'customer:delete'
-                }
-            ];
+                    {
+                        name: "platform.commands.delete",
+                        icon: 'fas fa-trash-alt',
+                        executeMethod: deleteChecked,
+                        canExecuteMethod: isItemsChecked,
+                        permission: 'customer:delete'
+                    }
+                ];
+            }
+
 
             $scope.clearKeyword = () => {
                 blade.searchKeyword = '';

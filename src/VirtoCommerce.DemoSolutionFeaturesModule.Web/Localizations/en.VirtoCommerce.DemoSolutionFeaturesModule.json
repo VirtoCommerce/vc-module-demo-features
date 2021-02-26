@@ -92,7 +92,11 @@
       "user-groups-list": {
         "labels": {
           "assigned-groups": "Assigned user groups",
-          "no-assigned": "No user groups assigned"
+          "inherited-groups": "Inherited user groups",
+          "no-assigned": "No user groups assigned",
+          "no-inherited": "No user groups inherited",
+          "all-assigned-btn": "All assigned groups",
+          "all-inherited-btn": "All inherited groups"
         },
         "title": "User Groups",
         "subtitle": "Define groups"
