@@ -11,12 +11,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Search.Customer
 {
     public class DemoTaggedMemberDocumentBuilder : IIndexDocumentBuilder
     {
-        private readonly IDemoMemberInheritanceEvaluator _memberInheritanceEvaluator;
         private readonly IDemoTaggedMemberService _taggedMemberService;
 
-        public DemoTaggedMemberDocumentBuilder(IDemoTaggedMemberService taggedMemberService, IDemoMemberInheritanceEvaluator memberInheritanceEvaluator)
+        public DemoTaggedMemberDocumentBuilder(IDemoTaggedMemberService taggedMemberService)
         {
-            _memberInheritanceEvaluator = memberInheritanceEvaluator;
             _taggedMemberService = taggedMemberService;
         }
 
@@ -31,28 +29,10 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Search.Customer
                 var allMemberTags = taggedMember.Tags.Union(taggedMember.InheritedTags).OrderBy(x => x).ToArray();
                 var ancestorDocument = CreateDocument(taggedMember.MemberId, allMemberTags);
                 result.Add(ancestorDocument);
-
-                var descendantIds = await _memberInheritanceEvaluator.GetAllDescendantIdsForMemberAsync(taggedMember.MemberId);
-
-                if (!descendantIds.IsNullOrEmpty())
-                {
-                    var descendants = await _taggedMemberService.GetByIdsAsync(descendantIds);
-
-                    foreach (var descendant in descendants)
-                    {
-                        var allDescendantTags = descendant.Tags.Union(descendant.InheritedTags).OrderBy(x => x).ToArray();
-
-                        var descendantDocument = CreateDocument(descendant.MemberId, allDescendantTags);
-                        result.Add(descendantDocument);
-                    }
-                }
-
-
             }
 
             return result;
         }
-
 
         protected virtual IndexDocument CreateDocument(string id, string[] tags)
         {

@@ -1,7 +1,8 @@
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hangfire;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Customer;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
 using VirtoCommerce.Platform.Core.ChangeLog;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Events;
@@ -11,20 +12,39 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Handlers
     public class LogChangesTaggedMembersHandler : IEventHandler<DemoTaggedMemberChangedEvent>
     {
         private readonly IChangeLogService _changeLogService;
+        private readonly IDemoMemberInheritanceEvaluator _memberInheritanceEvaluator;
 
-        public LogChangesTaggedMembersHandler(IChangeLogService changeLogService)
+        public LogChangesTaggedMembersHandler(IChangeLogService changeLogService, IDemoMemberInheritanceEvaluator memberInheritanceEvaluator)
         {
             _changeLogService = changeLogService;
+            _memberInheritanceEvaluator = memberInheritanceEvaluator;
         }
 
-        public Task Handle(DemoTaggedMemberChangedEvent message)
+        public async Task Handle(DemoTaggedMemberChangedEvent message)
         {
-            var logOperations = message.ChangedEntries.Select(x => AbstractTypeFactory<OperationLog>.TryCreateInstance().FromChangedEntry(x))
-                .ToArray();
+            var logOperations = new List<OperationLog>();
 
-            BackgroundJob.Enqueue(() => LogEntityChangesInBackground(logOperations));
+            foreach (var changedEntry in message.ChangedEntries)
+            {
+                var logOperation = AbstractTypeFactory<OperationLog>.TryCreateInstance().FromChangedEntry(changedEntry);
+                logOperations.Add(logOperation);
 
-            return Task.CompletedTask;
+                var descendantIds = await _memberInheritanceEvaluator.GetAllDescendantIdsForMemberAsync(logOperation.ObjectId);
+
+                if (!descendantIds.IsNullOrEmpty())
+                {
+                    foreach (var descendantId in descendantIds)
+                    {
+                        var descendantLogOperation = (OperationLog)logOperation.Clone();
+                        descendantLogOperation.ObjectId = descendantId;
+                        descendantLogOperation.OperationType = EntryState.Modified;
+                        logOperations.Add(descendantLogOperation);
+                    }
+
+                }
+            }
+
+            BackgroundJob.Enqueue(() => LogEntityChangesInBackground(logOperations.ToArray()));
         }
 
         [DisableConcurrentExecution(10)]
