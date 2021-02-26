@@ -29,7 +29,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Search.Customer
             foreach (var taggedMember in taggedMembers)
             {
                 var allMemberTags = taggedMember.Tags.Union(taggedMember.InheritedTags).OrderBy(x => x).ToArray();
-                CreateDocument(taggedMember.MemberId, allMemberTags);
+                var ancestorDocument = CreateDocument(taggedMember.MemberId, allMemberTags);
+                result.Add(ancestorDocument);
 
                 var descendantIds = await _memberInheritanceEvaluator.GetAllDescendantIdsForMemberAsync(taggedMember.MemberId);
 
@@ -41,19 +42,14 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Search.Customer
                     {
                         var allDescendantTags = descendant.Tags.Union(descendant.InheritedTags).OrderBy(x => x).ToArray();
 
-                        CreateDocument(descendant.MemberId, allDescendantTags);
+                        var descendantDocument = CreateDocument(descendant.MemberId, allDescendantTags);
+                        result.Add(descendantDocument);
                     }
                 }
 
 
             }
 
-            //foreach (var keyValue in lookup)
-            //{
-            //    var tags = keyValue.Value.Select(x => x.Tag).Distinct().ToArray();
-            //    var document = CreateDocument(keyValue.Key, tags);
-            //    result.Add(document);
-            //}
             return result;
         }
 
@@ -61,19 +57,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Search.Customer
         protected virtual IndexDocument CreateDocument(string id, string[] tags)
         {
             var document = new IndexDocument(id);
-
-
             document.AddFilterableValues("Groups", tags);
-
-            //if (tags.IsNullOrEmpty())
-            //{
-            //    tags = new[] { Constants.UserGroupsAnyValue };
-            //}
-            //foreach (var tag in tags)
-            //{
-            //    document.Add(new IndexDocumentField("Groups", tag) { IsRetrievable = true, IsFilterable = true, IsCollection = true });
-            //}
-
             return document;
         }
     }

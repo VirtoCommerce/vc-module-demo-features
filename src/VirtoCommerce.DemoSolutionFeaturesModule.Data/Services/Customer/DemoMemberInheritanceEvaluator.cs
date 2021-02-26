@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
@@ -29,25 +30,25 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
             var result = new List<string>();
             using var customerRepository = _memberRepositoryFactory();
-            var member = (await customerRepository.GetMembersByIdsAsync(new[] { memberId })).FirstOrDefault();
+            var relationEntities = await customerRepository.MemberRelations.Where(x =>
+                    x.DescendantId == memberId)
+                .ToArrayAsync();
 
-            if (member != null)
+            var ancestorIds = relationEntities
+                .Where(x => x.RelationType.EqualsInvariant(RelationType.Membership.ToString()))
+                .Select(x => x.AncestorId).ToArray();
+
+            if (!ancestorIds.IsNullOrEmpty())
             {
-                var ancestorIds = member.MemberRelations
-                    .Where(x => x.RelationType.EqualsInvariant(RelationType.Membership.ToString()))
-                    .Select(x => x.AncestorId).ToArray();
+                result.AddRange(ancestorIds);
 
-                if (!ancestorIds.IsNullOrEmpty())
+                foreach (var ancestorId in ancestorIds)
                 {
-                    result.AddRange(ancestorIds);
-
-                    foreach (var ancestorId in ancestorIds)
-                    {
-                        var ancestorsOfAncestorIds = await GetAllAncestorIdsForMemberAsync(ancestorId, callCounter);
-                        result.AddRange(ancestorsOfAncestorIds);
-                    }
+                    var ancestorsOfAncestorIds = await GetAllAncestorIdsForMemberAsync(ancestorId, callCounter);
+                    result.AddRange(ancestorsOfAncestorIds);
                 }
             }
+
 
             return result.Distinct().ToArray();
         }
@@ -64,23 +65,23 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
             var result = new List<string>();
             using var customerRepository = _memberRepositoryFactory();
-            var member = (await customerRepository.GetMembersByIdsAsync(new[] { memberId })).FirstOrDefault();
 
-            if (member != null)
+            var relationEntities = await customerRepository.MemberRelations.Where(x =>
+                    x.AncestorId == memberId)
+                .ToArrayAsync();
+
+            var descendantIds = relationEntities
+                .Where(x => x.RelationType.EqualsInvariant(RelationType.Membership.ToString()))
+                .Select(x => x.DescendantId).ToArray();
+
+            if (!descendantIds.IsNullOrEmpty())
             {
-                var descendantIds = member.MemberRelations
-                    .Where(x => x.RelationType.EqualsInvariant(RelationType.Membership.ToString()))
-                    .Select(x => x.DescendantId).ToArray();
+                result.AddRange(descendantIds);
 
-                if (!descendantIds.IsNullOrEmpty())
+                foreach (var ancestorId in descendantIds)
                 {
-                    result.AddRange(descendantIds);
-
-                    foreach (var ancestorId in descendantIds)
-                    {
-                        var descendantsOfDescendantIds = await GetAllDescendantIdsForMemberAsync(ancestorId, callCounter);
-                        result.AddRange(descendantsOfDescendantIds);
-                    }
+                    var descendantsOfDescendantIds = await GetAllDescendantIdsForMemberAsync(ancestorId, callCounter);
+                    result.AddRange(descendantsOfDescendantIds);
                 }
             }
 
