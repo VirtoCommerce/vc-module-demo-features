@@ -53,7 +53,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
             return result.Distinct().ToArray();
         }
 
-
         public virtual async Task<string[]> GetAllDescendantIdsForMemberAsync(string memberId, int callCounter = 0)
         {
             callCounter++;
