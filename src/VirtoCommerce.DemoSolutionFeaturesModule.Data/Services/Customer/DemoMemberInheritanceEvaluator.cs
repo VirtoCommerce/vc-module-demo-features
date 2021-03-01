@@ -5,18 +5,23 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
+using VirtoCommerce.DemoSolutionFeaturesModule.Core;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Core.Settings;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 {
     public class DemoMemberInheritanceEvaluator : IDemoMemberInheritanceEvaluator
     {
         private readonly Func<IMemberRepository> _memberRepositoryFactory;
+        private readonly int _maxRecursionDeep;
 
-        public DemoMemberInheritanceEvaluator(Func<IMemberRepository> memberRepositoryFactory)
+        public DemoMemberInheritanceEvaluator(Func<IMemberRepository> memberRepositoryFactory, ISettingsManager settingsManager)
         {
             _memberRepositoryFactory = memberRepositoryFactory;
+            _maxRecursionDeep = settingsManager.GetValue(ModuleConstants.Settings.General.DemoMaxRecursionDeep.Name,
+                (int)ModuleConstants.Settings.General.DemoMaxRecursionDeep.DefaultValue);
         }
 
         public virtual async Task<string[]> GetAllAncestorIdsForMemberAsync(string memberId)
@@ -28,7 +33,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
         {
             callCounter++;
 
-            if (callCounter > Core.ModuleConstants.MaxRecursionDeep)
+            if (callCounter > _maxRecursionDeep)
             {
                 return Array.Empty<string>();
             }
@@ -67,7 +72,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
         {
             callCounter++;
 
-            if (callCounter > Core.ModuleConstants.MaxRecursionDeep)
+            if (callCounter > _maxRecursionDeep)
             {
                 return Array.Empty<string>();
             }

@@ -173,6 +173,10 @@
           "title": "Logo url",
           "description": "Payment method logo url"
         }
+      },
+      "DemoMaxRecursionDeep": {
+        "title": "Maximum number of recursive method calls",
+        "description": "Maximum number of recursive method calls"
       }
     }
   },
