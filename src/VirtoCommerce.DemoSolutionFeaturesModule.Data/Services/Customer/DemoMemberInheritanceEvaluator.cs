@@ -19,7 +19,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
             _memberRepositoryFactory = memberRepositoryFactory;
         }
 
-        public virtual async Task<string[]> GetAllAncestorIdsForMemberAsync(string memberId, int callCounter = 0)
+        public virtual async Task<string[]> GetAllAncestorIdsForMemberAsync(string memberId)
+        {
+            return await InnerGetAllAncestorIdsForMemberAsync(memberId);
+        }
+
+        private async Task<string[]> InnerGetAllAncestorIdsForMemberAsync(string memberId, int callCounter = 0)
         {
             callCounter++;
 
@@ -44,7 +49,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
                 foreach (var ancestorId in ancestorIds)
                 {
-                    var ancestorsOfAncestorIds = await GetAllAncestorIdsForMemberAsync(ancestorId, callCounter);
+                    var ancestorsOfAncestorIds = await InnerGetAllAncestorIdsForMemberAsync(ancestorId, callCounter);
                     result.AddRange(ancestorsOfAncestorIds);
                 }
             }
@@ -53,7 +58,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
             return result.Distinct().ToArray();
         }
 
-        public virtual async Task<string[]> GetAllDescendantIdsForMemberAsync(string memberId, int callCounter = 0)
+        public virtual async Task<string[]> GetAllDescendantIdsForMemberAsync(string memberId)
+        {
+            return await InnerGetAllDescendantIdsForMemberAsync(memberId);
+        }
+
+        public virtual async Task<string[]> InnerGetAllDescendantIdsForMemberAsync(string memberId, int callCounter = 0)
         {
             callCounter++;
 
@@ -79,7 +89,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
                 foreach (var ancestorId in descendantIds)
                 {
-                    var descendantsOfDescendantIds = await GetAllDescendantIdsForMemberAsync(ancestorId, callCounter);
+                    var descendantsOfDescendantIds = await InnerGetAllDescendantIdsForMemberAsync(ancestorId, callCounter);
                     result.AddRange(descendantsOfDescendantIds);
                 }
             }
