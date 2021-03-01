@@ -11,7 +11,7 @@
                 <i class="btn-ico fa fa-times" aria-hidden="true" title="Clear" ng-click="clearKeyword()"></i>
             </button>
         </div>
-        <p class="form-count">{{'demoSolutionFeaturesModule.blades.all-user-groups-list.count' | translate}} <span class="count" ng-bind="filtered.length"></span></p>
+        <p class="form-count">{{'demoSolutionFeaturesModule.blades.all-user-groups-list.count' | translate}} <span class="count" ng-show="blade.type === 'assigned'" ng-bind="assignedTagsFiltered.length"></span><span class="count" ng-show="blade.type === 'inherited'" ng-bind="inheritedTagsFiltered.length"></span></p>
     </div>
 </div>
 <div class="blade-content">
@@ -20,7 +20,7 @@
             <div class="table-wrapper">
                 <table ng-show="blade.type === 'assigned'" class="table stripped-table" aria-label="Assigned user groups">
                     <tbody>
-                        <tr class="table-item" ng-repeat="data in blade.assignedTags | orderBy:'value' | filter: blade.searchKeyword as filtered">
+                        <tr class="table-item" ng-repeat="data in blade.assignedTags | orderBy:'value' | filter: blade.searchKeyword as assignedTagsFiltered">
                             <td class="table-col checkbox">
                                 <label class="form-control __checkbox">
                                     <input type="checkbox" ng-model="data.$selected">
@@ -35,7 +35,7 @@
                 </table>
                 <table ng-show="blade.type === 'inherited'" class="table stripped-table" aria-label="Inherited user groups">
                     <tbody>
-                        <tr class="table-item" ng-repeat="data in blade.currentEntity.inheritedTags | orderBy:'value' | filter: blade.searchKeyword as filtered">
+                        <tr class="table-item" ng-repeat="data in blade.inheritedTags | orderBy:'value' | filter: blade.searchKeyword as inheritedTagsFiltered">
                             <td class="table-col checkbox">
                                 <i class="fa fa-building icon-blue" aria-hidden="true"></i>
                             </td>

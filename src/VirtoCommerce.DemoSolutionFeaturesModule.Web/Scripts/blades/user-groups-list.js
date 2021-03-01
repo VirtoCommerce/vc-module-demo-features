@@ -10,7 +10,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                     blade.currentEntity.tags = blade.currentEntity.tags || [];
 
                     if (blade.currentEntity.inheritedTags && blade.currentEntity.inheritedTags.length) {
-                        blade.currentEntity.inheritedTags = _.map(blade.currentEntity.inheritedTags, tag => { return { value: tag }; });
+                        blade.inheritedTags = _.map(blade.currentEntity.inheritedTags, tag => { return { value: tag }; });
                     }
 
                     blade.isLoading = false;
@@ -57,6 +57,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                     type: groupType,
                     memberId: blade.memberId,
                     currentEntity: blade.currentEntity,
+                    inheritedTags: blade.inheritedTags ? blade.inheritedTags : [],
                     onBackButtonClick: () => {
                         bladeNavigationService.showBlade(blade, blade.parentBlade);
                     },
