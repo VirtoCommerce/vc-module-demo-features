@@ -32,12 +32,14 @@ angular.module(moduleName, [])
 
             featureManagerSubscriber.onLoginStatusChanged('UserGroupsInheritance', () => {
                 widgetService.registerWidget({
+                    isVisible: function (blade) { return blade.currentEntityId; },
                     controller: 'virtoCommerce.DemoSolutionFeaturesModule.userGroupsWidgetController',
                     template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/widgets/userGroupsWidget.tpl.html',
                     size: [2,1]
                 }, 'customerDetail2');
 
                 widgetService.registerWidget({
+                    isVisible: function (blade) { return blade.currentEntityId; },
                     controller: 'virtoCommerce.DemoSolutionFeaturesModule.userGroupsWidgetController',
                     template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/widgets/userGroupsWidget.tpl.html',
                     size: [2,1]
