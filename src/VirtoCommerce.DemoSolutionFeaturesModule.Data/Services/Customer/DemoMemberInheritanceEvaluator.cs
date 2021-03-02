@@ -26,80 +26,84 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
         public virtual async Task<string[]> GetAllAncestorIdsForMemberAsync(string memberId)
         {
-            return await InnerGetAllAncestorIdsForMemberAsync(memberId);
-        }
+            var callCounter = 0;
 
-        private async Task<string[]> InnerGetAllAncestorIdsForMemberAsync(string memberId, int callCounter = 0)
-        {
-            callCounter++;
-
-            if (callCounter > _maxRecursionDeep)
+            async Task<string[]> InnerGetAllAncestorIdsForMemberAsync(string memberId)
             {
-                return Array.Empty<string>();
-            }
+                callCounter++;
 
-            var result = new List<string>();
-            using var customerRepository = _memberRepositoryFactory();
-            var relationEntities = await customerRepository.MemberRelations.Where(x =>
-                    x.DescendantId == memberId)
-                .ToArrayAsync();
-
-            var ancestorIds = relationEntities
-                .Where(x => x.RelationType.EqualsInvariant(RelationType.Membership.ToString()))
-                .Select(x => x.AncestorId).ToArray();
-
-            if (!ancestorIds.IsNullOrEmpty())
-            {
-                result.AddRange(ancestorIds);
-
-                foreach (var ancestorId in ancestorIds)
+                if (callCounter > _maxRecursionDeep)
                 {
-                    var ancestorsOfAncestorIds = await InnerGetAllAncestorIdsForMemberAsync(ancestorId, callCounter);
-                    result.AddRange(ancestorsOfAncestorIds);
+                    return Array.Empty<string>();
                 }
+
+                var result = new List<string>();
+                using var customerRepository = _memberRepositoryFactory();
+                var relationEntities = await customerRepository.MemberRelations.Where(x =>
+                        x.DescendantId == memberId)
+                    .ToArrayAsync();
+
+                var ancestorIds = relationEntities
+                    .Where(x => x.RelationType.EqualsInvariant(RelationType.Membership.ToString()))
+                    .Select(x => x.AncestorId).ToArray();
+
+                if (!ancestorIds.IsNullOrEmpty())
+                {
+                    result.AddRange(ancestorIds);
+
+                    foreach (var ancestorId in ancestorIds)
+                    {
+                        var ancestorsOfAncestorIds = await InnerGetAllAncestorIdsForMemberAsync(ancestorId);
+                        result.AddRange(ancestorsOfAncestorIds);
+                    }
+                }
+
+
+                return result.Distinct().ToArray();
             }
 
-
-            return result.Distinct().ToArray();
+            return await InnerGetAllAncestorIdsForMemberAsync(memberId);
         }
 
         public virtual async Task<string[]> GetAllDescendantIdsForMemberAsync(string memberId)
         {
-            return await InnerGetAllDescendantIdsForMemberAsync(memberId);
-        }
+            var callCounter = 0;
 
-        public virtual async Task<string[]> InnerGetAllDescendantIdsForMemberAsync(string memberId, int callCounter = 0)
-        {
-            callCounter++;
-
-            if (callCounter > _maxRecursionDeep)
+            async Task<string[]> InnerGetAllDescendantIdsForMemberAsync(string memberId)
             {
-                return Array.Empty<string>();
-            }
+                callCounter++;
 
-            var result = new List<string>();
-            using var customerRepository = _memberRepositoryFactory();
-
-            var relationEntities = await customerRepository.MemberRelations.Where(x =>
-                    x.AncestorId == memberId)
-                .ToArrayAsync();
-
-            var descendantIds = relationEntities
-                .Where(x => x.RelationType.EqualsInvariant(RelationType.Membership.ToString()))
-                .Select(x => x.DescendantId).ToArray();
-
-            if (!descendantIds.IsNullOrEmpty())
-            {
-                result.AddRange(descendantIds);
-
-                foreach (var ancestorId in descendantIds)
+                if (callCounter > _maxRecursionDeep)
                 {
-                    var descendantsOfDescendantIds = await InnerGetAllDescendantIdsForMemberAsync(ancestorId, callCounter);
-                    result.AddRange(descendantsOfDescendantIds);
+                    return Array.Empty<string>();
                 }
+
+                var result = new List<string>();
+                using var customerRepository = _memberRepositoryFactory();
+
+                var relationEntities = await customerRepository.MemberRelations.Where(x =>
+                        x.AncestorId == memberId)
+                    .ToArrayAsync();
+
+                var descendantIds = relationEntities
+                    .Where(x => x.RelationType.EqualsInvariant(RelationType.Membership.ToString()))
+                    .Select(x => x.DescendantId).ToArray();
+
+                if (!descendantIds.IsNullOrEmpty())
+                {
+                    result.AddRange(descendantIds);
+
+                    foreach (var ancestorId in descendantIds)
+                    {
+                        var descendantsOfDescendantIds = await InnerGetAllDescendantIdsForMemberAsync(ancestorId);
+                        result.AddRange(descendantsOfDescendantIds);
+                    }
+                }
+
+                return result.Distinct().ToArray();
             }
 
-            return result.Distinct().ToArray();
+            return await InnerGetAllDescendantIdsForMemberAsync(memberId);
         }
     }
 }
