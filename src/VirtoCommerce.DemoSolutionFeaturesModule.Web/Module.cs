@@ -17,8 +17,10 @@ using VirtoCommerce.CatalogModule.Core.Model;
 using VirtoCommerce.CatalogModule.Data.Model;
 using VirtoCommerce.CatalogModule.Data.Repositories;
 using VirtoCommerce.CatalogPersonalizationModule.Data.Search.Indexing;
+using VirtoCommerce.CustomerModule.Core.Events;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Services;
+using VirtoCommerce.CustomerModule.Data.Handlers;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Catalog;
@@ -94,6 +96,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddSingleton<DemoTaggedMemberIndexChangesProvider>();
             serviceCollection.AddSingleton<DemoTaggedMemberDocumentBuilder>();
             serviceCollection.AddTransient<IDemoMemberInheritanceEvaluator, DemoMemberInheritanceEvaluator>();
+            serviceCollection.AddTransient<ClearTaggedMemberCacheAtMemberChangedHandler>();
 
             // cart
             serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
@@ -203,6 +206,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             inProcessBus.RegisterHandler<ProductChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>().Handle(message));
             inProcessBus.RegisterHandler<DemoProductPartChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesProductPartsHandler>().Handle(message));
             inProcessBus.RegisterHandler<DemoTaggedMemberChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesTaggedMembersHandler>().Handle(message));
+            inProcessBus.RegisterHandler<MemberChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<ClearTaggedMemberCacheAtMemberChangedHandler>().Handle(message));
 
             #region Search
 

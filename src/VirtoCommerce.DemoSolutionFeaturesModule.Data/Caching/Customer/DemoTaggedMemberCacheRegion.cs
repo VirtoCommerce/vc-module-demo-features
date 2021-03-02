@@ -45,5 +45,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Caching.Customer
 
             ExpireTokenForKey(taggedMember.Id);
         }
+
+        public static void ExpireEntity(string taggedMemberId)
+        {
+            if (taggedMemberId == null)
+            {
+                throw new ArgumentNullException(nameof(taggedMemberId));
+            }
+
+            ExpireTokenForKey(taggedMemberId);
+        }
     }
 }
