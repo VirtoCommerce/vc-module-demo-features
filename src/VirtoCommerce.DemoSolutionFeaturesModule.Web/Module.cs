@@ -200,7 +200,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             featureStorage.AddHighPriorityFeatureDefinition(demoFeaturesSection);
 
             featureStorage.TryAddFeature(demoFeaturesCore.ModuleConstants.Features.ConfigurableProduct, true);
-            featureStorage.TryAddFeature(demoFeaturesCore.ModuleConstants.Features.UserGroupsInheritance, "Developers");
+            featureStorage.TryAddFeature(demoFeaturesCore.ModuleConstants.Features.UserGroupsInheritance, true);
 
             var inProcessBus = appBuilder.ApplicationServices.GetService<IHandlerRegistrar>();
             inProcessBus.RegisterHandler<ProductChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>().Handle(message));
