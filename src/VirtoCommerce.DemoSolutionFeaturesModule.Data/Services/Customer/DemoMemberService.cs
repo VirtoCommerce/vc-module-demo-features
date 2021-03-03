@@ -19,6 +19,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
     {
         private readonly IDemoTaggedMemberService _taggedMemberService;
         private readonly IFeatureManager _featureManager;
+
         public DemoMemberService(Func<IMemberRepository> repositoryFactory, IUserSearchService userSearchService, IEventPublisher eventPublisher, IPlatformMemoryCache platformMemoryCache, IDemoTaggedMemberService taggedMemberService, IFeatureManager featureManager)
             : base(repositoryFactory, userSearchService, eventPublisher, platformMemoryCache)
         {
@@ -39,7 +40,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
                 foreach (var member in members.Where(x => taggedMembers.Select(tm => tm.MemberId).Contains(x.Id)))
                 {
                     var taggedMember = taggedMembers.First(x => x.MemberId == member.Id);
-                    var tags = taggedMember.Tags.Union(taggedMember.InheritedTags ?? Array.Empty<string>()).ToList();
+                    var tags = taggedMember.Tags.Union(taggedMember.InheritedTags ?? Array.Empty<string>()).ToArray();
                     member.Groups = tags.IsNullOrEmpty() ? member.Groups : tags;
                 }
             }
@@ -61,5 +62,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
             await base.SaveChangesAsync(members);
         }
+
     }
 }

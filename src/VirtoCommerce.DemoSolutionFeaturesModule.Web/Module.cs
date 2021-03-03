@@ -17,11 +17,12 @@ using VirtoCommerce.CatalogModule.Core.Model;
 using VirtoCommerce.CatalogModule.Data.Model;
 using VirtoCommerce.CatalogModule.Data.Repositories;
 using VirtoCommerce.CatalogPersonalizationModule.Data.Search.Indexing;
+using VirtoCommerce.CustomerModule.Core.Events;
 using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Services;
+using VirtoCommerce.CustomerModule.Data.Handlers;
 using VirtoCommerce.CustomerModule.Data.Model;
 using VirtoCommerce.CustomerModule.Data.Repositories;
-using VirtoCommerce.CustomerModule.Data.Search.Indexing;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
@@ -37,6 +38,7 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories.Customer;
+using VirtoCommerce.DemoSolutionFeaturesModule.Data.Search.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer;
@@ -92,6 +94,9 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddTransient<IMemberService, DemoMemberService>();
             serviceCollection.AddTransient<LogChangesTaggedMembersHandler>();
             serviceCollection.AddSingleton<DemoTaggedMemberIndexChangesProvider>();
+            serviceCollection.AddSingleton<DemoTaggedMemberDocumentBuilder>();
+            serviceCollection.AddTransient<IDemoMemberInheritanceEvaluator, DemoMemberInheritanceEvaluator>();
+            serviceCollection.AddTransient<ClearTaggedMemberCacheAtMemberChangedHandler>();
 
             // cart
             serviceCollection.AddTransient<ICartRepository, DemoCartRepository>();
@@ -201,6 +206,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             inProcessBus.RegisterHandler<ProductChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>().Handle(message));
             inProcessBus.RegisterHandler<DemoProductPartChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesProductPartsHandler>().Handle(message));
             inProcessBus.RegisterHandler<DemoTaggedMemberChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesTaggedMembersHandler>().Handle(message));
+            inProcessBus.RegisterHandler<MemberChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<ClearTaggedMemberCacheAtMemberChangedHandler>().Handle(message));
 
             #region Search
 
@@ -212,7 +218,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
                 var taggedItemProductDocumentSource = new IndexDocumentSource
                 {
                     ChangesProvider = appBuilder.ApplicationServices.GetRequiredService<DemoTaggedMemberIndexChangesProvider>(),
-                    DocumentBuilder = appBuilder.ApplicationServices.GetRequiredService<MemberDocumentBuilder>()
+                    DocumentBuilder = appBuilder.ApplicationServices.GetRequiredService<DemoTaggedMemberDocumentBuilder>()
                 };
                 foreach (var documentConfiguration in documentIndexingConfigurations.Where(c => c.DocumentType == KnownDocumentTypes.Member))
                 {

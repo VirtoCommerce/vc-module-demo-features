@@ -229,3 +229,7 @@ table.stripped-table tr:nth-child(even) {
 .table-group-item .bold {
     font-weight: bold !important;
 }
+
+.icon-blue {
+    color: #43b0e6;
+}

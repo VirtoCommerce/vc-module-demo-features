@@ -38,7 +38,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer
 
             if (!taggedMember.Tags.IsNullCollection())
             {
-                taggedMember.Tags = Tags.OrderBy(x => x.Tag).Select(x => x.Tag).ToList();
+                taggedMember.Tags = Tags.OrderBy(x => x.Tag).Select(x => x.Tag).ToArray();
             }
 
             return taggedMember;

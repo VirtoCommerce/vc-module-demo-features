@@ -8,6 +8,11 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 function(result) {
                     blade.currentEntity = result || {};
                     blade.currentEntity.tags = blade.currentEntity.tags || [];
+
+                    if (blade.currentEntity.inheritedTags && blade.currentEntity.inheritedTags.length) {
+                        blade.inheritedTags = _.map(blade.currentEntity.inheritedTags, tag => { return { value: tag }; });
+                    }
+
                     blade.isLoading = false;
             });
 
@@ -52,6 +57,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                     type: groupType,
                     memberId: blade.memberId,
                     currentEntity: blade.currentEntity,
+                    inheritedTags: blade.inheritedTags ? blade.inheritedTags : [],
                     onBackButtonClick: () => {
                         bladeNavigationService.showBlade(blade, blade.parentBlade);
                     },

@@ -48,6 +48,14 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
                     DefaultValue = "",
                 };
 
+                public static readonly SettingDescriptor DemoMaxRecursionDeep = new SettingDescriptor
+                {
+                    Name = "VirtoCommerceDemoSolutionFeaturesModule.DemoMaxRecursionDeep",
+                    GroupName = "VirtoCommerceDemoSolutionFeaturesModule|General",
+                    ValueType = SettingValueType.Integer,
+                    DefaultValue = 10
+                };
+
                 public static IEnumerable<SettingDescriptor> InvoicePaymentMethodSettings
                 {
                     get
@@ -70,6 +78,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
                     {
                         yield return DemoInvoicePaymentMethodLogo;
                         yield return DemoCreditCardPaymentMethodLogo;
+                        yield return DemoMaxRecursionDeep;
                     }
                 }
             }
