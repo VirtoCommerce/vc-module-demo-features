@@ -3,7 +3,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
     ['$scope', 'platformWebApp.bladeNavigationService', 'virtoCommerce.DemoSolutionFeaturesModule.productPartsApi',
     function ($scope, bladeNavigationService, productPartsApi) {
         const blade = $scope.blade;
-        blade.headIcon = 'fa-cogs';
+        blade.headIcon = 'fas fa-pencil-ruler';
         blade.toolbarCommands = [];
 
         if (blade.isNew) {
