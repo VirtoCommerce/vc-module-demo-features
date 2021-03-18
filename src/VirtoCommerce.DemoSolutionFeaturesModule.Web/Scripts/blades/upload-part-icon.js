@@ -3,7 +3,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
     ['FileUploader', '$document', '$scope', '$timeout', 'platformWebApp.bladeNavigationService', 'virtoCommerce.catalogModule.catalogImagesFolderPathHelper', 'platformWebApp.assets.api',
     function(FileUploader, $document, $scope, $timeout, bladeNavigationService, catalogImagesFolderPathHelper, assetsApi) {
         const blade = $scope.blade;
-        blade.headIcon = 'fa-picture-o';
+        blade.headIcon = 'fas fa-image';
         blade.isLoading = false;
         blade.downloadImage = false;
         blade.folderPath = catalogImagesFolderPathHelper.getImagesFolderPath(blade.configuredProduct.catalogId, blade.configuredProduct.code);

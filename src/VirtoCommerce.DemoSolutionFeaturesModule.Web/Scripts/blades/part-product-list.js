@@ -11,7 +11,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         var filter = $scope.filter = blade.filter = {};
         const bladeNavigationService = bladeUtils.bladeNavigationService;
 
-        blade.headIcon = 'fa-archive';
+        blade.headIcon = 'fas fa-box-open';
 
         blade.currentEntity = angular.copy(blade.originalEntity);
 

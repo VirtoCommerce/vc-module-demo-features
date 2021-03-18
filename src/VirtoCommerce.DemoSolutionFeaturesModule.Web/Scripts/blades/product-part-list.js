@@ -11,7 +11,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
         var filter = $scope.filter = {};
         const bladeNavigationService = bladeUtils.bladeNavigationService;
 
-        blade.headIcon = 'fa-cogs';
+        blade.headIcon = 'fas fa-pencil-ruler';
         blade.title = 'demoSolutionFeaturesModule.blades.product-part-list.title';
         blade.subtitle = 'demoSolutionFeaturesModule.blades.product-part-list.subtitle';
 

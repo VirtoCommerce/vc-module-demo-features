@@ -3,7 +3,7 @@
   <id>VirtoCommerce.DemoSolutionFeaturesModule</id>
   <version>1.11.0</version>
   <version-tag />
-  <platformVersion>3.24.0</platformVersion>
+  <platformVersion>3.49.0</platformVersion>
   <title>Demo solution features module</title>
   <description>Module contains additions, extensions and customization for platform developed by Demo Solution Team.</description>
   <authors>
