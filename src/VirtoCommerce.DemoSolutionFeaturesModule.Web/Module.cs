@@ -40,7 +40,6 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Data.Search.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer;
-using VirtoCommerce.FeatureManagementModule.Core;
 using VirtoCommerce.FeatureManagementModule.Core.Services;
 using VirtoCommerce.NotificationsModule.Core.Services;
 using VirtoCommerce.NotificationsModule.Core.Types;
@@ -191,8 +190,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             inProcessBus.RegisterHandler<MemberChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<ClearTaggedMemberCacheAtMemberChangedHandler>().Handle(message));
 
             var featureStorage = appBuilder.ApplicationServices.GetService<IFeatureStorage>();
-            featureStorage.TryAddFeatureDefinition(demoFeaturesCore.ModuleConstants.Features.ConfigurableProduct, ModuleConstants.FeatureFilters.Developers);
-            featureStorage.TryAddFeatureDefinition(demoFeaturesCore.ModuleConstants.Features.UserGroupsInheritance, ModuleConstants.FeatureFilters.Developers);
+            featureStorage.TryAddFeatureDefinition(demoFeaturesCore.ModuleConstants.Features.ConfigurableProduct, true);
+            featureStorage.TryAddFeatureDefinition(demoFeaturesCore.ModuleConstants.Features.UserGroupsInheritance, true);
 
             #region Search
 
