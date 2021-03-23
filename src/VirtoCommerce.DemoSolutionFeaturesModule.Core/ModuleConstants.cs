@@ -22,9 +22,8 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core
                 public const string Read = "virtoCommerceDemoSolutionFeaturesModule:read";
                 public const string Update = "virtoCommerceDemoSolutionFeaturesModule:update";
                 public const string Delete = "virtoCommerceDemoSolutionFeaturesModule:delete";
-                public const string Developer = "demo:developer";
 
-                public static string[] AllPermissions => new[] { Read, Create, Access, Update, Delete, Developer };
+                public static string[] AllPermissions => new[] { Read, Create, Access, Update, Delete };
             }
         }
 
