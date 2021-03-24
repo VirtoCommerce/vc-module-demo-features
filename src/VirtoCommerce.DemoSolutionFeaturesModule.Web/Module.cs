@@ -2,12 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.FeatureManagement;
 using VirtoCommerce.CartModule.Core.Model;
 using VirtoCommerce.CartModule.Core.Services;
 using VirtoCommerce.CartModule.Data.Model;
@@ -42,8 +40,7 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Data.Search.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer;
-using VirtoCommerce.DemoSolutionFeaturesModule.Web.HangfireFilters;
-using VirtoCommerce.DemoSolutionFeaturesModule.Web.Infrastructure;
+using VirtoCommerce.FeatureManagementModule.Core.Services;
 using VirtoCommerce.NotificationsModule.Core.Services;
 using VirtoCommerce.NotificationsModule.Core.Types;
 using VirtoCommerce.NotificationsModule.TemplateLoader.FileSystem;
@@ -105,11 +102,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddTransient<IOrderRepository, DemoOrderRepository>();
             serviceCollection.AddTransient<ICustomerOrderTotalsCalculator, DemoCustomerOrderTotalsCalculator>();
             serviceCollection.AddTransient<ICustomerOrderBuilder, DemoCustomerOrderBuilder>();
-
-            serviceCollection.AddFeatureManagement().AddFeatureFilter<DevelopersFilter>();
-            serviceCollection.AddSingleton<DemoFeatureDefinitionProvider>();
-            serviceCollection.AddSingleton<IFeaturesStorage>(s => s.GetService<DemoFeatureDefinitionProvider>());
-            serviceCollection.AddSingleton<IFeatureDefinitionProvider>(s => s.GetService<DemoFeatureDefinitionProvider>());
 
             // catalog
             serviceCollection.AddTransient<ICatalogRepository, DemoCatalogRepository>();
@@ -191,22 +183,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
                     Name = x,
                 }).ToArray());
 
-            var configuration = appBuilder.ApplicationServices.GetService<IConfiguration>();
-
-            // features registration
-            var featureStorage = appBuilder.ApplicationServices.GetService<IFeaturesStorage>();
-
-            var demoFeaturesSection = configuration.GetSection("DemoFeatures");
-            featureStorage.AddHighPriorityFeatureDefinition(demoFeaturesSection);
-
-            featureStorage.TryAddFeature(demoFeaturesCore.ModuleConstants.Features.ConfigurableProduct, true);
-            featureStorage.TryAddFeature(demoFeaturesCore.ModuleConstants.Features.UserGroupsInheritance, true);
-
             var inProcessBus = appBuilder.ApplicationServices.GetService<IHandlerRegistrar>();
             inProcessBus.RegisterHandler<ProductChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>().Handle(message));
             inProcessBus.RegisterHandler<DemoProductPartChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesProductPartsHandler>().Handle(message));
             inProcessBus.RegisterHandler<DemoTaggedMemberChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<LogChangesTaggedMembersHandler>().Handle(message));
             inProcessBus.RegisterHandler<MemberChangedEvent>(async (message, token) => await appBuilder.ApplicationServices.GetService<ClearTaggedMemberCacheAtMemberChangedHandler>().Handle(message));
+
+            var featureStorage = appBuilder.ApplicationServices.GetService<IFeatureStorage>();
+            featureStorage.TryAddFeatureDefinition(demoFeaturesCore.ModuleConstants.Features.ConfigurableProduct, true);
+            featureStorage.TryAddFeatureDefinition(demoFeaturesCore.ModuleConstants.Features.UserGroupsInheritance, true);
 
             #region Search
 
@@ -256,10 +241,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
                 dbContext.Database.EnsureCreated();
                 dbContext.Database.Migrate();
             }
-
-            // Add Hangfire filters/middlewares
-            var demoUserNameResolver = serviceScope.ServiceProvider.GetRequiredService<IDemoUserNameResolver>();
-            GlobalJobFilters.Filters.Add(new DemoHangfireUserContextFilter(demoUserNameResolver));
         }
 
         public void Uninstall()

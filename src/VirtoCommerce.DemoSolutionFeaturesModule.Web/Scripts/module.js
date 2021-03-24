@@ -6,7 +6,7 @@ if (AppDependencies !== undefined) {
 }
 
 angular.module(moduleName, [])
-    .run(['virtoCommerce.catalogModule.itemTypesResolverService', 'platformWebApp.widgetService', 'virtoCommerce.demoFeatures.featureManagerSubscriber',
+    .run(['virtoCommerce.catalogModule.itemTypesResolverService', 'platformWebApp.widgetService', 'virtoCommerce.featureManagerSubscriber',
         function (itemTypesResolverService, widgetService, featureManagerSubscriber) {
             const configurableProductType = 'Configurable';
             featureManagerSubscriber.onLoginStatusChanged('ConfigurableProduct', () => {
@@ -47,6 +47,6 @@ angular.module(moduleName, [])
             });
 
             const itemDetailWidgets = widgetService.widgetsMap['itemDetail'];
-            const variationWidget = itemDetailWidgets.find(widget => widget.controller == 'virtoCommerce.catalogModule.itemVariationWidgetController');
+            const variationWidget = itemDetailWidgets.find(widget => widget.controller === 'virtoCommerce.catalogModule.itemVariationWidgetController');
             variationWidget.isVisible = blade => blade.id !== 'variationDetail' && blade.productType !== configurableProductType;
     }]);

@@ -44,7 +44,7 @@
 
                 <div class="form-group">
                     <ul class="list __items">
-                        <li class="list-item" ng-click="openUploadPartIconBlade()" va-permission="hasAssetPermissions">
+                        <li class="list-item" ng-click="openUploadPartIconBlade()" ng-if="hasAssetPermissions">
                             <i ng-if="!blade.currentEntity.imgSrc" class="list-ico fa fa-image" aria-hidden="true"></i>
                             <img ng-if="blade.currentEntity.imgSrc" class="list-img" ng-src="{{ blade.currentEntity.imgSrc }}" alt="">
                             <div class="list-container">
