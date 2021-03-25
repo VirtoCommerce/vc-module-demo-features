@@ -108,10 +108,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
             serviceCollection.AddTransient<IDemoProductPartService, DemoProductPartService>();
             serviceCollection.AddTransient<IDemoProductPartSearchService, DemoProductPartSearchService>();
 
-            serviceCollection.AddScoped<IDemoUserNameResolver, DemoUserNameResolver>();
-            serviceCollection.AddScoped<IUserNameResolver, DemoUserNameResolver>();
-            serviceCollection.AddSingleton<Func<IUserNameResolver>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IUserNameResolver>());
-
             serviceCollection.AddTransient<InvalidateProductPartsSearchCacheWhenProductIsDeletedHandler>();
             serviceCollection.AddTransient<LogChangesProductPartsHandler>();
         }
