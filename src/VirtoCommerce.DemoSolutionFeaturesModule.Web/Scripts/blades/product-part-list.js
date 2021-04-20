@@ -30,7 +30,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                             configuredProduct: blade.item,
                             configuredProductId: blade.itemId,
                             controller: 'virtoCommerce.DemoSolutionFeaturesModule.productPartDetailController',
-                            template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-detail.tpl.html'
+                            template: 'Modules/$(VirtoCommerce.DemoSolutionFeatures)/Scripts/blades/product-part-detail.tpl.html'
                         };
                         bladeNavigationService.showBlade(newBlade, blade);
                     });
@@ -50,7 +50,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                             configuredProduct: blade.item,
                             originalEntity: selectedNode,
                             controller: 'virtoCommerce.DemoSolutionFeaturesModule.productPartDetailController',
-                            template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-detail.tpl.html'
+                            template: 'Modules/$(VirtoCommerce.DemoSolutionFeatures)/Scripts/blades/product-part-detail.tpl.html'
                         };
                         bladeNavigationService.showBlade(newBlade, blade);
                     });
@@ -100,7 +100,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 originalEntity: node,
                 catalogId: blade.catalogId,
                 controller: 'virtoCommerce.DemoSolutionFeaturesModule.productPartDetailController',
-                template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-detail.tpl.html'
+                template: 'Modules/$(VirtoCommerce.DemoSolutionFeatures)/Scripts/blades/product-part-detail.tpl.html'
             };
             bladeNavigationService.showBlade(newBlade, blade);
 

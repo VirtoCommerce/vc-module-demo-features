@@ -21,7 +21,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 title: 'demoSolutionFeaturesModule.blades.user-groups-list.title',
                 subtitle: 'demoSolutionFeaturesModule.blades.user-groups-list.subtitle',
                 controller: 'virtoCommerce.DemoSolutionFeaturesModule.userGroupsListController',
-                template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/user-groups-list.tpl.html',
+                template: 'Modules/$(VirtoCommerce.DemoSolutionFeatures)/Scripts/blades/user-groups-list.tpl.html',
                 onGroupsChanged: () => recalculateGroupsCount()
             };
             bladeNavigationService.showBlade(newBlade, blade);

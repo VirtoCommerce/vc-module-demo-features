@@ -13,7 +13,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 currentEntity: $scope.operation,
                 recalculateFn: blade.recalculate,
                 controller: 'virtoCommerce.DemoSolutionFeaturesModule.orderLineItemsListController',
-                template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/order-line-items-list.tpl.html'
+                template: 'Modules/$(VirtoCommerce.DemoSolutionFeatures)/Scripts/blades/order-line-items-list.tpl.html'
             };
             bladeNavigationService.showBlade(newBlade, blade);
         };

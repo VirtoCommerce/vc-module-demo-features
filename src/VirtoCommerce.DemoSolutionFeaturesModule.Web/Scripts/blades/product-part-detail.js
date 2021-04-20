@@ -86,7 +86,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 originalEntity: blade.currentEntity,
                 catalogId: blade.catalogId,
                 controller: 'virtoCommerce.DemoSolutionFeaturesModule.partProductListController',
-                template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/part-product-list.tpl.html',
+                template: 'Modules/$(VirtoCommerce.DemoSolutionFeatures)/Scripts/blades/part-product-list.tpl.html',
                 onConfirm: (entity) => {
                     blade.currentEntity = entity;
                 }
@@ -120,7 +120,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 originalEntity: blade.currentEntity,
                 onSelect: (entity) => blade.currentEntity = entity,
                 controller: 'virtoCommerce.DemoSolutionFeaturesModule.uploadPartIconController',
-                template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/upload-part-icon.tpl.html'
+                template: 'Modules/$(VirtoCommerce.DemoSolutionFeatures)/Scripts/blades/upload-part-icon.tpl.html'
             };
             bladeNavigationService.showBlade(newBlade, blade);
         }

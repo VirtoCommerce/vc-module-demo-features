@@ -28,7 +28,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                                 subtitle: 'demoSolutionFeaturesModule.blades.assign-user-group.subtitle',
                                 currentTags: blade.currentEntity.tags,
                                 controller: 'virtoCommerce.DemoSolutionFeaturesModule.assignUserGroupController',
-                                template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/assign-user-group.tpl.html',
+                                template: 'Modules/$(VirtoCommerce.DemoSolutionFeatures)/Scripts/blades/assign-user-group.tpl.html',
                                 onGroupsAdded: (entity) => {
                                     const newTags = _.difference(entity.tags, blade.currentEntity.tags);
                                     blade.currentEntity.tags = [...blade.currentEntity.tags, ...newTags];
@@ -63,7 +63,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                     },
                     groupsChanged: () => blade.onGroupsChanged(),
                     controller: 'virtoCommerce.DemoSolutionFeaturesModule.allUserGroupsListController',
-                    template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/all-user-groups-list.tpl.html',
+                    template: 'Modules/$(VirtoCommerce.DemoSolutionFeatures)/Scripts/blades/all-user-groups-list.tpl.html',
 
                 }
                 bladeNavigationService.closeBlade(blade, () => {
