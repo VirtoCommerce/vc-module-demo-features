@@ -17,7 +17,7 @@
   </owners>
   <requireLicenseAcceptance>false</requireLicenseAcceptance>
   <releaseNotes>First version.</releaseNotes>
-  <copyright>Copyright © 2020 VirtoCommerce. All rights reserved</copyright>
+  <copyright>Copyright © 2021 VirtoCommerce. All rights reserved</copyright>
   <tags>extension module</tags>
   <assemblyFile>VirtoCommerce.DemoSolutionFeaturesModule.Web.dll</assemblyFile>
   <moduleType>VirtoCommerce.DemoSolutionFeaturesModule.Web.Module, VirtoCommerce.DemoSolutionFeaturesModule.Web</moduleType>
