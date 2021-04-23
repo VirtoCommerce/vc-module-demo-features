@@ -10,7 +10,7 @@ angular.module('virtoCommerce.DemoSolutionFeaturesModule')
                 itemId: blade.itemId,
                 catalogId: blade.catalog.id,
                 controller: 'virtoCommerce.DemoSolutionFeaturesModule.productPartListController',
-                template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/blades/product-part-list.tpl.html'
+                template: 'Modules/$(VirtoCommerce.DemoSolutionFeatures)/Scripts/blades/product-part-list.tpl.html'
             };
             bladeNavigationService.showBlade(newBlade, blade);
         };

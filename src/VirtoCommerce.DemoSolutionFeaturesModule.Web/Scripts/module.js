@@ -20,13 +20,13 @@ angular.module(moduleName, [])
                 widgetService.registerWidget({
                     isVisible: function (blade) { return blade.productType === configurableProductType; },
                     controller: 'virtoCommerce.DemoSolutionFeaturesModule.productPartsWidgetController',
-                    template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/widgets/productPartsWidget.tpl.html'
+                    template: 'Modules/$(VirtoCommerce.DemoSolutionFeatures)/Scripts/widgets/productPartsWidget.tpl.html'
                 }, 'itemDetail');
 
                 widgetService.registerWidget({
                     isVisible: function (blade) { return blade.controller === 'virtoCommerce.orderModule.operationDetailController'; },
                     controller: 'virtoCommerce.DemoSolutionFeaturesModule.orderLineItemsWidgetController',
-                    template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/widgets/orderLineItemsWidget.tpl.html'
+                    template: 'Modules/$(VirtoCommerce.DemoSolutionFeatures)/Scripts/widgets/orderLineItemsWidget.tpl.html'
                 }, 'customerOrderDetailWidgets');
             });
 
@@ -34,14 +34,14 @@ angular.module(moduleName, [])
                 widgetService.registerWidget({
                     isVisible: function (blade) { return blade.currentEntityId; },
                     controller: 'virtoCommerce.DemoSolutionFeaturesModule.userGroupsWidgetController',
-                    template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/widgets/userGroupsWidget.tpl.html',
+                    template: 'Modules/$(VirtoCommerce.DemoSolutionFeatures)/Scripts/widgets/userGroupsWidget.tpl.html',
                     size: [2,1]
                 }, 'customerDetail2');
 
                 widgetService.registerWidget({
                     isVisible: function (blade) { return blade.currentEntityId; },
                     controller: 'virtoCommerce.DemoSolutionFeaturesModule.userGroupsWidgetController',
-                    template: 'Modules/$(VirtoCommerce.DemoSolutionFeaturesModule)/Scripts/widgets/userGroupsWidget.tpl.html',
+                    template: 'Modules/$(VirtoCommerce.DemoSolutionFeatures)/Scripts/widgets/userGroupsWidget.tpl.html',
                     size: [2,1]
                 }, 'organizationDetail2');
             });
