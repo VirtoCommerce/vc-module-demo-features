@@ -22,11 +22,11 @@ jobs:
     steps:
     - name: Gets artifact link
       id: artifactLink
-      uses: VirtoCommerce/vc-github-actions/get-artifact-link@VDS-1275
+      uses: VirtoCommerce/vc-github-actions/get-artifact-link@master
 
     - name: Create deploy PR in QA
       if: github.event.action != 'closed' && contains(github.event.pull_request.labels.*.name, 'deploy-qa') && !contains(github.event.pull_request.labels.*.name, 'deploy-demo')
-      uses: VirtoCommerce/vc-github-actions/create-deploy-pr@VDS-1275
+      uses: VirtoCommerce/vc-github-actions/create-deploy-pr@master
       with:
         deployRepo: "vc-webstore-deploy"
         deployBranch: "qa"
