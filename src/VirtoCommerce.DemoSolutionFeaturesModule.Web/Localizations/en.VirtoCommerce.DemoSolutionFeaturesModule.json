@@ -197,5 +197,10 @@
       "displayName": "Registration invitation notification",
       "description": "This notification sends by email to client when registered invitation"
     }
-  }
+  },
+  "catalog": {
+    "product-types": {
+      "Configurable": "Configurable" 
+    } 
+  } 
  }
