@@ -1,5 +1,5 @@
 {
-    "artifactKey": "VirtoCommerce.DemoSolutionFeaturesModule",
+    "artifactKey": "VirtoCommerce.DemoSolutionFeatures",
     "deployRepo": "vc-webstore-deploy",
     "dev": {
         "deployAppName": "webstore-dev",
