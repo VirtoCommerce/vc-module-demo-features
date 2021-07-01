@@ -35,7 +35,6 @@ using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Catalog;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories;
-using VirtoCommerce.DemoSolutionFeaturesModule.Data.Repositories.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Search.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Catalog;
@@ -84,8 +83,6 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Web
 
             // customer
             serviceCollection.AddTransient<ICustomerRepository, CustomerDemoRepository>();
-            serviceCollection.AddTransient<IDemoTaggedMemberRepository, CustomerDemoRepository>();
-            serviceCollection.AddTransient<Func<IDemoTaggedMemberRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IDemoTaggedMemberRepository>());
             serviceCollection.AddTransient<IDemoTaggedMemberService, DemoTaggedMemberService>();
             serviceCollection.AddTransient<IDemoTaggedMemberSearchService, DemoTaggedMemberSearchService>();
             serviceCollection.AddTransient<IMemberService, DemoMemberService>();
