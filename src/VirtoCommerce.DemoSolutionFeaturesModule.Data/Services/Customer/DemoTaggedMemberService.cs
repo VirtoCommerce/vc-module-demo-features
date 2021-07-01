@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using VirtoCommerce.CustomerModule.Data.Caching;
+using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Events.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
@@ -19,12 +20,12 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 {
     public class DemoTaggedMemberService : IDemoTaggedMemberService
     {
-        private readonly Func<IDemoTaggedMemberRepository> _taggedMemberRepositoryFactory;
+        private readonly Func<ICustomerRepository> _taggedMemberRepositoryFactory;
         private readonly IPlatformMemoryCache _platformMemoryCache;
         private readonly IEventPublisher _eventPublisher;
         private readonly IDemoMemberInheritanceEvaluator _memberInheritanceEvaluator;
 
-        public DemoTaggedMemberService(Func<IDemoTaggedMemberRepository> taggedMemberRepositoryFactory,
+        public DemoTaggedMemberService(Func<ICustomerRepository> taggedMemberRepositoryFactory,
             IPlatformMemoryCache platformMemoryCache,
             IEventPublisher eventPublisher,
             IDemoMemberInheritanceEvaluator memberInheritanceEvaluator)
@@ -42,7 +43,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
                 .Select(x => new GenericChangedEntry<DemoTaggedMember>(x, EntryState.Deleted))
                 .ToArray();
 
-            using var taggedMemberRepository = _taggedMemberRepositoryFactory();
+            using var taggedMemberRepository = (IDemoTaggedMemberRepository)_taggedMemberRepositoryFactory();
 
             await _eventPublisher.Publish(new DemoTaggedMemberChangingEvent(changedEntries));
 
@@ -110,7 +111,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 
         protected virtual async Task<DemoTaggedMember[]> GetTaggedMembersByIdsWithoutInheritedAsync(string[] memberIds)
         {
-            using var taggedMemberRepository = _taggedMemberRepositoryFactory();
+            using var taggedMemberRepository = (IDemoTaggedMemberRepository)_taggedMemberRepositoryFactory();
             taggedMemberRepository.DisableChangesTracking();
             var taggedMemberEntities = await taggedMemberRepository.GetTaggedMembersByIdsAsync(memberIds);
             var taggedMembers = taggedMemberEntities.Select(x => x.ToModel(AbstractTypeFactory<DemoTaggedMember>.TryCreateInstance()))
@@ -125,7 +126,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
             var pkMap = new PrimaryKeyResolvingMap();
             var changedEntries = new List<GenericChangedEntry<DemoTaggedMember>>();
 
-            using var taggedMemberRepository = _taggedMemberRepositoryFactory();
+            using var taggedMemberRepository = (IDemoTaggedMemberRepository)_taggedMemberRepositoryFactory();
 
             var ids = taggedMembers.Select(x => x.Id).Where(x => x != null).Distinct().ToArray();
             var alreadyExistEntities = await taggedMemberRepository.GetTaggedMembersByIdsAsync(ids);

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using VirtoCommerce.CustomerModule.Data.Repositories;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Services.Customer;
 using VirtoCommerce.DemoSolutionFeaturesModule.Data.Caching.Customer;
@@ -15,11 +16,11 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
 {
     public class DemoTaggedMemberSearchService : IDemoTaggedMemberSearchService
     {
-        private readonly Func<IDemoTaggedMemberRepository> _repositoryFactory;
+        private readonly Func<ICustomerRepository> _repositoryFactory;
         private readonly IPlatformMemoryCache _platformMemoryCache;
         private readonly IDemoTaggedMemberService _taggedMemberService;
 
-        public DemoTaggedMemberSearchService(Func<IDemoTaggedMemberRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, IDemoTaggedMemberService taggedMemberService)
+        public DemoTaggedMemberSearchService(Func<ICustomerRepository> repositoryFactory, IPlatformMemoryCache platformMemoryCache, IDemoTaggedMemberService taggedMemberService)
         {
             _repositoryFactory = repositoryFactory;
             _platformMemoryCache = platformMemoryCache;
@@ -38,7 +39,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services.Customer
                     cacheEntry.AddExpirationToken(DemoTaggedMemberSearchCacheRegion.CreateChangeToken());
                     var result = new DemoTaggedMemberSearchResult();
 
-                    using var taggedMemberRepository = _repositoryFactory();
+                    using var taggedMemberRepository = (IDemoTaggedMemberRepository)_repositoryFactory();
                     taggedMemberRepository.DisableChangesTracking();
 
                     var query = taggedMemberRepository.TaggedMembers;
