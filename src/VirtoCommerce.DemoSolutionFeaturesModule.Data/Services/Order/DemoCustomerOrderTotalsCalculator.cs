@@ -1,4 +1,5 @@
 using System.Linq;
+using VirtoCommerce.CoreModule.Core.Currency;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
 using VirtoCommerce.OrdersModule.Core.Model;
 using VirtoCommerce.OrdersModule.Data.Services;
@@ -7,11 +8,15 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
 {
     public class DemoCustomerOrderTotalsCalculator : DefaultCustomerOrderTotalsCalculator
     {
+        public DemoCustomerOrderTotalsCalculator(ICurrencyService currencyService)
+            : base(currencyService)
+        { }
+
         public override void CalculateTotals(CustomerOrder order)
         {
             base.CalculateTotals(order);
 
-            var demoOrder = (DemoCustomerOrder) order;
+            var demoOrder = (DemoCustomerOrder)order;
 
             // Calculate totals for configured product items also
             foreach (var configuredGroupItem in demoOrder.ConfiguredGroups.SelectMany(x => x.Items))
@@ -24,7 +29,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
 
         private static void CalculateConfiguredGroups(CustomerOrder order)
         {
-            var orderExtended = (DemoCustomerOrder) order;
+            var orderExtended = (DemoCustomerOrder)order;
 
             var configuredGroups = (orderExtended.ConfiguredGroups ?? Enumerable.Empty<DemoOrderConfiguredGroup>()).ToArray();
 
