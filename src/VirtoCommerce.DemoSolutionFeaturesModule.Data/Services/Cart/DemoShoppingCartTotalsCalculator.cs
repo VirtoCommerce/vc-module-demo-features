@@ -1,12 +1,18 @@
 using System.Linq;
 using VirtoCommerce.CartModule.Core.Model;
 using VirtoCommerce.CartModule.Data.Services;
+using VirtoCommerce.CoreModule.Core.Currency;
 using VirtoCommerce.DemoSolutionFeaturesModule.Core.Models;
 
 namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
 {
     public class DemoShoppingCartTotalsCalculator : DefaultShoppingCartTotalsCalculator
     {
+        public DemoShoppingCartTotalsCalculator(ICurrencyService currencyService)
+            : base(currencyService)
+        {
+        }
+
         public override void CalculateTotals(ShoppingCart cart)
         {
             base.CalculateTotals(cart);
@@ -15,7 +21,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Data.Services
 
         private static void CalculateConfiguredGroups(ShoppingCart cart)
         {
-            var cartExtended = (DemoShoppingCart) cart;
+            var cartExtended = (DemoShoppingCart)cart;
 
             var configuredGroups = (cartExtended.ConfiguredGroups ?? Enumerable.Empty<DemoCartConfiguredGroup>()).ToArray();
 
