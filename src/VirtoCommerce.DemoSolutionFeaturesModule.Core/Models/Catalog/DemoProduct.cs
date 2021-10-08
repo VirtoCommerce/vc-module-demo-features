@@ -15,7 +15,7 @@ namespace VirtoCommerce.DemoSolutionFeaturesModule.Core.Models.Catalog
 
             if (result is DemoProduct demoProduct)
             {
-                demoProduct.ProductParts = ProductParts.Select(x => x.GetCopy()).Cast<DemoProductPart>().ToArray();
+                demoProduct.ProductParts = ProductParts?.Select(x => x.GetCopy()).OfType<DemoProductPart>().ToList();
             }
 
             return result;
