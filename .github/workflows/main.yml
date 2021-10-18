@@ -1,4 +1,4 @@
-# v1.4.2.vc-demo-module
+# v1.4.3.vc-demo-module
 name: Module CI
 
 on:
@@ -133,17 +133,17 @@ jobs:
           changelog: ${{ steps.changelog.outputs.changelog }}
         uses: VirtoCommerce/vc-github-actions/publish-github-release@master
 
-      # - name: Setup Git Credentials
-      #   if: ${{ (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master') && github.event_name != 'workflow_dispatch' }}
-      #   uses: VirtoCommerce/vc-github-actions/setup-git-credentials-github@master
-      #   with:
-      #     githubToken: ${{ secrets.REPO_TOKEN }}
+      - name: Setup Git Credentials
+        if: ${{ (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master') && github.event_name != 'workflow_dispatch' }}
+        uses: VirtoCommerce/vc-github-actions/setup-git-credentials-github@master
+        with:
+          githubToken: ${{ secrets.REPO_TOKEN }}
 
-      # - name: Publish Manifest
-      #   if: ${{ (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master') && github.event_name != 'workflow_dispatch' }}
-      #   uses: VirtoCommerce/vc-github-actions/publish-manifest@master
-      #   with:
-      #     packageUrl: ${{ steps.blobRelease.outputs.packageUrl }}
+      - name: Publish Manifest
+        if: ${{ (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master') && github.event_name != 'workflow_dispatch' }}
+        uses: VirtoCommerce/vc-github-actions/publish-manifest@master
+        with:
+          packageUrl: ${{ steps.blobRelease.outputs.packageUrl }}
 
       - name: Parse Jira Keys from All Commits
         uses: VirtoCommerce/vc-github-actions/get-jira-keys@master
